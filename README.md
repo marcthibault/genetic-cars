@@ -1,4 +1,4 @@
-# Genetic Cars
+# GENETIC CARS
 
 This is the Genetic Cars Git repository.
 
