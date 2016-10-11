@@ -32,3 +32,22 @@ Here's how to use Git :
     
     You have successfully cloned the whole project !
     
+## Git workflow
+
+Here's the workflow we'll be using : 
+
+As you start working, update your repository by pulling the server repository : 
+
+`git pull origin master`
+
+`git pull origin mybranch`
+
+Do your modifications on the source code. You can then add them to your local branch : 
+
+`git add --all`
+
+`git commit -m 'my_commit_comment'`
+
+`git push origin mybranch`
+
+As you think your branch is cool enough to replace the master branch, go to Gitlab and do a merge request. The team leader then has to accept the merge request.
