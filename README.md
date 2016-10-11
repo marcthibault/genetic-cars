@@ -31,3 +31,4 @@ Here's how to use Git :
     You will be asked your LDAP IDs, just type them in
     
     You have successfully cloned the whole project !
+    
