@@ -6,6 +6,7 @@ class Car
 {
 public:
     Car();
+    Car(double rayon1, double rayon2);
 };
 
 #endif // CAR_H

@@ -23,7 +23,11 @@ Car::Car()
     std::cout<<"Hello World"<<std::endl;
     }
 
+ void Car::hello(){
 
+     std::cout<<"Hello World"<< std::endl;
+
+ }
 
 
 
