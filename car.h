@@ -12,8 +12,8 @@ class Car
 public :
     double rayon1;
     double rayon2;
-    vector<pair<double, double>> haut;
-    vector<pair<double, double>> bas;
+    vector<pair<double, double> > haut;
+    vector<pair<double, double> > bas;
 
     Car();
     Car(double rayon1, double rayon2);
