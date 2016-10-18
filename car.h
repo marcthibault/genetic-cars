@@ -4,7 +4,12 @@
 
 class Car
 {
-public:
+public :
+    double rayon1;
+    double rayon2;
+    vector<pair<double, double>> haut;
+    vector<pair<double, double>> bas;
+
     Car();
     Car(double rayon1, double rayon2);
 };
