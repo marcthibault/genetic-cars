@@ -66,7 +66,8 @@ void preprocessing::computeRandomVector(Car my_car,double V){
     std::default_random_engine generator;
     for(int i=0;i<attributes.size();i++){
         //std::normal_distribution<double> distribution(5.0,2.0);
-        std::normal_distribution<double> distribution(0,V);
+        double variance = attributes[i]/10;
+        std::normal_distribution<double> distribution(0,variance);
         double variation = distribution(generator);
         attributes[i] += variation;
     }
@@ -99,6 +100,12 @@ Car preprocessing::generateCar(std::vector<Car> ranking){
     }
     Car car = preprocessing::returnCar(preCar);
     return car;
+}
+
+// Compute a random car
+
+Car preprocessing::generateRandomCar(){
+
 }
 
 
