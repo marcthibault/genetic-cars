@@ -3,49 +3,31 @@
 
 #include <vector>
 
+#include<utility>
+
 using namespace std;
 
 class Car{
 public :
-<<<<<<< HEAD
-<<<<<<< HEAD
-    static const int nNoeuds = 10; // nombre total de noeuds
-    double rayon1;
-    double rayon2;
-    double L; // distance entre les roues
-    double densiteRoue1;
-    double densiteRoue2;
-    double densiteVoiture;
-=======
-=======
->>>>>>> 1a774373a9662524246a34f62248058396dda717
     double r1; //rayon roue avant
     double d1; //densité roue avant
     double r2; //rayon roue arrière
     double d2; //densité roue arrière
     double D; //distance entre les deux roues
     double d; //densité de la carrosserie
-    static int N=8; //nombre de sommets du polygone (carrosserie)
     vector<pair<double, double> > angles_distances; //coordonées polaires des points A3,...AN
-<<<<<<< HEAD
->>>>>>> 1a774373a9662524246a34f62248058396dda717
-=======
->>>>>>> 1a774373a9662524246a34f62248058396dda717
+    bool ordered;
+     struct { bool operator()(pair<double, double> a, pair<double, double> b) { return a.first < b.second; } } pair_inf;
 
-    vector<double> angles;
-    vector<double> distances; // tailles des rayons
-    Car();
-<<<<<<< HEAD
-<<<<<<< HEAD
-    Car(double rayon1, double rayon2, double L, double densiteRoue1, double densiteRoue2, double densiteVoiture, vector<double> angles, vector<double> distances);
-=======
-    Car(double r1, double d1, double r2, double d2, double D, double d, vector<pair<double, double> > angles_distances);
+    Car(); //constructeur (random)
+    Car(double r1, double d1, double r2, double d2, double D, double d, vector<pair<double, double> > angles_distances); //constructeur
 
->>>>>>> 1a774373a9662524246a34f62248058396dda717
-=======
-    Car(double r1, double d1, double r2, double d2, double D, double d, vector<pair<double, double> > angles_distances);
-
->>>>>>> 1a774373a9662524246a34f62248058396dda717
+    double get_angle_wheel(); //cf schéma (angle théta)
+    bool check_constraint(); //vérifie si l'angle candidat ne coincide pas avec les roues
+    void order_angles();
+    bool violate_constraint(double candidate,vector<double> S); //renvoie True si l'angle candidat existe déjà dans S!
+    vector<pair<double, double> > get_points(); //renvoie les sommets du polygones (dans l'ordre trigonométrique)
+    vector<int> get_wheels_index(); //renvoie les positions des roues avant et arrière dans le polygone
 };
 
 #endif // CAR_H

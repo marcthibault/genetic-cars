@@ -8,7 +8,8 @@ using namespace std;
 /* Load the a  vector of " cars "
  * load a vector of their performance ( or ranking )
  * Corrolation : Pearson product-moment correlation coefficient
- *  coeff_correlation =1 => on prend la valeur max du parametre, -1 valeurs min, autres => min + (coeff+1)/2   *(max-min)
+ *  pour le score  coeff_correlation =1 => on prend la valeur max du parametre, -1 valeurs min, autres => min + (coeff+1)/2   *(max-min)
+ * Pour le ranking ranking petit => meilleur voiture, => coeff_correlation =1 => on prend la valeur min du parametre, 1 valeurs max  autres => max + (coeff+1)/2   *(min-max)
  * pour la carcasse : Pour le moment , le nombre de point est choisi constant 8 poins : R1,R2 et 6 autres,
  *                                      toutes les voitures recus ont le même nmb de point
  *                                     Centre C(0,r1) , pas inclus dans la carcasse
@@ -16,7 +17,7 @@ using namespace std;
  *                                     R2(-D/2,0)
  *                                     car.angles et car.distances donne distance entre point et C, et les angles (C,axeX,point)
  *                                     Conditions : angles distincts
- * Create "best" predicted car
+ * Create "best"  predicted car
  */
 
 
