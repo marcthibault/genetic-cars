@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     cars.push_back(my_car1);
     cars.push_back(my_car2);
     cars.push_back(my_car3);
-
+    my_car1.printCar();
 
 
     std::cout << "Fin de l'affichage" << std::endl;
