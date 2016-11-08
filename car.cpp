@@ -25,3 +25,18 @@ Car::Car(double rayon1, double rayon2, double L, double densiteRoue1, double den
 Car::Car(){
 
 }
+
+void Car::printCar(){
+    std::cout << "rayon1 = " << this->rayon1 << std::endl;
+    std::cout << "rayon2 = " << this->rayon2 << std::endl;
+    std::cout << "L = " << this->L << std::endl;
+    std::cout << "densiteRoue1 = " << this->densiteRoue1 << std::endl;
+    std::cout << "densiteRoue2 = " << this->densiteRoue2 << std::endl;
+    std::cout << "densiteVoiture = " << this->densiteVoiture << std::endl;
+    for (std::vector<double>::iterator it = this->angles.begin() ; it != this->angles.end(); ++it){
+       std::cout << *it << std::endl;
+    }
+    for (std::vector<double>::iterator it = this->distances.begin() ; it != this->distances.end(); ++it){
+      std::cout << *it << std::endl;
+    }
+ }

@@ -3,7 +3,6 @@
 #include <math.h>
 #include <vector>
 #include <random>
-#include <iostream>
 
 preprocessing::preprocessing()
 {
@@ -46,7 +45,6 @@ Car preprocessing::returnCar(std::vector<double> attributes){
 }
 
 // Compute the coeff associated to the ranking of the car
-//- Version simpliste
 double preprocessing::computeCoeff(int rank, int total){
     if(rank < total){
        return 1./pow(2, rank);
@@ -56,7 +54,7 @@ double preprocessing::computeCoeff(int rank, int total){
 }
 // Function that takes the ranking of the race and generates the coefficients
 std::vector<double> preprocessing::generateCoeff(int N){
-    std::vector<double> coeffs;
+std::vector<double> coeffs;
     for (int i=0;i<N;i++){
        coeffs.push_back(computeCoeff(i, N));
     }
@@ -95,17 +93,18 @@ std::vector<double> preprocessing::multiply(std::vector<double> car, double x){
 }
 
 // Compute a new car with the ranking of the race
-/*Car preprocessing::generateCar(std::vector<Car> ranking){
-    coeffs = generateCoeff(ranking.size);
-    std::vector<double> preCar = new std::vector<double>();
-    for(int i=0;i<car.size;i++) {
-        preCar = add( preCar , multiply(open(car[i]),coeffs[i]) )
+Car preprocessing::generateCar(std::vector<Car> ranking){
+    std::vector<double> coeffs = generateCoeff(ranking.size());
+    std::vector<double> preCar(preprocessing::openCar(ranking[0]).size(),0.0);
+    for(int i=0;i<ranking.size();i++) {
+        preCar = preprocessing::add( preCar , preprocessing::multiply(preprocessing::openCar(ranking[i]),coeffs[i]) );
     }
     Car car = preprocessing::returnCar(preCar);
     return car;
-}*/
+}
 
 // Compute a random car
+
 Car preprocessing::generateRandomCar(std::vector<double> * means, std::vector<double> * variances){
     std::vector<double> attributes;
     std::default_random_engine generator;
@@ -125,16 +124,6 @@ Car preprocessing::generateRandomCar(std::vector<double> * means, std::vector<do
         attributes[6 + len + i] = value_variance;
     }
     return returnCar(attributes);
-}
-
-void preprocessing::printCar(Car my_car){
-    std::vector<double> car = openCar(my_car);
-    printCar(car);
-}
-void preprocessing::printCar(std::vector<double> car){
-    for (std::vector<double>::const_iterator i = car.begin(); i != car.end(); ++i)
-        std::cout << *i << ' ';
-    std::cout << " " << std::endl;
 }
 
 
