@@ -8,7 +8,7 @@ using namespace std;
 class Car
 {
 public :
-    static int nNoeuds = 10; // nombre total de noeuds
+    static const int nNoeuds = 10; // nombre total de noeuds
     double rayon1;
     double rayon2;
     double L; // distance entre les roues

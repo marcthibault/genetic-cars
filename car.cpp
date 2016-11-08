@@ -11,6 +11,7 @@ Car(double rayon1, double rayon2, double L, double yO, double densiteRoue1, doub
     : rayon1(rayon1), rayon2(rayon2), L(L), densiteRoue1(densiteRoue1), densiteRoue2(densiteRoue2),
       densiteVoiture(densiteVoiture), angles(angles){}
 
+
 Car::Car(){
 
 }

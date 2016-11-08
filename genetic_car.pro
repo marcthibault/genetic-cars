@@ -15,4 +15,5 @@ SOURCES += main.cpp \
 
 HEADERS += \
     car.h \
-    preprocessing.h
+    preprocessing.h \
+    car.h
