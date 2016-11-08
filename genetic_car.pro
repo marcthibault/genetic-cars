@@ -10,7 +10,9 @@ CONFIG -= app_bundle
 TEMPLATE = app
 
 SOURCES += main.cpp \
-    car.cpp
+    car.cpp \
+    preprocessing.cpp
 
 HEADERS += \
-    car.h
+    car.h \
+    preprocessing.h
