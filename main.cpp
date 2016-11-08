@@ -8,7 +8,6 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
     std::cout << "Starting..." << std::endl;
-
     std::vector<double> angles;
     angles.push_back(3);
     angles.push_back(7);

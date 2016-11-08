@@ -63,8 +63,12 @@ std::vector<double> preprocessing::generateCoeff(int N){
     return coeffs;
 }
 // Compute the random evolution of the new cars
+<<<<<<< HEAD
 //- We can imagine a model where the variability decreases (like temperature)
 void preprocessing::computeRandomVector(Car my_car){
+=======
+void preprocessing::computeRandomVector(Car my_car,double V){
+>>>>>>> 3f16a7db8325c88252dfb8a54ed3b3b04bfd6db1
     std::vector<double> attributes = openCar(my_car);
     std::default_random_engine generator;
     for(int i=0;i<attributes.size();i++){
@@ -100,15 +104,31 @@ std::vector<double> preprocessing::multiply(std::vector<double> car, double x){
     std::vector<double> preCar = new std::vector<double>();
     for(int i=0;i<car.size;i++) {
         preCar = add( preCar , multiply(open(car[i]),coeffs[i]) )
-
     }
-    Car car = close(preCar);
+    Car car = preprocessing::returnCar(preCar);
     return car;
 }*/
 
 // Compute a random car
-Car preprocessing::generateRandomCar(){
+Car preprocessing::generateRandomCar(std::vector<double> * means, std::vector<double> * variances){
+    std::vector<double> attributes;
+    std::default_random_engine generator;
+    for(int i = 0;i < 6; i++){
+        std::normal_distribution<double> distribution((*means)[i], (*variances)[i]);
+        double value = distribution(generator);
+        attributes[i] = value;
+    }
+    int len = ((*means).size() - 6) / 2;
+    for(int i = 0; i < len; i++){
+        std::normal_distribution<double> distribution_means((*means)[6 + i], (*variances)[6 + i]);
+        double value_mean = distribution_means(generator);
+        attributes[6 + i] = value_mean;
 
+        std::normal_distribution<double> distribution_variances((*means)[6 + len + i], (*variances)[6 + len + i]);
+        double value_variance = distribution_variances(generator);
+        attributes[6 + len + i] = value_variance;
+    }
+    return returnCar(attributes);
 }
 
 void preprocessing::printCar(Car my_car){
