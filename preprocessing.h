@@ -18,6 +18,8 @@ public:
     std::vector<double> multiply(std::vector<double> car, double x);
     Car generateCar(std::vector<Car> ranking);
     Car generateRandomCar();
+    void printCar(Car car);
+    void printCar(std::vector<double> car);
 };
 
 #endif // PREPROCESSING_H

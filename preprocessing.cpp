@@ -3,6 +3,7 @@
 #include <math.h>
 #include <vector>
 #include <random>
+#include <iostream>
 
 preprocessing::preprocessing()
 {
@@ -45,6 +46,7 @@ Car preprocessing::returnCar(std::vector<double> attributes){
 }
 
 // Compute the coeff associated to the ranking of the car
+//- Version simpliste
 double preprocessing::computeCoeff(int rank, int total){
     if(rank < total){
        return 1./pow(2, rank);
@@ -54,13 +56,14 @@ double preprocessing::computeCoeff(int rank, int total){
 }
 // Function that takes the ranking of the race and generates the coefficients
 std::vector<double> preprocessing::generateCoeff(int N){
-std::vector<double> coeffs;
+    std::vector<double> coeffs;
     for (int i=0;i<N;i++){
        coeffs.push_back(computeCoeff(i, N));
     }
     return coeffs;
 }
 // Compute the random evolution of the new cars
+//- We can imagine a model where the variability decreases (like temperature)
 void preprocessing::computeRandomVector(Car my_car){
     std::vector<double> attributes = openCar(my_car);
     std::default_random_engine generator;
@@ -75,8 +78,8 @@ void preprocessing::computeRandomVector(Car my_car){
 
 // Sum of two cars
 std::vector<double> preprocessing::add(std::vector<double> a, std::vector<double> b){
-    c = std::vector<double>;
-    for (int i=0;i<a.size;i++){
+    std::vector<double> c;
+    for (int i=0;i<a.size();i++){
         c[i] = a[i] + b[i];
     }
     return c;
@@ -84,15 +87,15 @@ std::vector<double> preprocessing::add(std::vector<double> a, std::vector<double
 
 //Multiply car with a scalar
 std::vector<double> preprocessing::multiply(std::vector<double> car, double x){
-    c= std::vector<double>;
-    for (int i=0;i<car.size;i++){
+    std::vector<double> c;
+    for (int i=0;i<car.size();i++){
         c[i] = x * car[i];
     }
     return c;
 }
 
 // Compute a new car with the ranking of the race
-Car preprocessing::generateCar(std::vector<Car> ranking){
+/*Car preprocessing::generateCar(std::vector<Car> ranking){
     coeffs = generateCoeff(ranking.size);
     std::vector<double> preCar = new std::vector<double>();
     for(int i=0;i<car.size;i++) {
@@ -101,12 +104,21 @@ Car preprocessing::generateCar(std::vector<Car> ranking){
     }
     Car car = close(preCar);
     return car;
-}
+}*/
 
 // Compute a random car
-
 Car preprocessing::generateRandomCar(){
 
+}
+
+void preprocessing::printCar(Car my_car){
+    std::vector<double> car = openCar(my_car);
+    printCar(car);
+}
+void preprocessing::printCar(std::vector<double> car){
+    for (std::vector<double>::const_iterator i = car.begin(); i != car.end(); ++i)
+        std::cout << *i << ' ';
+    std::cout << " " << std::endl;
 }
 
 
