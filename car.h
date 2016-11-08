@@ -12,7 +12,6 @@ public :
     double rayon1;
     double rayon2;
     double L; // distance entre les roues
-    double yO; // ordonnee du point O
     double densiteRoue1;
     double densiteRoue2;
     double densiteVoiture;
@@ -20,7 +19,7 @@ public :
     vector<double> angles;
     vector<double> distances; // tailles des rayons
     Car();
-    Car(double rayon1, double rayon2, double L, double yO, double densiteRoue1, double densiteRoue2, double densiteVoiture, vector<double> angles, vector<double> distances);
+    Car(double rayon1, double rayon2, double L, double densiteRoue1, double densiteRoue2, double densiteVoiture, vector<double> angles, vector<double> distances);
 };
 
 #endif // CAR_H
