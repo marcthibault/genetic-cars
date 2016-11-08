@@ -6,8 +6,8 @@
 using namespace std;
 
 
-Car::Car( double rayon1, double rayon2) : rayon1(rayon1), rayon2(rayon2) {
-
+car::car() {
+    a = 5;
 }
 
 
