@@ -17,4 +17,5 @@ preprocessing::preprocessing()
         return coeffs;
     }
 
+    vector<double>
 }
