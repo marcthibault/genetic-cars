@@ -58,4 +58,22 @@ bool violate_constraint(double candidate,vector<double> S){
     return false;
 }
 
+Car::get_angle_wheel(){
+    double angle_wheel = atan(D/(2*r1));
+    return angle_wheel;
+}
+
+Car::get_wheels_index(){
+    vector<int> wheels_index;
+    wheels_index[0] = 0;
+    wheels_index[1] = 8;
+    double theta = get_angle_wheel();
+    for(int i=0;i<N-2;i++){
+        if (angles_distances[i]<M_PI+theta) wheels_index[0]++;
+        else if (angles_distances[i>2*M_PI-theta]) wheels_index[1]--;
+    }
+    return  wheels_index;
+}
+
+
 Car Jeep= Car();
