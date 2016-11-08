@@ -16,5 +16,4 @@ SOURCES += main.cpp \
 HEADERS += \
     car.h \
     preprocessing.h \
-    car.h \
-    firstLearner.h
+    car.h
