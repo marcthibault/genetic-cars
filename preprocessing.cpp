@@ -9,7 +9,7 @@ preprocessing::preprocessing()
 }
 
 // Transform an object Car in array
-std::vector<double> preprocessing::open(car my_car){
+std::vector<double> preprocessing::open(Car my_car){
     std::vector<double> data;
     data.push_back(my_car.a);
 
@@ -25,14 +25,14 @@ double preprocessing::computeCoeff(int rank, int total){
 }
 // Function that takes the ranking of the race and generates the coefficients
 std::vector<double> preprocessing::generateCoeff(int N){
-    vector<double> coeffs = new vector<double>();
-    for (i=0;i<N;i++){
-       coeffs.push_back(computeCoeffs(i));
+    vector<double> coeffs;
+    for (int i=0;i<N;i++){
+       coeffs.push_back(preprocessing::computeCoeff(i));
     }
     return coeffs;
 }
 // Compute the random evolution of the new cars
-void preprocessing::computeRandomVector(car my_car){
+void preprocessing::computeRandomVector(Car my_car){
     std::vector<double> attributes = open(my_car);
     for(int i=0;i<attributes.size();i++){
         attributes[i];
@@ -40,12 +40,20 @@ void preprocessing::computeRandomVector(car my_car){
 
 // Sum of two cars
 std::vector<double> preprocessing::add(std::vector<double> a, std::vector<double> b){
-    return std::transform (a.begin(), a.end(), b.begin(), a.begin(), std::plus<int>());
+    c= std::vector<double>;
+    for (int i=0;i<a.size;i++){
+        c[i] = a[i] + b[i];
     }
+    return c;
+}
 
 //Multiply car with a scalar
 std::vector<double> preprocessing::multiply(std::vector<double> car, double x){
-    return std::transform(car.begin(), car.end(), car.begin(), std::bind1st(std::multiplies<T>(),x));
+    c= std::vector<double>;
+    for (int i=0;i<car.size;i++){
+        c[i] = x * car[i];
+    }
+    return c;
 }
 
 // Compute a new car with the ranking of the race
@@ -58,7 +66,6 @@ Car preprocessing::generateCar(std::vector<Car> ranking){
     }
     Car car = close(preCar);
     return car;
-}
 }
 
 
