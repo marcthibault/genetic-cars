@@ -7,7 +7,7 @@
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    //Theo was here
+    std::cout << "Theo was here" << std::endl;
     std::cout << "Hello World" << std::endl;
     std::cout << "My very first commit" << std::endl;
 
