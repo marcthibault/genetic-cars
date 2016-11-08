@@ -104,8 +104,25 @@ Car preprocessing::generateCar(std::vector<Car> ranking){
 
 // Compute a random car
 
-Car preprocessing::generateRandomCar(){
+Car preprocessing::generateRandomCar(std::vector<double> * means, std::vector<double> * variances){
+    std::vector<double> attributes;
+    std::default_random_engine generator;
+    for(int i = 0;i < 6; i++){
+        std::normal_distribution<double> distribution((*means)[i], (*variances)[i]);
+        double value = distribution(generator);
+        attributes[i] = value;
+    }
+    int len = ((*means).size() - 6) / 2;
+    for(int i = 0; i < len; i++){
+        std::normal_distribution<double> distribution_means((*means)[6 + i], (*variances)[6 + i]);
+        double value_mean = distribution_means(generator);
+        attributes[6 + i] = value_mean;
 
+        std::normal_distribution<double> distribution_variances((*means)[6 + len + i], (*variances)[6 + len + i]);
+        double value_variance = distribution_variances(generator);
+        attributes[6 + len + i] = value_variance;
+    }
+    return returnCar(attributes);
 }
 
 
