@@ -14,6 +14,9 @@ public:
     double computeCoeff(int rank, int total);
     void computeRandomVector(Car my_car);
     std::vector<double> generateCoeff(int N);
+    std::vector<double> add(std::vector<double> a, std::vector<double> b);
+    std::vector<double> multiply(std::vector<double> car, double x);
+    Car generateCar(std::vector<Car> ranking);
 };
 
 #endif // PREPROCESSING_H
