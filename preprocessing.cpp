@@ -74,7 +74,7 @@ void preprocessing::computeRandomVector(Car my_car){
 
 // Sum of two cars
 std::vector<double> preprocessing::add(std::vector<double> a, std::vector<double> b){
-    c= std::vector<double>;
+    c = std::vector<double>;
     for (int i=0;i<a.size;i++){
         c[i] = a[i] + b[i];
     }
@@ -100,6 +100,12 @@ Car preprocessing::generateCar(std::vector<Car> ranking){
     }
     Car car = close(preCar);
     return car;
+}
+
+// Compute a random car
+
+Car preprocessing::generateRandomCar(){
+
 }
 
 
