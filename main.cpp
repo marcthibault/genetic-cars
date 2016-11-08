@@ -13,11 +13,11 @@ int main(int argc, char *argv[])
     groundBodyDef.position.Set(0.0f, -20.0f);
     b2Body* groundBody = m_world->CreateBody(&groundBodyDef);
     b2PolygonShape groundBox;
-    groundBox.SetAsBox(500.0f, 10.0f);
+    groundBox.SetAsBox(500.0f, 17.0f);
 
     b2FixtureDef fdGround;
     fdGround.shape = &groundBox;
-    fdGround.density = 1.0f;
+    fdGround.density = 0.0f;
     fdGround.friction = 0.9f;
     groundBody->CreateFixture(&fdGround);//shape, density
 
@@ -132,11 +132,11 @@ int main(int argc, char *argv[])
     m_wheel2->CreateFixture(&fd);
 
     b2WheelJointDef jd;
-    b2Vec2 axis(0.0f, 1.0f);
+    b2Vec2 axis(1.0f, 0.0f);
 
     jd.Initialize(m_car, m_wheel1, m_wheel1->GetPosition(), axis);
-    jd.motorSpeed = -1.5f;
-    jd.maxMotorTorque = 20.0f;
+    jd.motorSpeed = -10.0f;
+    jd.maxMotorTorque = 60.0f;
     jd.enableMotor = true;
     jd.frequencyHz = m_hz;
     jd.dampingRatio = m_zeta;
@@ -144,21 +144,22 @@ int main(int argc, char *argv[])
 
     jd.Initialize(m_car, m_wheel2, m_wheel2->GetPosition(), axis);
     jd.motorSpeed = 0.0f;
-    jd.maxMotorTorque = 0.0f;
+    jd.maxMotorTorque = 60.0f;
     jd.enableMotor = false;
-    jd.frequencyHz = m_hz;
-    jd.dampingRatio = m_zeta;
+    jd.frequencyHz = 4.0f;
+    jd.dampingRatio = 0.5;
     m_spring2 = (b2WheelJoint*)m_world->CreateJoint(&jd);
-
     float32 timeStep = 1.0f / 60.0f;
-    int32 velocityIterations = 6;
-    int32 positionIterations = 2;
+    int32 velocityIterations = 20;
+    int32 positionIterations = 20;
     for (int32 i = 0; i < 600; i++)
     {
         m_world->Step(timeStep, velocityIterations, positionIterations);
         b2Vec2 position = m_car->GetPosition();
         float32 angle = m_car->GetAngle();
-        std::cout << " X: " << position.x << " \t Y : " << position.y << " \t Angle : " << angle << std::endl;
+        std::cout << " X : " << position.x << " \t Y : " << position.y << " \t Angle : " << angle << std::endl;
     }
     return 0;
 }
+
+
