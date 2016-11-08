@@ -3,14 +3,14 @@
 #include <math.h>
 #include <vector>
 #include <random>
+#include <iostream>
 
 preprocessing::preprocessing()
 {
 
 }
 
-// Transform an object Car in array
-
+// Transform an object Car in vector
 std::vector<double> preprocessing::openCar(Car my_car){
     std::vector<double> data;
     data.push_back(my_car.rayon1);
@@ -28,10 +28,11 @@ std::vector<double> preprocessing::openCar(Car my_car){
 
     return data;
 }
+// Convert vector in car
 Car preprocessing::returnCar(std::vector<double> attributes){
     Car my_car = Car();
     my_car.rayon1 = attributes[0];
-    my_car.rayon1 = attributes[1];
+    my_car.rayon2 = attributes[1];
     my_car.L = attributes[2];
     my_car.densiteRoue1 = attributes[3];
     my_car.densiteRoue2 = attributes[4];
@@ -46,6 +47,7 @@ Car preprocessing::returnCar(std::vector<double> attributes){
 
 // Compute the coeff associated to the ranking of the car
 double preprocessing::computeCoeff(int rank, int total){
+    rank++; // nb 0 is 1st
     if(rank < total){
        return 1./pow(2, rank);
     } else {
@@ -78,7 +80,7 @@ void preprocessing::computeRandomVector(Car my_car,double V){
 std::vector<double> preprocessing::add(std::vector<double> a, std::vector<double> b){
     std::vector<double> c;
     for (int i=0;i<a.size();i++){
-        c[i] = a[i] + b[i];
+        c.push_back(a[i] + b[i]);
     }
     return c;
 }
@@ -87,7 +89,7 @@ std::vector<double> preprocessing::add(std::vector<double> a, std::vector<double
 std::vector<double> preprocessing::multiply(std::vector<double> car, double x){
     std::vector<double> c;
     for (int i=0;i<car.size();i++){
-        c[i] = x * car[i];
+        c.push_back( x * car[i]);
     }
     return c;
 }
@@ -104,26 +106,33 @@ Car preprocessing::generateCar(std::vector<Car> ranking){
 }
 
 // Compute a random car
-
-Car preprocessing::generateRandomCar(std::vector<double> * means, std::vector<double> * variances){
+Car preprocessing::generateRandomCar(std::vector<double> means, std::vector<double> variances){
     std::vector<double> attributes;
     std::default_random_engine generator;
     for(int i = 0;i < 6; i++){
-        std::normal_distribution<double> distribution((*means)[i], (*variances)[i]);
+        std::normal_distribution<double> distribution(means[i], variances[i]);
         double value = distribution(generator);
-        attributes[i] = value;
+        attributes.push_back(value);
     }
-    int len = ((*means).size() - 6) / 2;
+    int len = (means.size() - 6) / 2;
     for(int i = 0; i < len; i++){
-        std::normal_distribution<double> distribution_means((*means)[6 + i], (*variances)[6 + i]);
+        std::normal_distribution<double> distribution_means(means[6 + i], variances[6 + i]);
         double value_mean = distribution_means(generator);
-        attributes[6 + i] = value_mean;
-
-        std::normal_distribution<double> distribution_variances((*means)[6 + len + i], (*variances)[6 + len + i]);
+        attributes.push_back(value_mean);
+    }
+    for(int i = 0; i < len; i++){
+        std::normal_distribution<double> distribution_variances(means[6 + len + i], variances[6 + len + i]);
         double value_variance = distribution_variances(generator);
-        attributes[6 + len + i] = value_variance;
+        attributes.push_back(value_variance);
     }
     return returnCar(attributes);
+}
+
+// Pour la debug : print vector
+void preprocessing::printVector(std::vector<double> vec){
+    for (std::vector<double>::const_iterator i = vec.begin(); i != vec.end(); ++i)
+        std::cout << *i << ' ';
+    std::cout << ' ' << std::endl;
 }
 
 

@@ -17,9 +17,9 @@ public:
     std::vector<double> add(std::vector<double> a, std::vector<double> b);
     std::vector<double> multiply(std::vector<double> car, double x);
     Car generateCar(std::vector<Car> ranking);
-    void printCar(Car car);
-    void printCar(std::vector<double> car);
     Car generateRandomCar(std::vector<double> * means, std::vector<double> * variances);
+    Car generateRandomCar(std::vector<double> means, std::vector<double> variances);
+    void printVector(std::vector<double> vec);
 };
 
 #endif // PREPROCESSING_H

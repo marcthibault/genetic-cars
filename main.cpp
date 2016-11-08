@@ -7,10 +7,10 @@
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    std::cout << "Theo was here" << std::endl;
-    std::cout << "Enfin !!" <<std::endl;
-    std::cout << "Hello World" << std::endl;
+    std::cout << "Starting..." << std::endl;
 
+// Tester la génération de nouvelles voitures à partir d'un ranking
+    /*
     std::vector<double> angles;
     angles.push_back(3);
     angles.push_back(7);
@@ -29,16 +29,37 @@ int main(int argc, char *argv[])
 
     preprocessing preprocessor = preprocessing();
 
-    std::vector<double> means;
+    preprocessor.printVector(preprocessor.openCar(my_car1));
+    preprocessor.printVector(preprocessor.openCar(my_car2));
+    preprocessor.printVector(preprocessor.openCar(my_car3));
+    preprocessor.printVector(preprocessor.openCar(preprocessor.generateCar(cars)));*/
+
+// Tester la génération d'une voiture aléatoire
+ /*   std::vector<double> means;
     std::vector<double> variances;
-    means.push_back(2.3);
+    means.push_back(1.6);
+    means.push_back(2.6);
+    means.push_back(3.6);
+    means.push_back(4.6);
+    means.push_back(22.6);
+    means.push_back(22.6);
+    means.push_back(22.6);
+    means.push_back(22.6);
+    means.push_back(22.6);
     means.push_back(22.6);
     variances.push_back(0.1);
     variances.push_back(0.1);
-    std::vector<double> car = preprocessor.generateRandomCar(means, variances);
-    preprocessor.printCar(car);
-
-    my_car1.printCar();
+    variances.push_back(0.1);
+    variances.push_back(0.1);
+    variances.push_back(0.1);
+    variances.push_back(0.1);
+    variances.push_back(0.1);
+    variances.push_back(0.1);
+    variances.push_back(0.1);
+    variances.push_back(0.1);
+    Car car = preprocessor.generateRandomCar(means, variances);
+    car.printCar();
+*/
 
 
 
