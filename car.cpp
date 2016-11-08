@@ -14,8 +14,3 @@ Car(double rayon1, double rayon2, double L, double yO, double densiteRoue1, doub
 Car::Car(){
 
 }
-
-int main(int argc, char const *argv[]) {
-  /* code */
-  return 0;
-}
