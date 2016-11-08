@@ -10,11 +10,8 @@ preprocessing::preprocessing()
 }
 
 // Transform an object Car in array
-<<<<<<< HEAD
-std::vector<double> preprocessing::open(Car my_car){
-=======
+
 std::vector<double> preprocessing::openCar(Car my_car){
->>>>>>> 43331b69d93b83dbfebf0153cadda1c06e760e38
     std::vector<double> data;
     data.push_back(my_car.rayon1);
     data.push_back(my_car.rayon2);
