@@ -63,12 +63,8 @@ std::vector<double> preprocessing::generateCoeff(int N){
     return coeffs;
 }
 // Compute the random evolution of the new cars
-<<<<<<< HEAD
 //- We can imagine a model where the variability decreases (like temperature)
-void preprocessing::computeRandomVector(Car my_car){
-=======
 void preprocessing::computeRandomVector(Car my_car,double V){
->>>>>>> 3f16a7db8325c88252dfb8a54ed3b3b04bfd6db1
     std::vector<double> attributes = openCar(my_car);
     std::default_random_engine generator;
     for(int i=0;i<attributes.size();i++){

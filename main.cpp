@@ -23,7 +23,14 @@ int main(int argc, char *argv[])
     cars.push_back(my_car2);
     cars.push_back(my_car3);
     preprocessing preprocessor = preprocessing();
-    std::vector<double> car =  preprocessor.openCar(my_car1);
+
+    std::vector<double> means;
+    std::vector<double> variances;
+    means.push_back(2.3);
+    means.push_back(22.6);
+    variances.push_back(0.1);
+    variances.push_back(0.1);
+    std::vector<double> car = preprocessor.generateRandomCar(means, variances);
     preprocessor.printCar(car);
 
 
