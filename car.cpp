@@ -6,6 +6,7 @@
 using namespace std;
 
 
+<<<<<<< HEAD
 /*Car(double rayon1, double rayon2, double L, double yO, double densiteRoue1, double densiteRoue2,
     double densiteVoiture, vector<double> angles, vector<double> distances)
     : rayon1(rayon1), rayon2(rayon2), L(L), densiteRoue1(densiteRoue1), densiteRoue2(densiteRoue2),
@@ -24,4 +25,13 @@ Car::Car(double rayon1, double rayon2, double L, double densiteRoue1, double den
 
 Car::Car(){
 
+=======
+Car(double rayon1, double rayon2, double L, double yO, double densiteRoue1, double densiteRoue2,
+    double densiteVoiture, vector<double> angles, vector<double> distances)
+    : rayon1(rayon1), rayon2(rayon2), L(L), densiteRoue1(densiteRoue1), densiteRoue2(densiteRoue2),
+      densiteVoiture(densiteVoiture), angles(angles){}
+
+Car::Car(){
+
+>>>>>>> 1a774373a9662524246a34f62248058396dda717
 }
