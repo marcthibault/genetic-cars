@@ -1,4 +1,4 @@
-#include <QCoreApplication>
+#include <QApplication>
 #include "car.h"
 #include <iostream>
 #include "windows.h"
@@ -7,16 +7,13 @@
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
-    std::cout << "Theo was here" << std::endl;
+    QApplication app(argc, argv);
 
-    std::cout << "Enfin !!" <<std::endl;
-    std::cout << "Hello World" << std::endl;
 
 
     windows fenetre;
     fenetre.show();
 
-    return a.exec();
+    return app.exec();
 }
 //test
