@@ -1,7 +1,8 @@
 #include <QCoreApplication>
 #include "car.h"
 #include <iostream>
-
+#include "windows.h"
+#include <QWidget>
 
 
 int main(int argc, char *argv[])
@@ -12,6 +13,9 @@ int main(int argc, char *argv[])
     std::cout << "Enfin !!" <<std::endl;
     std::cout << "Hello World" << std::endl;
 
+
+    windows fenetre;
+    fenetre.show();
 
     return a.exec();
 }
