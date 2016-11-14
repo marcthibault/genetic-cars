@@ -11,11 +11,9 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     car.cpp \
-    preprocessing.cpp \
     firstLearner.cpp
 
 HEADERS += \
     car.h \
-    preprocessing.h \
     car.h \
     firstLearner.h

@@ -3,10 +3,11 @@
 #include <utility>
 #include <math.h>
 #include <limits>
+#include <iostream>
 using namespace std;
 // (TODO ) adapt to new variable names in car.h
 
-firstLearner::firstLearner(int car_number,int point_voiture,vector<car> listcar,vector<int> ranking,vector<double> scores){
+firstLearner::firstLearner(int car_number,int point_voiture,vector<Car> listcar,vector<int> ranking,vector<double> scores){
     this->car_number=car_number;
     this->point_voiture= point_voiture;
     this->listcar=listcar;
@@ -19,15 +20,55 @@ firstLearner::firstLearner(int car_number,int point_voiture,vector<car> listcar,
         this->corrolations_scores.push_back(0);
     }
 }
+// Transform an object Car in vector
+std::vector<double> firstLearner::openCar(Car my_car){
+    std::vector<double> data;
+    data.push_back(my_car.r1);
+    data.push_back(my_car.d1);
+    data.push_back(my_car.r2);
+    data.push_back(my_car.d2);
+    data.push_back(my_car.D);
+    data.push_back(my_car.d);
+    for(int i=0;i< point_voiture;i++){
+
+       data.push_back((my_car.get_points())[i].first);
+       data.push_back((my_car.get_points())[i].second);
+    }
+
+    return data;
+}
+// Convert vector in car
+Car firstLearner::returnCar(std::vector<double> attributes){
+    Car my_car = Car();
+    my_car.r1 = attributes[0];
+    my_car.d1 = attributes[1];
+    my_car.r2 = attributes[2];
+    my_car.d2 = attributes[3];
+    my_car.D = attributes[4];
+    my_car.d = attributes[5];
+
+    for(int j = 0; j < point_voiture; j++){
+        my_car.angles_distances.push_back(pair<double, double> (attributes[6+2*j],attributes[7+2*j]));
+    }
+    return my_car;
+}
+// transform all cars to matrix
+void firstLearner::make_cars(){
+    for(int i = 0; i <car_number ; i++){
+        all_cars.push_back(openCar(listcar[i]));
+
+    }
+
+}
 
 void firstLearner::compute_corrolations_ranking(){
     // store les moyennes pour le calcul de la variance/ covariance et coeff de correlation
-    vector<double> param_mean(parameters_number);
+    vector<double> param_mean;
 
     // store la covariance non normalisée
-    vector<double> param_cov(parameters_number);
+    vector<double> param_cov;
     //store la variance des parametres non normalisée
-    vector<double> param_var(parameters_number);
+    vector<double> param_var;
     // store la moyenne et variance du ranking non normalisée
     double ranking_mean=0;
     double ranking_var=0;
@@ -35,58 +76,29 @@ void firstLearner::compute_corrolations_ranking(){
 
     // initialization
     for(int i = 0; i <parameters_number ; i++){
-        param_mean[i]=0;
-        param_cov[i]=0;
-        param_var[i]=0;
+        param_mean.push_back(0);
+        param_cov.push_back(0);
+        param_var.push_back(0);
     }
     // calcul des moyennes
     for(int i = 0; i <car_number ; i++){
         ranking_mean+=ranking[i];
-        param_mean[0]+=  listcar[i]->r1;
-        param_mean[1]+=  listcar[i]->r2;
-        param_mean[2]+=  listcar[i]->D;
-        param_mean[3]+=  listcar[i]->d1;
-        param_mean[4]+=  listcar[i]->d2;
-        param_mean[5]+=  listcar[i]->d;
-        //angles_distances  contients les points de carcasse différent de R1,R2
-        for(int j = 0; j <point_voiture ; j++){
-            param_mean[6+2*j]+=(listcar[i]->angles_distances)[j].first;  // first is angle, second is distance
-            param_mean[7+2*j]+=(listcar[i]->angles_distances)[j].second;
+        for(int j = 0; j <parameters_number ; j++){
+            param_mean[j]+=all_cars[i][j];
         }
     }
 
     ranking_mean/= car_number;
-    param_mean[0]/= car_number;
-    param_mean[1]/=  car_number;
-    param_mean[2]/=  car_number;
-    param_mean[3]/=  car_number;
-    param_mean[4]/=  car_number;
-    param_mean[5]/=  car_number;
-    for(int j = 0; j <point_voiture ; j++){
-        param_mean[6+2*j]/=car_number;
-        param_mean[7+2*j]/=car_number;
+    for(int j = 0; j <parameters_number ; j++){
+        param_mean[j]/= car_number;
     }
 
 
     // calcul des variances et covariances non normalisée, ( l'effet de la normalisation se compense lors du calcul des parametres de corrélation )
     for(int i = 0; i <car_number ; i++){
-        param_var[0]+=  (listcar[i]->r1-param_mean[0])*(listcar[i]->r1-param_mean[0]);
-        param_var[1]+=  (listcar[i]->r2-param_mean[1])*(listcar[i]->r2-param_mean[1]);
-        param_var[2]+=  (listcar[i]->D-param_mean[2])*(listcar[i]->D-param_mean[2]);
-        param_var[3]+=  (listcar[i]->d1-param_mean[3])*(listcar[i]->d1-param_mean[3]);
-        param_var[4]+=  (listcar[i]->d2-param_mean[4])*(listcar[i]->d2-param_mean[4]);
-        param_var[5]+=  (listcar[i]->d-param_mean[5])*(listcar[i]->d-param_mean[5]);
-        param_cov[0]+=  (listcar[i]->r1-param_mean[0])*(ranking[i]-ranking_mean) ;
-        param_cov[1]+=  (listcar[i]->r2-param_mean[1])*(ranking[i]-ranking_mean) ;
-        param_cov[2]+=  (listcar[i]->D-param_mean[2])*(ranking[i]-ranking_mean);
-        param_cov[3]+=  (listcar[i]->d1-param_mean[3])*(ranking[i]-ranking_mean);
-        param_cov[4]+=  (listcar[i]->d2-param_mean[4])*(ranking[i]-ranking_mean);
-        param_cov[5]+=  (listcar[i]->d-param_mean[5])*(ranking[i]-ranking_mean);
-        for(int j = 0; j <point_voiture ; j++){
-            param_var[6+2*j]+=( (listcar[i]->angles)[j].first -  param_mean[6+2*j] )*( (listcar[i]->angles)[j].first -  param_mean[6+2*j] );
-            param_var[7+2*j]+=( (listcar[i]->distances)[j].second -  param_mean[7+2*j] )*( (listcar[i]->distances)[j].second -  param_mean[7+2*j] );
-            param_cov[6+2*j]+=( (listcar[i]->angles)[j].first -  param_mean[6+2*j] )*(ranking[i]-ranking_mean);
-            param_cov[7+2*j]+=( (listcar[i]->distances)[j].second -  param_mean[7+2*j] )*(ranking[i]-ranking_mean);
+        for(int j = 0; j <parameters_number ; j++){
+            param_var[j]+=( all_cars[i][j] -  param_mean[j] )*( all_cars[i][j] -  param_mean[j] );
+            param_cov[j]+=( all_cars[i][j] -  param_mean[j] )*(ranking[i]-ranking_mean);
         }
         ranking_var+=(ranking[i]-ranking_mean)* (ranking[i]-ranking_mean);
 
@@ -94,91 +106,75 @@ void firstLearner::compute_corrolations_ranking(){
 
     // calcul des coeff de corrélation
     for(int i = 0; i <parameters_number ; i++){
-        corrolations_ranking[i]= param_cov[i] /(   sqrt(param_var[i]*ranking_var)  ) ;
+        if( param_cov[i]==0){
+            corrolations_ranking[i]=0;
+        }
+        else{
+            corrolations_ranking[i]= param_cov[i] /(   sqrt(param_var[i]*ranking_var)  ) ;
+        }
     }
 
 }
 
 
 void firstLearner::compute_corrolations_scores(){
-        // store les moyennes pour le calcul de la variance/ covariance et coeff de correlation
-        vector<double> param_mean(parameters_number);
+    // store les moyennes pour le calcul de la variance/ covariance et coeff de correlation
+    vector<double> param_mean;
 
-        // store la covariance non normalisée
-        vector<double> param_cov(parameters_number);
-        //store la variance des parametres non normalisée
-        vector<double> param_var(parameters_number);
-        // store la moyenne et variance des scores non normalisée
-        double scores_mean=0;
-        double scores_var=0;
+    // store la covariance non normalisée
+    vector<double> param_cov;
+    //store la variance des parametres non normalisée
+    vector<double> param_var;
+    // store la moyenne et variance du score non normalisée
+    double scores_mean=0;
+    double scores_var=0;
 
 
-        // initialization
-        for(int i = 0; i <parameters_number ; i++){
-            scores_mean[i]=0;
-            param_cov[i]=0;
-            param_var[i]=0;
+    // initialization
+    for(int i = 0; i <parameters_number ; i++){
+        param_mean.push_back(0);
+        param_cov.push_back(0);
+        param_var.push_back(0);
+    }
+    // calcul des moyennes
+    for(int i = 0; i <car_number ; i++){
+        scores_mean+=scores[i];
+        for(int j = 0; j <parameters_number ; j++){
+            param_mean[j]+=all_cars[i][j];
         }
-        // calcul des moyennes
-        for(int i = 0; i <car_number ; i++){
-            scores_mean+=scores[i];
-            param_mean[0]+=  listcar[i]->r1;
-            param_mean[1]+=  listcar[i]->r2;
-            param_mean[2]+=  listcar[i]->D;
-            param_mean[3]+=  listcar[i]->d1;
-            param_mean[4]+=  listcar[i]->d2;
-            param_mean[5]+=  listcar[i]->d;
-            for(int j = 0; j <point_voiture ; j++){
-                param_mean[6+2*j]+=(listcar[i]->angles_distances)[j].first;  // first is angle, second is distance
-                param_mean[7+2*j]+=(listcar[i]->angles_distances)[j].second;
-            }
+    }
+
+    scores_mean/= car_number;
+    for(int j = 0; j <parameters_number ; j++){
+        param_mean[j]/= car_number;
+    }
+
+
+    // calcul des variances et covariances non normalisée, ( l'effet de la normalisation se compense lors du calcul des parametres de corrélation )
+    for(int i = 0; i <car_number ; i++){
+        for(int j = 0; j <parameters_number ; j++){
+            param_var[j]+=( all_cars[i][j] -  param_mean[j] )*( all_cars[i][j] -  param_mean[j] );
+            param_cov[j]+=( all_cars[i][j] -  param_mean[j] )*(scores[i]-scores_mean);
         }
+        scores_var+=(scores[i]-scores_mean)* (scores[i]-scores_mean);
 
-        scores_mean/= car_number;
-        param_mean[0]/= car_number;
-        param_mean[1]/=  car_number;
-        param_mean[2]/=  car_number;
-        param_mean[3]/=  car_number;
-        param_mean[4]/=  car_number;
-        param_mean[5]/=  car_number;
-        for(int j = 0; j <point_voiture ; j++){
-            param_mean[6+2*j]/=car_number;
-            param_mean[7+2*j]/=car_number;
+    }
+
+    // calcul des coeff de corrélation
+    for(int i = 0; i <parameters_number ; i++){
+        if( param_cov[i]==0){
+            corrolations_scores[i]=0;
         }
-
-
-        // calcul des variances et covariances non normalisée, ( l'effet de la normalisation se compense lors du calcul des parametres de corrélation )
-        for(int i = 0; i <car_number ; i++){
-            param_var[0]+=  (listcar[i]->r1-param_mean[0])*(listcar[i]->r1-param_mean[0]);
-            param_var[1]+=  (listcar[i]->r2-param_mean[1])*(listcar[i]->r2-param_mean[1]);
-            param_var[2]+=  (listcar[i]->D-param_mean[2])*(listcar[i]->D-param_mean[2]);
-            param_var[3]+=  (listcar[i]->d1-param_mean[3])*(listcar[i]->d1-param_mean[3]);
-            param_var[4]+=  (listcar[i]->d2-param_mean[4])*(listcar[i]->d2-param_mean[4]);
-            param_var[5]+=  (listcar[i]->d-param_mean[5])*(listcar[i]->d-param_mean[5]);
-            param_cov[0]+=  (listcar[i]->r1-param_mean[0])*((scores[i]-scores_mean);
-            param_cov[1]+=  (listcar[i]->r2-param_mean[1])*(scores[i]-scores_mean);
-            param_cov[2]+=  (listcar[i]->D-param_mean[2])*(scores[i]-scores_mean);
-            param_cov[3]+=  (listcar[i]->d1-param_mean[3])*(scores[i]-scores_mean);
-            param_cov[4]+=  (listcar[i]->d2-param_mean[4])*(scores[i]-scores_mean);
-            param_cov[5]+=  (listcar[i]->d-param_mean[5])*(scores[i]-scores_mean);
-            for(int j = 0; j <point_voiture ; j++){
-                param_var[6+2*j]+=( (listcar[i]->angles)[j].first -  param_mean[6+2*j] )*( (listcar[i]->angles)[j].first -  param_mean[6+2*j] );
-                param_var[7+2*j]+=( (listcar[i]->distances)[j].second -  param_mean[7+2*j] )*( (listcar[i]->distances)[j].second -  param_mean[7+2*j] );
-                param_cov[6+2*j]+=( (listcar[i]->angles)[j].first -  param_mean[6+2*j] )*(scores[i]-scores_mean);
-                param_cov[7+2*j]+=( (listcar[i]->distances)[j].second -  param_mean[7+2*j] )*(scores[i]-scores_mean);
-            }
-            scores_var+=(scores[i]-scores_mean)* (scores[i]-scores_mean);
-
-        }
-
-        // calcul des coeff de corrélation
-        for(int i = 0; i <parameters_number ; i++){
+        else{
             corrolations_scores[i]= param_cov[i] /(   sqrt(param_var[i]*scores_var)  ) ;
         }
+        //std::cout << corrolations_scores[i] << " " <<param_cov[i] << " " << param_var[i]  << std::endl;
+    }
+
 }
 
 
-car firstLearner:predict_ranking_car(){
+Car firstLearner::predict_ranking_car(){
     // store les valeurs min et max apparus de chaque parametres
     vector<double> param_min(parameters_number);
     vector<double> param_max(parameters_number);
@@ -192,59 +188,20 @@ car firstLearner:predict_ranking_car(){
         new_car[i]=0;
     }
     for(int i = 0; i <car_number ; i++){
-        if(param_min[0] > listcar[i]->r1) {
-           param_min[0] = listcar[i]->r1;
-        }
-        if(param_min[1] > listcar[i]->r2) {
-           param_min[1] = listcar[i]->r2;
-        }
-        if(param_min[2] > listcar[i]->D) {
-           param_min[2] = listcar[i]->D;
-        }
-        if(param_min[3] > listcar[i]->d1) {
-           param_min[3] = listcar[i]->d1;
-        }
-        if(param_min[4] > listcar[i]->d2) {
-           param_min[4] = listcar[i]->d2;
-        }
-        if(param_min[5] > listcar[i]->d) {
-           param_min[5] = listcar[i]->d;
-        }
-
-        if(param_max[0] < listcar[i]->r1) {
-           param_max[0] = listcar[i]->r1;
-        }
-        if(param_max[1] < listcar[i]->r2) {
-           param_max[1] = listcar[i]->r2;
-        }
-        if(param_max[2] < listcar[i]->D) {
-           param_max[2] = listcar[i]->D;
-        }
-        if(param_max[3] < listcar[i]->d1) {
-           param_max[3] = listcar[i]->d1;
-        }
-        if(param_max[4] < listcar[i]->d2) {
-           param_max[4] = listcar[i]->d2;
-        }
-        if(param_max[5] < listcar[i]->d) {
-           param_max[5] = listcar[i]->d;
-        }
-
-
-        for(int j = 0; j <point_voiture ; j++){
-              // first is angle, second is distance
-            if(param_max[6+2*j] < (listcar[i]->angles_distances)[j].first) {
-               param_max[6+2*j] = (listcar[i]->angles_distances)[j].first;
+        for(int j = 0; j <parameters_number ; j++){
+            if(param_min[j] > all_cars[i][j]) {
+             param_min[j] = all_cars[i][j];
             }
-            if(param_max[7+2*j] < (listcar[i]->angles_distances)[j].second) {
-               param_max[7+2*j] = (listcar[i]->angles_distances)[j].second;
+            if(param_max[j] < all_cars[i][j]) {
+               param_max[j] = all_cars[i][j];
             }
+
         }
     }
     for(int i = 0; i <parameters_number ; i++){
         new_car[i]= param_max[i] + (corrolations_ranking[i]+1)/2   *(param_min[i]-param_max[i]);
     }
-    vector<pair <double,double>> nouvelle_carcasse(point_voiture);
+    vector<pair <double,double>> nouvelle_carcasse;
 
     for(int j = 0; j <point_voiture ; j++){
         nouvelle_carcasse.push_back(pair<double, double> (new_car[6+2*j],new_car[7+2*j]));
@@ -254,7 +211,51 @@ car firstLearner:predict_ranking_car(){
 
 
 
-    Car new_car(new_car[0],new_car[3],new_car[1],new_car[4],new_car[2],new_car[5],nouvelle_carcasse);
-    return new_car;
+    Car rank_car(new_car[0],new_car[3],new_car[1],new_car[4],new_car[2],new_car[5],nouvelle_carcasse);
+    return rank_car;
+
+}
+Car firstLearner::predict_scores_car(){
+    // store les valeurs min et max apparus de chaque parametres
+    vector<double> param_min(parameters_number);
+    vector<double> param_max(parameters_number);
+    vector<double> new_car(parameters_number);
+    double max_val=numeric_limits<double>::max();
+
+    for(int i = 0; i <parameters_number ; i++){
+
+        param_min[i]=max_val;
+        param_max[i]=-1;
+        new_car[i]=0;
+    }
+    for(int i = 0; i <car_number ; i++){
+        for(int j = 0; j <parameters_number ; j++){
+            if(param_min[j] > all_cars[i][j]) {
+             param_min[j] = all_cars[i][j];
+            }
+            if(param_max[j] < all_cars[i][j]) {
+               param_max[j] = all_cars[i][j];
+            }
+
+        }
+    }
+    //std::cout << parameters_number << std::endl;
+    for(int i = 0; i <parameters_number ; i++){
+        //std::cout << corrolations_scores[i] << std::endl;
+        new_car[i]= param_min[i] + (corrolations_scores[i]+1)/2   *(param_max[i]-param_min[i]);
+        //std::cout << new_car[i] << " " <<  param_min[i] << " " << param_max[i] << " "<<corrolations_scores[i]<<   std::endl;
+    }
+    vector<pair <double,double>> nouvelle_carcasse;
+
+    for(int j = 0; j <point_voiture ; j++){
+        nouvelle_carcasse.push_back(pair<double, double> (new_car[6+2*j],new_car[7+2*j]));
+
+    }
+
+
+
+
+    Car scores_car(new_car[0],new_car[3],new_car[1],new_car[4],new_car[2],new_car[5],nouvelle_carcasse);
+    return scores_car;
 
 }

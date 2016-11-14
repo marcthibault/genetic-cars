@@ -1,8 +1,7 @@
-#ifndef CAR_H
-#define CAR_H
+
 #include <vector>
 #include<utility>
-#include<car.h>
+#include "car.h"
 using namespace std;
 
 /* Load the a  vector of " cars "
@@ -25,9 +24,10 @@ using namespace std;
 class firstLearner
 {
 public :
-    vector<car> listcar;
+    vector<Car> listcar;
     vector<int> ranking;
     vector<double> scores;
+    vector<vector<double>> all_cars;
     int car_number; // number of cars that we will use for the prediction, should be the length of listcar,ranking and scores
     int parameters_number ; // number of car parameters used for corrolation = 6  +   2* (nombre de points ( sans compter R1 et R2))
     int point_voiture; // nombre de points différent (sans compter R1 et R2))
@@ -35,13 +35,16 @@ public :
     vector<double> corrolations_scores ;// corrolations with score
 
     //constructir
-    firstLearner(int car_number,int point_voiture,vector<car> listcar,vector<int> ranking,vector<double> scores);
+    firstLearner(int car_number,int point_voiture,vector<Car> listcar,vector<int> ranking,vector<double> scores);
 
     void compute_corrolations_ranking();
     void compute_corrolations_scores();
-    car predict_ranking_car();
-    car predict_score_car();
+    Car predict_ranking_car();
+    Car predict_scores_car();
+    std::vector<double> openCar(Car my_car);
+    Car returnCar(std::vector<double> attributes);
 
+    void make_cars();
 
 
 
