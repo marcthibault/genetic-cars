@@ -1,7 +1,7 @@
 #include <QCoreApplication>
 #include <Box2D/Box2D.h>
 #include <QApplication>
-// #include <QCoreApplication>
+#include <QCoreApplication>
 #include "car.h"
 #include "preprocessing.h"
 #include <iostream>
@@ -205,9 +205,9 @@ int main(int argc, char *argv[])
     distances.push_back(3);
     distances.push_back(7.4);
 
-    Car my_car1 = Car(2.3, 2, 4, 3, 3.5, 4, angles, distances);
-    Car my_car2 = Car(1.3, 5, 2, 1.3, 3.9, 2, angles, distances);
-    Car my_car3 = Car(2.9, 2.5, 3, 3, 1.5, 1, angles, distances);
+    Car my_car1 = Car();
+    Car my_car2 = Car();
+    Car my_car3 = Car();
 
     std::vector<Car> cars;
     cars.push_back(my_car1);

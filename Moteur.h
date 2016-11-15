@@ -15,7 +15,7 @@ public :
 
     void next();
 
-    std::vector<float[3]> getPosition();
+    std::vector<float*> getPosition();
 
 
 };

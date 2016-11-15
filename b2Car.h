@@ -1,6 +1,8 @@
 #ifndef B2CAR_H
 #define B2CAR_H
 
+#include "car.h"
+
 class b2Car
 {
 public:

@@ -21,17 +21,17 @@ std::vector<Car> preprocessing::matrixToCars(std::vector<std::vector<double>> ma
 // Transform an object Car in vector
 std::vector<double> preprocessing::openCar(Car my_car){
     std::vector<double> data;
-    data.push_back(my_car.rayon1);
-    data.push_back(my_car.rayon2);
-    data.push_back(my_car.L);
-    data.push_back(my_car.densiteRoue1);
-    data.push_back(my_car.densiteRoue2);
-    data.push_back(my_car.densiteVoiture);
-    for(int i=0;i<my_car.angles.size();i++){
-       data.push_back(my_car.angles[i]);
+    data.push_back(my_car.r1);
+    data.push_back(my_car.r2);
+    data.push_back(my_car.D);
+    data.push_back(my_car.d1);
+    data.push_back(my_car.d2);
+    data.push_back(my_car.d);
+    for(int i=0;i<my_car.angles_distances.size();i++){
+       data.push_back(my_car.angles_distances[i].first);
     }
-    for(int i=0;i<my_car.distances.size();i++){
-       data.push_back(my_car.distances[i]);
+    for(int i=0;i<my_car.angles_distances.size();i++){
+       data.push_back(my_car.angles_distances[i].second);
     }
     return data;
 }
@@ -39,16 +39,17 @@ std::vector<double> preprocessing::openCar(Car my_car){
 // Convert vector in car
 Car preprocessing::returnCar(std::vector<double> attributes){
     Car my_car = Car();
-    my_car.rayon1 = attributes[0];
-    my_car.rayon2 = attributes[1];
-    my_car.L = attributes[2];
-    my_car.densiteRoue1 = attributes[3];
-    my_car.densiteRoue2 = attributes[4];
-    my_car.densiteVoiture = attributes[5];
+    my_car.r1 = attributes[0];
+    my_car.r2 = attributes[1];
+    my_car.D = attributes[2];
+    my_car.d1 = attributes[3];
+    my_car.d2 = attributes[4];
+    my_car.D = attributes[5];
     int len = (attributes.size() - 6)/2;
     for(int i = 0; i < len; i++){
-        my_car.angles.push_back(attributes[6+i]);
-        my_car.distances.push_back(attributes[6+len+i]);
+        my_car.angles_distances.push_back(make_pair(attributes[6+i], attributes[6+len+i]));
+        //my_car.angles.push_back(attributes[6+i]);
+        //my_car.distances.push_back(attributes[6+len+i]);
     }
 }
 

@@ -1,8 +1,9 @@
 #ifndef CAR_H
 #define CAR_H
-#include<vector>
+#include <vector>
 
 using namespace std;
+
 class Car{
 public :
     int N;//Nombre de sommets du polygone
@@ -24,6 +25,8 @@ public :
     vector<pair<double, double> > get_points(); //renvoie les sommets du polygones (dans l'ordre trigonométrique)
     vector<pair<double,double> > get_points_xy(); //idem en coordonnées cartésiennes
     vector<pair<double, double> > get_points_without_wheels(); //renvoie les sommets du polygones (dans l'ordre trigonométrique) sans les roues
+
+    void printCar();
 
 };
 #endif // CAR_H
