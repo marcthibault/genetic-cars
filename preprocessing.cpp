@@ -52,14 +52,16 @@ double preprocessing::computeCoeff(int rank, int total){
        return 1./pow(2, (total-1));
     }
 }
+
 // Function that takes the ranking of the race and generates the coefficients
 std::vector<double> preprocessing::generateCoeff(int N){
-std::vector<double> coeffs;
+    std::vector<double> coeffs;
     for (int i=0;i<N;i++){
        coeffs.push_back(computeCoeff(i, N));
     }
     return coeffs;
 }
+
 // Compute the random evolution of the new cars
 void preprocessing::computeRandomVector(Car my_car,double V){
     std::vector<double> attributes = openCar(my_car);
@@ -75,7 +77,7 @@ void preprocessing::computeRandomVector(Car my_car,double V){
 
 // Sum of two cars
 std::vector<double> preprocessing::add(std::vector<double> a, std::vector<double> b){
-    std::vector<double> c;
+    std::vector<double> c(a.size(), 0.0);
     for (int i=0;i<a.size();i++){
         c[i] = a[i] + b[i];
     }
@@ -84,7 +86,7 @@ std::vector<double> preprocessing::add(std::vector<double> a, std::vector<double
 
 //Multiply car with a scalar
 std::vector<double> preprocessing::multiply(std::vector<double> car, double x){
-    std::vector<double> c;
+    std::vector<double> c(car.size(), 0.0);
     for (int i=0;i<car.size();i++){
         c[i] = x * car[i];
     }
