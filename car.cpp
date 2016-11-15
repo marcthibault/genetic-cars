@@ -63,8 +63,8 @@ vector<int> Car::get_wheels_index(){
 }
 
 bool Car::violate_constraint(double angle){
-    for (int i=0;i<N-2;i++){
-        if (angle==std::get<0>(angles_distances[i])) {return true;}
+    for (auto a_d : angles_distances){
+        if (angle==std::get<0>(a_d)) {return true;}
     }
     return false;
 }
