@@ -181,8 +181,8 @@ std::vector<std::vector<double>> preprocessing::CarsToMatrix(std::vector<std::pa
     }
 }
 
-int preprocessing::selectParent(std::vector<double> & distances) {
-    for(std::vector<double>::iterator it = output.begin(); it != output.end(); ++it){
+pair<int,int> preprocessing::selectParent(std::vector<double> & distances) {
+    for(std::vector<double>::iterator it = distances.begin(); it != distances.end(); ++it){
 
     }
 }
