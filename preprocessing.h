@@ -2,6 +2,7 @@
 #define PREPROCESSING_H
 
 #include "car.h"
+#include <utility> //std::pair
 #include <vector>
 
 
@@ -21,6 +22,7 @@ public:
     Car generateCar(std::vector<Car> ranking);
     Car generateRandomCar(std::vector<double> means, std::vector<double> variances);
     void printVector(std::vector<double> vec);
+    std::vector<std::vector<double>> CarsToMatrix(std::vector<std::pair<Car,double>> output);
 };
 
 #endif // PREPROCESSING_H
