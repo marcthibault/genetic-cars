@@ -1,25 +1,14 @@
-<<<<<<< HEAD
 
-=======
->>>>>>> ad4fded0963851d4b8fdaf1a9c54704ff2afb8a5
 #include "preprocessing.h"
 #include "car.h"
 #include <math.h>
 #include <vector>
 #include <random>
 #include <iostream>
-<<<<<<< HEAD
-
-    preprocessing::preprocessing()
-    {
-=======
->>>>>>> ad4fded0963851d4b8fdaf1a9c54704ff2afb8a5
 
 preprocessing::preprocessing(){
 }
 
-<<<<<<< HEAD
-=======
 // Transform an object Car in array
 
 std::vector<double> preprocessing::openCar(Car my_car){
@@ -55,7 +44,6 @@ Car preprocessing::returnCar(std::vector<double> attributes){
         return my_car;
 }
 
->>>>>>> ad4fded0963851d4b8fdaf1a9c54704ff2afb8a5
 // Transform an object Car in vector
 std::vector<double> preprocessing::openCar(Car my_car){
     std::vector<double> data;
@@ -90,18 +78,6 @@ Car preprocessing::returnCar(std::vector<double> attributes){
     }
 }
 
-<<<<<<< HEAD
-=======
-// Compute the coeff associated to the ranking of the car
-    double preprocessing::computeCoeff(int rank, int total){
-        if(rank < total){
-           return 1./pow(2, rank);
-        } else {
-           return 1./pow(2, (total-1));
-        }
-}
->>>>>>> ad4fded0963851d4b8fdaf1a9c54704ff2afb8a5
-
 // Compute the coeff associated to the ranking of the car
 double preprocessing::computeCoeff(int rank, int total){
     rank++; // nb 0 is 1st
@@ -111,24 +87,16 @@ double preprocessing::computeCoeff(int rank, int total){
        return 1./pow(2, (total-1));
     }
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> ad4fded0963851d4b8fdaf1a9c54704ff2afb8a5
 // Function that takes the ranking of the race and generates the coefficients
 std::vector<double> preprocessing::generateCoeff(int N){
 std::vector<double> coeffs;
     for (int i=0;i<N;i++){
        coeffs.push_back(computeCoeff(i, N));
     }
-<<<<<<< HEAD
     return coeffs;
 }
 
-
-=======
-    return coeffs;
-}
 
 // Compute the random evolution of the new cars
 void preprocessing::computeRandomVector(Car my_car){
@@ -143,7 +111,6 @@ void preprocessing::computeRandomVector(Car my_car){
     return coeffs;
 }
 
->>>>>>> ad4fded0963851d4b8fdaf1a9c54704ff2afb8a5
 // Compute the random evolution of the new cars
 //- We can imagine a model where the variability decreases (like temperature)
 void preprocessing::computeRandomVector(Car my_car,double V){
@@ -171,10 +138,7 @@ std::vector<double> preprocessing::add(std::vector<double> a, std::vector<double
     for (int i=0;i<a.size();i++){
         c.push_back(a[i] + b[i]);
     }
-<<<<<<< HEAD
 
-//Multiply car with a scalar
-=======
 // Multiply car with a scalar
 std::vector<double> preprocessing::multiply(std::vector<double> car, double x){
     c= std::vector<double>;
@@ -183,30 +147,7 @@ std::vector<double> preprocessing::multiply(std::vector<double> car, double x){
     }
     return c;
 }
-    //Multiply car with a scalar
->>>>>>> ad4fded0963851d4b8fdaf1a9c54704ff2afb8a5
-std::vector<double> preprocessing::multiply(std::vector<double> car, double x){
-    std::vector<double> c;
-    for (int i=0;i<car.size();i++){
-        c.push_back( x * car[i]);
-    }
 
-<<<<<<< HEAD
-=======
-}
-// Compute a new car with the ranking of the race
-Car preprocessing::generateCar(std::vector<Car> ranking){
-    coeffs = generateCoeff(ranking.size);
-    std::vector<double> preCar = new std::vector<double>();
-    for(int i=0;i<car.size;i++) {
-        preCar = add( preCar , multiply(open(car[i]),coeffs[i]) )
-
-    }
-    Car car = close(preCar);
-    return car;
-}
-
->>>>>>> ad4fded0963851d4b8fdaf1a9c54704ff2afb8a5
 // Compute a new car with the ranking of the race
 Car preprocessing::generateCar(std::vector<Car> ranking){
     std::vector<double> coeffs = generateCoeff(ranking.size());
