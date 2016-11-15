@@ -4,6 +4,7 @@
 #include <math.h>
 #include <limits>
 #include <iostream>
+
 using namespace std;
 // (TODO ) adapt to new variable names in car.h
 
@@ -257,5 +258,129 @@ Car firstLearner::predict_scores_car(){
 
     Car scores_car(new_car[0],new_car[3],new_car[1],new_car[4],new_car[2],new_car[5],nouvelle_carcasse);
     return scores_car;
+
+}
+//this class uses ranking
+Car firstLearner::predict_naive_Bayes_car(int fraction){
+    int winner_number=car_number/fraction;
+    // we devide the group of cars into winners(best ranking) and non winners
+    //are_winners=1 if correspending car is winner
+    vector<int> are_winners;
+    for(int i=0;i<car_number;i++){
+        if( ranking[i]<winner_number){
+            are_winners.push_back(1);
+        }
+        else{
+            are_winners.push_back(0);
+        }
+    }
+    // store les valeurs min et max apparus de chaque parametres
+    int category_number=10; //categories are portion * i with i=0 to i=10
+    vector<double> param_min(parameters_number);
+    vector<double> param_max(parameters_number);
+    vector<double> new_car(parameters_number);
+    double max_val=numeric_limits<double>::max();
+    for(int i = 0; i <parameters_number ; i++){
+        new_car[i]=0;
+        param_min[i]=max_val;
+        param_max[i]=-1;
+    }
+    for(int i = 0; i <car_number ; i++){
+        for(int j = 0; j <parameters_number ; j++){
+            if(param_min[j] > all_cars[i][j]) {
+             param_min[j] = all_cars[i][j];
+            }
+            if(param_max[j] < all_cars[i][j]) {
+               param_max[j] = all_cars[i][j];
+            }
+
+        }
+    }
+    vector<double> portion;
+
+
+    for(int j = 0; j <parameters_number ; j++){
+         portion.push_back( (param_max[j]-param_min[j])/category_number );
+
+    }
+
+    // représente une matrice de taille parameters_number * (category_number+1)
+    // stocke le nombre d'apparition des features (catégorique et non continu) et de leurs proba
+    //cond => conditionellement à l'appartenance de la voiture au groupes des voitures gagnantes
+    vector<vector<double>> count;
+    vector<vector<double>> proba;
+    vector<vector<double>> cond_proba;
+    vector<vector<double>> cond_count;
+    // initialization
+    for(int j = 0; j <parameters_number ; j++){
+        vector<double> current1;
+        vector<double> current2;
+        vector<double> current3;
+        vector<double> current4;
+        for(int k = 0; k <category_number +1 ; k++){
+            current1.push_back(0);current2.push_back(0);current3.push_back(0);current4.push_back(0);
+        }
+        count.push_back(current1);
+        proba.push_back(current2);
+        cond_proba.push_back(current3);
+        cond_count.push_back(current4);
+    }
+    // remplissage de count
+    int k;
+    for(int i = 0; i <car_number ; i++){
+        for(int j = 0; j <parameters_number ; j++){
+            if(portion[j]==0){
+                k=0;
+            }
+            else{
+                k=floor((all_cars[i][j]-  param_min[j])/  portion[j]) ;
+            }
+            count[j][k]+=1;
+            if (are_winners[i]==1){
+            cond_count[j][k]+=1;
+            }
+        }
+    }
+
+    // remplissage des proba
+     for(int j = 0; j <parameters_number ; j++){
+         for(int k = 0; k <category_number +1 ; k++){
+             proba[j][k]=count[j][k]/car_number;
+             cond_proba[j][k]=cond_count[j][k]/winner_number;
+         }
+     }
+     int p;
+     int max;
+    vector<double> bayes_portions;
+    for(int j = 0; j <parameters_number ; j++){
+        p=0;
+        max=0;
+        for(int k = 0; k <category_number +1 ; k++){
+            if(proba[j][k]!=0){
+                if((cond_proba[j][k]/proba[j][k])>max){
+                  max=(cond_proba[j][k]/proba[j][k]);
+                  p=k;
+                }
+            }
+        }
+        bayes_portions.push_back(p);
+
+    }
+
+    for(int i = 0; i <parameters_number ; i++){
+
+        new_car[i]= param_min[i] + portion[i]*bayes_portions[i];
+
+    }
+    vector<pair <double,double>> nouvelle_carcasse;
+
+    for(int j = 0; j <point_voiture ; j++){
+        nouvelle_carcasse.push_back(pair<double, double> (new_car[6+2*j],new_car[7+2*j]));
+
+    }
+
+    Car bayes_car(new_car[0],new_car[3],new_car[1],new_car[4],new_car[2],new_car[5],nouvelle_carcasse);
+    return bayes_car;
+
 
 }

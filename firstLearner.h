@@ -36,16 +36,18 @@ public :
 
     //constructir
     firstLearner(int car_number,int point_voiture,vector<Car> listcar,vector<int> ranking,vector<double> scores);
-
+    //corrolations
     void compute_corrolations_ranking();
     void compute_corrolations_scores();
     Car predict_ranking_car();
     Car predict_scores_car();
+    //data processing
     std::vector<double> openCar(Car my_car);
     Car returnCar(std::vector<double> attributes);
 
     void make_cars();
-
+    //Naive bayes
+    Car predict_naive_Bayes_car(int fraction); // fraction = fraction des voitures qui sera considéré  comme gagnant ( ex: fraction =3 =>les 1/3  premier voitures sont gagnant )
 
 
 
