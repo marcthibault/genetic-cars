@@ -14,9 +14,11 @@
 #include <QPointF>
 #include <QApplication>
 #include <QLCDNumber>
-#include <QPushButton>
 #include <QTimer>
 #include <QGridLayout>
+#include <QVector>
+#include <QPen>
+#include <QBrush>
 
 
 
@@ -27,6 +29,8 @@ class windows : public QWidget
     public:
     windows();
     windows(int dt);
+    void dessiner(QVector<QPointF> v,QPen pen=QPen(Qt::red),QBrush brush=QBrush(Qt::blue));
+
 
     public slots:
     void run();
