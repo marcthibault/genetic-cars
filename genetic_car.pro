@@ -54,7 +54,8 @@ SOURCES += main.cpp \
     Floor.cpp \
     car.cpp \
     preprocessing.cpp \
-    windows.cpp
+    windows.cpp \
+    firstLearner.cpp
 
 
 HEADERS += \
