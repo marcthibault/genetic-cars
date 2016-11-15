@@ -9,6 +9,7 @@ using namespace std;
 
 class Car{
 public :
+    int N;//Nombre de sommets du polygone
     double r1; //rayon roue avant
     double d1; //densité roue avant
     double r2; //rayon roue arrière
@@ -18,7 +19,7 @@ public :
     vector<pair<double, double> > angles_distances; //coordonées polaires des points A3,...AN
 
     Car(); //constructeur (random)
-    Car(double r1, double d1, double r2, double d2, double D, double d, vector<pair<double, double> > angles_distances); //constructeur
+    Car(int N, double r1, double d1, double r2, double d2, double D, double d, vector<pair<double, double> > angles_distances); //constructeur
 
     double get_angle_wheel(); //cf schéma, angle théta
     vector<int> get_wheels_index(); //renvoie les positions des roues avant et arrière dans le polygone

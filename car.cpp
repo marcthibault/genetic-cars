@@ -13,10 +13,11 @@ static double r_max = 1;//Rayon maximal
 static double D_max = 4;//Distance entre les deux roues maximale
 static double d_max = 1;//Densité maximale
 static double distance_max = 6;//Distance des points au centre maximale
-static int N=8;//Nombre de sommets du polygone
+
 
 
 Car::Car(){
+    N=8;
     srand(time(0));
     r1 = (double) rand() / RAND_MAX * r_max;
     r2 = (double) rand() / RAND_MAX * r_max;
@@ -38,8 +39,8 @@ Car::Car(){
     //}
 }
 
-Car::Car(double r1, double d1, double r2, double d2, double D, double d, vector<pair<double, double> > angles_distances)
-    : r1(r1), d1(d1), r2(r2), d2(d2), D(D), d(d), angles_distances(angles_distances){
+Car::Car(int n,double r1, double d1, double r2, double d2, double D, double d, vector<pair<double, double> > angles_distances)
+    : N(n),r1(r1), d1(d1), r2(r2), d2(d2), D(D), d(d), angles_distances(angles_distances){
     //double theta = get_angle_wheel();
     //if(violate_constraint(M_PI+theta)||violate_constraint(2*M_PI-theta)) {
         //std::cout<<"Raise Exception: angle constraint violated !" <<std::endl;
