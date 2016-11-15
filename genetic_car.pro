@@ -53,6 +53,8 @@ SOURCES += main.cpp \
     Moteur.cpp \
     b2Car.cpp \
     Floor.cpp \
+    car.cpp \
+    preprocessing.cpp \
     windows.cpp
 
 HEADERS += \
@@ -106,13 +108,6 @@ HEADERS += \
     Moteur.h \
     b2Car.h \
     Floor.h \
-    windows.h
-=======
-    car.cpp \
-    preprocessing.cpp
-
-HEADERS += \
-    car.h \
     preprocessing.h \
-    car.h
->>>>>>> Gen-team
+    car.h \
+    windows.h
