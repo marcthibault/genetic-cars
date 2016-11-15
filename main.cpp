@@ -2,6 +2,7 @@
 #include "car.h"
 #include "preprocessing.h"
 #include <iostream>
+#include <utility>
 
 
 int main(int argc, char *argv[])
@@ -11,6 +12,7 @@ int main(int argc, char *argv[])
 
 // Tester la génération de nouvelles voitures à partir d'un ranking
     std::vector<double> angles;
+    std::vector<Car> ranking;
     angles.push_back(3);
     angles.push_back(7);
     std::vector<double> distances;
@@ -33,7 +35,6 @@ int main(int argc, char *argv[])
     preprocessor.printVector(preprocessor.openCar(my_car1));
     preprocessor.printVector(preprocessor.openCar(my_car2));
     preprocessor.printVector(preprocessor.openCar(my_car3));
-    preprocessor.printVector(preprocessor.openCar(preprocessor.generateCar(cars)));
 
 // Tester la génération d'une voiture aléatoire
     std::vector<double> means;
@@ -66,4 +67,10 @@ int main(int argc, char *argv[])
     std::cout << "Fin de l'affichage" << std::endl;
     // return a.exec();
     return 0;
+
+}
+
+std::vector<Car> preprocessing::geneticMutation(std::vector< std::pair<Car,double>> cars){
+    std::vector<Car> ans;
+    return ans;
 }
