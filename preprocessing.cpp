@@ -86,23 +86,31 @@ std::vector<double> preprocessing::add(std::vector<double> a, std::vector<double
 }
 
 //Multiply car with a scalar
-std::vector<double> preprocessing::multiply(std::vector<double> car, double x){
+std::vector<double> preprocessing::multiply(std::vector<double> lambda, std::vector<double> car){
     std::vector<double> c(car.size(), 0.0);
     for (int i=0;i<car.size();i++){
-        c.push_back( x * car[i]);
+        c.push_back( lambda[i] * car[i]);
     }
     return c;
 }
 
-// Compute a new car with the ranking of the race
-Car preprocessing::generateCar(std::vector<Car> ranking){
-    std::vector<double> coeffs = generateCoeff(ranking.size());
-    std::vector<double> preCar(preprocessing::openCar(ranking[0]).size(),0.0);
-    for(int i=0;i<ranking.size();i++) {
-        preCar = preprocessing::add( preCar , preprocessing::multiply(preprocessing::openCar(ranking[i]),coeffs[i]) );
+// Generate the random coefficients for one car
+std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<double>> cars){
+    std::vector<vector<double>> ans;
+    return ans;
+}
+
+// Generate all the new cars
+std::vector<vector<double>> preprocessing::generate(std::vector<vector<double>> cars){
+    std::vector<vector<double>> newCars;
+    for (int i=0;i<cars.size();i++){
+        newCars[i] = vector<double>(cars[0].size());
+        vector<vector<double>> coeffs = preprocessing::generateCoeffs(cars);
+        for (int j=0;j<cars.size();j++){
+            newCars[i] = preprocessing::add( newCars[i] , preprocessing::multiply( cars[j],coeffs[j] ) );
+        }
     }
-    Car car = preprocessing::returnCar(preCar);
-    return car;
+    return newCars;
 }
 
 // Compute a random car

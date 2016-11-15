@@ -34,7 +34,6 @@ int main(int argc, char *argv[])
     preprocessor.printVector(preprocessor.openCar(my_car1));
     preprocessor.printVector(preprocessor.openCar(my_car2));
     preprocessor.printVector(preprocessor.openCar(my_car3));
-    preprocessor.printVector(preprocessor.openCar(preprocessor.generateCar(cars)));
 
 // Tester la génération d'une voiture aléatoire
     std::vector<double> means;
