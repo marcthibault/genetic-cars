@@ -9,7 +9,6 @@
 preprocessing::preprocessing(){
 }
 
-
 // Transform an object Car in vector
 std::vector<double> preprocessing::openCar(Car my_car){
     std::vector<double> data;
@@ -44,7 +43,6 @@ Car preprocessing::returnCar(std::vector<double> attributes){
     }
 }
 
-
 // Compute the coeff associated to the ranking of the car
 double preprocessing::computeCoeff(int rank, int total){
     rank++; // nb 0 is 1st
@@ -55,7 +53,6 @@ double preprocessing::computeCoeff(int rank, int total){
     }
 }
 
-
 // Function that takes the ranking of the race and generates the coefficients
 std::vector<double> preprocessing::generateCoeff(int N){
 std::vector<double> coeffs;
@@ -64,7 +61,6 @@ std::vector<double> coeffs;
     }
     return coeffs;
 }
-
 
 // Compute the random evolution of the new cars
 //- We can imagine a model where the variability decreases (like temperature)
@@ -79,13 +75,6 @@ void preprocessing::computeRandomVector(Car my_car,double V){
         attributes[i] += variation;
     }
 }
-// Sum of two cars
-std::vector<double> preprocessing::add(std::vector<double> a, std::vector<double> b){
-    c= std::vector<double>;
-    for (int i=0;i<a.size;i++){
-        c[i] = a[i] + b[i];
-    }
-    return c;
 
 // Sum of two cars
 std::vector<double> preprocessing::add(std::vector<double> a, std::vector<double> b){
@@ -93,6 +82,7 @@ std::vector<double> preprocessing::add(std::vector<double> a, std::vector<double
     for (int i=0;i<a.size();i++){
         c.push_back(a[i] + b[i]);
     }
+    return c;
 }
 
 //Multiply car with a scalar
@@ -101,6 +91,7 @@ std::vector<double> preprocessing::multiply(std::vector<double> car, double x){
     for (int i=0;i<car.size();i++){
         c.push_back( x * car[i]);
     }
+    return c;
 }
 
 // Compute a new car with the ranking of the race
