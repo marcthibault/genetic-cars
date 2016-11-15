@@ -34,6 +34,8 @@ class windows : public QWidget
     bool a;
     int step;
     static const int default_step=40;
+    QGraphicsScene* m_scene;
+    QGraphicsView* m_view;
 };
 
 

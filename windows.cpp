@@ -18,6 +18,12 @@ windows::windows() : QWidget()
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(afficher()));
 
     QObject::connect(m_bouton, SIGNAL(clicked()), this, SLOT(run()));
+
+    m_scene = new QGraphicsScene(this);
+    m_scene->setSceneRect(0,0,500,500);
+    m_view = new QGraphicsView(m_scene,this);
+    m_view->move(100,100);
+    m_view->show();
 }
 
 windows::windows(int dt) : QWidget()
@@ -38,6 +44,13 @@ windows::windows(int dt) : QWidget()
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(afficher()));
 
     QObject::connect(m_bouton, SIGNAL(clicked()), this, SLOT(run()));
+
+    m_scene = new QGraphicsScene(this);
+    m_scene->setSceneRect(0,0,500,500);
+    m_view = new QGraphicsView(m_scene,this);
+    m_view->move(100,100);
+    m_view->show();
+
 }
 
 void windows::run()
@@ -50,15 +63,14 @@ void windows::run()
 
 void windows::afficher()
 {
+    /*QGraphicsScene* m_scene = new QGraphicsScene(this);
+    m_scene->setSceneRect(0,0,100,100);
+    QGraphicsView* m_view = new QGraphicsView(m_scene,this);
+    m_view->move(100,100);
+    m_view->show();*/
+    m_scene->clear();
     if(a){
-        QGraphicsScene* m_scene = new QGraphicsScene(this);
 
-        m_scene->setSceneRect(0,0,100,100);
-
-        QGraphicsView* m_view = new QGraphicsView(m_scene,this);
-        m_view->move(100,100);
-
-        m_view->show();
 
         QVector<QPointF> vect;
           vect.append(QPointF(10.0,10.0));
@@ -70,14 +82,6 @@ void windows::afficher()
         a=false;
     }
     else{
-        QGraphicsScene* m_scene = new QGraphicsScene(this);
-
-        m_scene->setSceneRect(0,0,100,100);
-
-        QGraphicsView* m_view = new QGraphicsView(m_scene,this);
-        m_view->move(100,100);
-
-        m_view->show();
 
         QVector<QPointF> vect;
           vect.append(QPointF(10.0,10.0));
