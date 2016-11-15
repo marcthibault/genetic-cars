@@ -4,10 +4,20 @@
 #include <math.h>
 #include <vector>
 #include <random>
+#include <stdlib.h>
 #include <iostream>
 #include <time.h>
 
 preprocessing::preprocessing(){
+
+}
+
+std::vector<Car> preprocessing::matrixToCars(std::vector<std::vector<double>> matrix){
+    std::vector<Car> cars;
+    for(int i=0;i<matrix.size();i++){
+        cars.push_back(returnCar(matrix[i]));
+    }
+    return cars;
 }
 
 // Transform an object Car in vector
@@ -56,7 +66,7 @@ double preprocessing::computeCoeff(int rank, int total){
 
 // Function that takes the ranking of the race and generates the coefficients
 std::vector<double> preprocessing::generateCoeff(int N){
-std::vector<double> coeffs;
+    std::vector<double> coeffs;
     for (int i=0;i<N;i++){
        coeffs.push_back(computeCoeff(i, N));
     }
@@ -65,21 +75,39 @@ std::vector<double> coeffs;
 
 // Compute the random evolution of the new cars
 //- We can imagine a model where the variability decreases (like temperature)
-void preprocessing::computeRandomVector(Car my_car,double V){
-    std::vector<double> attributes = openCar(my_car);
+std::vector<double> preprocessing::generateRandomVector(std::vector<std::vector<double>> cars){
+    std::vector<double> means;
+    std::vector<double> variances;
+    std::vector<double> noise;
     std::default_random_engine generator;
-    for(int i=0;i<attributes.size();i++){
-        //std::normal_distribution<double> distribution(5.0,2.0);
-        double variance = attributes[i]/10;
-        std::normal_distribution<double> distribution(0,variance);
-        double variation = distribution(generator);
-        attributes[i] += variation;
+    // pour chaque paramètre i (sauf la distance parcourue)
+    for(int i=0;i<(cars[0].size()-1);i++){
+        // calcul de la moyenne
+       double m = 0;
+        // pour chaque voiture j
+       for(int j=0;j<cars.size();j++){
+           m += cars[j][i];
+       }
+       m /= cars.size();
+       double var = 0;
+       for(int j=0;j<cars.size();j++){
+           var += (cars[j][i] - m)*(cars[j][i] - m);
+       }
+       var /= cars.size();
+       variances.push_back(var);
     }
+    // pour chaque param i
+    for(int i=0;i<(cars[0].size()-1);i++){
+        std::normal_distribution<double> distribution(0,variances[i]);
+        double param = distribution(generator);
+        noise.push_back(param);
+    }
+    return noise;
 }
 
 // Sum of two cars
 std::vector<double> preprocessing::add(std::vector<double> a, std::vector<double> b){
-    std::vector<double> c;
+    std::vector<double> c(a.size(), 0.0);
     for (int i=0;i<a.size();i++){
         c.push_back(a[i] + b[i]);
     }
@@ -87,23 +115,39 @@ std::vector<double> preprocessing::add(std::vector<double> a, std::vector<double
 }
 
 //Multiply car with a scalar
-std::vector<double> preprocessing::multiply(std::vector<double> car, double x){
-    std::vector<double> c;
+std::vector<double> preprocessing::multiply(std::vector<double> lambda, std::vector<double> car){
+    std::vector<double> c(car.size(), 0.0);
     for (int i=0;i<car.size();i++){
-        c.push_back( x * car[i]);
+        c.push_back( lambda[i] * car[i]);
     }
     return c;
 }
 
-// Compute a new car with the ranking of the race
-Car preprocessing::generateCar(std::vector<Car> ranking){
-    std::vector<double> coeffs = generateCoeff(ranking.size());
-    std::vector<double> preCar(preprocessing::openCar(ranking[0]).size(),0.0);
-    for(int i=0;i<ranking.size();i++) {
-        preCar = preprocessing::add( preCar , preprocessing::multiply(preprocessing::openCar(ranking[i]),coeffs[i]) );
+// Generate the random coefficients for one car
+std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<double>> cars){
+    std::vector<vector<double>> ans;
+    for (int i=0;i<cars.size();i++){
+        std::vector<double> tmp;
+        for (int j =0;j<cars[0].size()-1;j++){
+            tmp.push_back(1.0);
+        }
+        ans.push_back(tmp);
     }
-    Car car = preprocessing::returnCar(preCar);
-    return car;
+    return ans;
+}
+
+// Generate all the new cars
+std::vector<vector<double>> preprocessing::generate(std::vector<vector<double>> cars){
+    std::vector<vector<double>> newCars;
+    for (int i=0;i<cars.size();i++){
+        vector<vector<double>> coeffs = preprocessing::generateCoeffs(cars);
+        vector<double> tmp(cars[0].size(),0);
+        for (int j=0;j<cars.size();j++){
+            tmp  = preprocessing::add( tmp , preprocessing::multiply( cars[j],coeffs[j] ) );
+        }
+        newCars.push_back(tmp);
+    }
+    return newCars;
 }
 
 // Compute a random car
@@ -136,7 +180,18 @@ void preprocessing::printVector(std::vector<double> vec){
     std::cout << ' ' << std::endl;
 }
 
+// Transforme l'output de la course en matrice
+std::vector<std::vector<double>> preprocessing::CarsToMatrix(std::vector<std::pair<Car,double>> output){
+    std::vector<std::vector<double>> M;
+    for(std::vector<std::pair<Car,double>>::iterator it = output.begin(); it != output.end(); ++it){
+        std::vector<double> data;
+        data = openCar((*it).first);
+        data.push_back((*it).second);
+        M.push_back(data);
+    }
+}
 
+<<<<<<< HEAD
 // Calcule les coefficients pour la combinaison linéaire des voitures
 // première stratégie : on choisit deux parents parmis la population proportionnellement à leur performance (=distance parcourue)
 //
@@ -187,4 +242,38 @@ std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<dou
         }
     }
     return coeffs;
+=======
+pair<int,int> preprocessing::selectParents(std::vector<double> & distances) {
+    double distanceTotale = 0.0;
+    double distanceCourante = 0.0;
+    for(std::vector<double>::iterator it = distances.begin(); it != distances.end(); ++it){
+        distanceTotale += *it;
+    }
+     std::cout << "distanceTotale = " << distanceTotale << endl;
+    std::vector<double>::iterator it2 = distances.begin();
+    int n1 = -1;
+    int n2 = -1;
+    int cpt = 0;
+    srand(time(NULL));
+    double r1 = ((double) rand() / (RAND_MAX));
+    std::cout << "r1 = " << r1 << endl;
+    double r2 = ((double) rand() / (RAND_MAX));
+    std::cout << "r2 = " << r2 << endl;
+    while(n1 < 0 || n2 < 0){
+        distanceCourante += (*it2 / distanceTotale);
+        std::cout << "distanceCourante = " << distanceCourante << endl;
+        if(r1 <= distanceCourante && n1 < 0){
+            n1 = cpt;
+        }
+        if(r2 <= distanceCourante && n2 < 0){
+            n2 = cpt;
+        }
+        cpt++;
+        it2++;
+    }
+    if(n1 < n2)
+        return make_pair(n1,n2);
+    else
+        return make_pair(n2,n1);
+>>>>>>> 3dc0990b823b067c443eaef9829279d94845541d
 }
