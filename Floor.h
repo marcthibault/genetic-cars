@@ -2,7 +2,7 @@
 #define FLOOR_H
 
 
-class Floor
+class Floor // classe représentant le sol box2d
 {
 public:
     Floor();
