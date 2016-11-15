@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
     matrix.push_back(car3);
 
     //test de generateCoeffs
-    vector<vector<double>> coeffs = preprocessor.generateCoeffs(matrix);
+    vector<vector<double>> coeffs = preprocessor.generateCoeffsRandom(matrix);
     preprocessor.printVector(matrix[0]);
     preprocessor.printVector(coeffs[0]);
 

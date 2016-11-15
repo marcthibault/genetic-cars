@@ -124,7 +124,7 @@ std::vector<double> preprocessing::multiply(std::vector<double> lambda, std::vec
 }
 
 // Generate the random coefficients for one car
-std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<double>> cars){
+std::vector<vector<double>> preprocessing::generateCoeffsRandom(std::vector<vector<double>> cars){
     std::vector<vector<double>> ans;
     for (int i=0;i<cars.size();i++){
         std::vector<double> tmp;
@@ -140,7 +140,7 @@ std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<dou
 std::vector<vector<double>> preprocessing::generate(std::vector<vector<double>> cars){
     std::vector<vector<double>> newCars;
     for (int i=0;i<cars.size();i++){
-        vector<vector<double>> coeffs = preprocessing::generateCoeffs(cars);
+        vector<vector<double>> coeffs = preprocessing::generateCoeffsRandom(cars);
         vector<double> tmp(cars[0].size(),0);
         for (int j=0;j<cars.size();j++){
             tmp  = preprocessing::add( tmp , preprocessing::multiply( cars[j],coeffs[j] ) );
@@ -191,15 +191,11 @@ std::vector<std::vector<double>> preprocessing::CarsToMatrix(std::vector<std::pa
     }
 }
 
-<<<<<<< HEAD
 // Calcule les coefficients pour la combinaison linéaire des voitures
 // première stratégie : on choisit deux parents parmis la population proportionnellement à leur performance (=distance parcourue)
 //
 
 // Tirage avec remise de deux parents, proportionnellement à la distance parcourue
-std::pair<int,int> preprocessing::selectParents(std::vector<double> distances){
-
-}
 
 std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<double>> carsAndDistance){
     std::vector<vector<double>> coeffs;
@@ -210,7 +206,7 @@ std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<dou
     }
 
     std::pair<int,int> parents;
-    parents = selectParents(distances)
+    parents = selectParents(distances);
 
     std::vector<double> coeff1;
     std::vector<double> coeff2;
@@ -242,7 +238,8 @@ std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<dou
         }
     }
     return coeffs;
-=======
+}
+
 pair<int,int> preprocessing::selectParents(std::vector<double> & distances) {
     double distanceTotale = 0.0;
     double distanceCourante = 0.0;
@@ -275,5 +272,4 @@ pair<int,int> preprocessing::selectParents(std::vector<double> & distances) {
         return make_pair(n1,n2);
     else
         return make_pair(n2,n1);
->>>>>>> 3dc0990b823b067c443eaef9829279d94845541d
 }
