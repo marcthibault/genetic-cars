@@ -22,7 +22,7 @@ windows::windows() : QWidget()
 
 windows::windows(int dt) : QWidget()
 {
-    setFixedSize(100, 50);
+    setFixedSize(1000, 500);
 
     m_bouton = new QPushButton("Run !", this);
     m_bouton->setFont(QFont("Comic Sans MS", 14));
@@ -55,7 +55,7 @@ void windows::afficher()
         a=false;
     }
     else{
-        setFixedSize(100, 60);
+        setFixedSize(1000, 500);
         a=true;
     }
     timer->start(step);
