@@ -34,9 +34,11 @@ void Car::printCar(){
     std::cout << "densiteRoue2 = " << this->densiteRoue2 << std::endl;
     std::cout << "densiteVoiture = " << this->densiteVoiture << std::endl;
     for (std::vector<double>::iterator it = this->angles.begin() ; it != this->angles.end(); ++it){
+       std::cout << "Angle = ";
        std::cout << *it << std::endl;
     }
     for (std::vector<double>::iterator it = this->distances.begin() ; it != this->distances.end(); ++it){
-      std::cout << *it << std::endl;
+        std::cout << "Distance = ";
+        std::cout << *it << std::endl;
     }
  }
