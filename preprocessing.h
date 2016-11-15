@@ -14,7 +14,6 @@ public:
     std::vector<Car> matrixToCars(std::vector<std::vector<double>> matrix);
     Car returnCar(std::vector<double> attributes);
     double computeCoeff(int rank, int total);
-    void generateRandomVector(Car my_car, double V);
     std::vector<double> generateRandomVector(std::vector<std::vector<double>> cars);
     std::vector<double> generateCoeff(int N);
     std::vector<double> add(std::vector<double> a, std::vector<double> b);
