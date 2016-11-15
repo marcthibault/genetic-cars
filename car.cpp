@@ -9,11 +9,11 @@
 
 using namespace std;
 
+//C'est quoi ça ? (Mabille ?)
 static double r_max = 1;//Rayon maximal
 static double D_max = 4;//Distance entre les deux roues maximale
 static double d_max = 1;//Densité maximale
 static double distance_max = 6;//Distance des points au centre maximale
-
 
 
 Car::Car(){

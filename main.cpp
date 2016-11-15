@@ -1,6 +1,15 @@
 #include <QCoreApplication>
-#include <iostream>
 #include <Box2D/Box2D.h>
+#include <QApplication>
+#include "car.h"
+#include <iostream>
+#include "windows.h"
+#include <QWidget>
+#include <QTimer>
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QPolygonF>
+#include <QPointF>
 
 
 
@@ -14,10 +23,12 @@ int main(int argc, char *argv[])
     std::cout<<theta<<std::endl;
     //Jeep->get_points_xy();
 
+  //TEST UI TEAM
 
-    std::cout << "Enfin !!" <<std::endl;
-    std::cout << "Hello World" << std::endl;
-
+    QApplication app(argc, argv);
+    windows fenetre(500);
+    fenetre.show();
+    /*return */app.exec();
 
   //TEST PHY TEAM
 
@@ -177,3 +188,4 @@ int main(int argc, char *argv[])
     }
     return 0;
 }
+//test

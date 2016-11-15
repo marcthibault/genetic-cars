@@ -1,13 +1,6 @@
-QT += core
-QT -= gui
+QT += widgets
 
-CONFIG += c++11
 
-TARGET = genetic_car
-CONFIG += console
-CONFIG -= app_bundle
-
-TEMPLATE = app
 
 SOURCES += main.cpp \
     Box2D/Collision/Shapes/b2ChainShape.cpp \
@@ -58,7 +51,8 @@ SOURCES += main.cpp \
     Box2D/Rope/b2Rope.cpp \
     Moteur.cpp \
     b2Car.cpp \
-    Floor.cpp
+    Floor.cpp \
+    windows.cpp
 
 HEADERS += \
     Box2D/Collision/Shapes/b2ChainShape.h \
@@ -92,7 +86,7 @@ HEADERS += \
     Box2D/Dynamics/Joints/b2GearJoint.h \
     Box2D/Dynamics/Joints/b2Joint.h \
     Box2D/Dynamics/Joints/b2MotorJoint.h \
-    Box2D/Dynamics/Joints/b2MouseJoint.h \
+    Box2D/Dynamics/archi.cppJoints/b2MouseJoint.h \
     Box2D/Dynamics/Joints/b2PrismaticJoint.h \
     Box2D/Dynamics/Joints/b2PulleyJoint.h \
     Box2D/Dynamics/Joints/b2RevoluteJoint.h \
@@ -110,4 +104,5 @@ HEADERS += \
     Box2D/Box2D.h \
     Moteur.h \
     b2Car.h \
-    Floor.h
+    Floor.h \
+    windows.h
