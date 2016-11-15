@@ -20,7 +20,7 @@ windows::windows() : QWidget()
     QObject::connect(m_bouton, SIGNAL(clicked()), this, SLOT(run()));
 
     m_scene = new QGraphicsScene(this);
-    m_scene->setSceneRect(0,0,500,500);
+    m_scene->setSceneRect(0,0,500,300);
     m_view = new QGraphicsView(m_scene,this);
     m_view->move(100,100);
     m_view->show();
@@ -46,7 +46,7 @@ windows::windows(int dt) : QWidget()
     QObject::connect(m_bouton, SIGNAL(clicked()), this, SLOT(run()));
 
     m_scene = new QGraphicsScene(this);
-    m_scene->setSceneRect(0,0,500,500);
+    m_scene->setSceneRect(0,0,500,300);
     m_view = new QGraphicsView(m_scene,this);
     m_view->move(100,100);
     m_view->show();
