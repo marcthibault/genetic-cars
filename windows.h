@@ -7,6 +7,7 @@
 #include <QCoreApplication>
 #include <QWidget>
 #include <QPushButton>
+#include <QTimer>
 
 
 
@@ -17,12 +18,18 @@ class windows : public QWidget
 
     public:
     windows();
+    windows(int dt);
 
     public slots:
     void run();
+    void afficher();
 
     private:
     QPushButton *m_bouton;
+    QTimer *timer;
+    bool a;
+    int step;
+    static const int default_step=40;
 };
 
 

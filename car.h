@@ -6,7 +6,7 @@
 #include<utility>
 
 using namespace std;
-
+/*
 class Car{
 public :
     double r1; //rayon roue avant
@@ -22,5 +22,5 @@ public :
     Car(double r1, double d1, double r2, double d2, double D, double d, vector<pair<double, double> > angles_distances);
 
 };
-
+*/
 #endif // CAR_H

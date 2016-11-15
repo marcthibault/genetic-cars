@@ -4,7 +4,7 @@
 #include <iostream>
 
 using namespace std;
-
+/*
 
 Car(double rayon1, double rayon2, double L, double yO, double densiteRoue1, double densiteRoue2,
     double densiteVoiture, vector<double> angles, vector<double> distances)
@@ -14,3 +14,4 @@ Car(double rayon1, double rayon2, double L, double yO, double densiteRoue1, doub
 Car::Car(){
 
 }
+*/
