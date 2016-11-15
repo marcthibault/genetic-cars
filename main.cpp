@@ -28,9 +28,14 @@ int main(int argc, char *argv[])
     cars.push_back(my_car2);
     cars.push_back(my_car3);
 
+    std::vector<std::pair<Car,double>> pairs;
+    pairs.push_back(std::pair<Car,double>(my_car1,1));
+    pairs.push_back(std::pair<Car,double>(my_car2,2));
+    pairs.push_back(std::pair<Car,double>(my_car3,3));
+
     preprocessing preprocessor = preprocessing();
 
-    std::cout << "Impression de trois voitures générées à partir d'un ranking" << std::endl;
+    std::cout << "Impression de trois voitures" << std::endl;
 
     preprocessor.printVector(preprocessor.openCar(my_car1));
     preprocessor.printVector(preprocessor.openCar(my_car2));
@@ -62,7 +67,38 @@ int main(int argc, char *argv[])
 
     std::cout << "Impression d'une voiture générée aléatoirement" << std::endl;
     Car car = preprocessor.generateRandomCar(means, variances);
-    car.printCar();
+
+    std::cout<< "Affichage des coefficients" << std::endl;
+
+    //vector<vector<double>> matrix2 = preprocessor.CarsToMatrix(pairs);
+
+    // création d'une matrice de test
+    vector<vector<double>> matrix;
+    vector<double> car1;
+    car1.push_back(10);
+    car1.push_back(20);
+    car1.push_back(20);
+    vector<double> car2;
+    car2.push_back(15);
+    car2.push_back(25);
+    car2.push_back(25);
+    vector<double> car3;
+    car3.push_back(5);
+    car3.push_back(30);
+    car3.push_back(30);
+    matrix.push_back(car1);
+    matrix.push_back(car2);
+    matrix.push_back(car3);
+
+    //test de generateCoeffs
+    vector<vector<double>> coeffs = preprocessor.generateCoeffs(matrix);
+    preprocessor.printVector(matrix[0]);
+    preprocessor.printVector(coeffs[0]);
+
+    //test de generate
+    std::vector<vector<double>> newCars = preprocessor.generate(matrix);
+    preprocessor.printVector(newCars[0]);
+    std::cout << newCars.size() << std::endl;
 
     std::cout << "Fin de l'affichage" << std::endl;
     // return a.exec();
