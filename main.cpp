@@ -37,6 +37,17 @@ int main(int argc, char *argv[])
 
     std::cout << "Impression de trois voitures" << std::endl;
 
+    std::vector<std::pair<Car,double>> output;
+    output.push_back(make_pair(my_car1,1.0));
+    output.push_back(make_pair(my_car2,2.0));
+    output.push_back(make_pair(my_car3,3.0));
+
+    std::vector<std::vector<double>> Matrix;
+
+    preprocessing preprocessor = preprocessing();
+
+    Matrix = preprocessor.CarsToMatrix(output);
+
     preprocessor.printVector(preprocessor.openCar(my_car1));
     preprocessor.printVector(preprocessor.openCar(my_car2));
     preprocessor.printVector(preprocessor.openCar(my_car3));

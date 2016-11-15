@@ -73,18 +73,6 @@ std::vector<double> preprocessing::generateCoeff(int N){
 
 // Compute the random evolution of the new cars
 //- We can imagine a model where the variability decreases (like temperature)
-void preprocessing::generateRandomVector(Car my_car,double V){
-    std::vector<double> attributes = openCar(my_car);
-    std::default_random_engine generator;
-    for(int i=0;i<attributes.size();i++){
-        //std::normal_distribution<double> distribution(5.0,2.0);
-        double variance = attributes[i]/10;
-        std::normal_distribution<double> distribution(0,variance);
-        double variation = distribution(generator);
-        attributes[i] += variation;
-    }
-}
-
 std::vector<double> preprocessing::generateRandomVector(std::vector<std::vector<double>> cars){
     std::vector<double> means;
     std::vector<double> variances;
@@ -198,5 +186,11 @@ std::vector<std::vector<double>> preprocessing::CarsToMatrix(std::vector<std::pa
         data = openCar((*it).first);
         data.push_back((*it).second);
         M.push_back(data);
+    }
+}
+
+pair<int,int> preprocessing::selectParent(std::vector<double> & distances) {
+    for(std::vector<double>::iterator it = distances.begin(); it != distances.end(); ++it){
+
     }
 }
