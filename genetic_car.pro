@@ -3,6 +3,7 @@ QT += widgets
 
 
 SOURCES += main.cpp \
+<<<<<<< HEAD
     Box2D/Collision/Shapes/b2ChainShape.cpp \
     Box2D/Collision/Shapes/b2CircleShape.cpp \
     Box2D/Collision/Shapes/b2EdgeShape.cpp \
@@ -106,3 +107,12 @@ HEADERS += \
     b2Car.h \
     Floor.h \
     windows.h
+=======
+    car.cpp \
+    preprocessing.cpp
+
+HEADERS += \
+    car.h \
+    preprocessing.h \
+    car.h
+>>>>>>> Gen-team
