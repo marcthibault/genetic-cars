@@ -74,10 +74,11 @@ void windows::afficher()
 
         QVector<QPointF> vect;
           vect.append(QPointF(10.0,10.0));
-          vect.append(QPointF(10.0,50.0));
-          vect.append(QPointF(50.0,30.0));
-          vect.append(QPointF(40.0,50.0));
-          vect.append(QPointF(20.0,10.0));
+          vect.append(QPointF(10.0,100.0));
+          vect.append(QPointF(200.0,150.0));
+          vect.append(QPointF(300.0,100.0));
+          vect.append(QPointF(200.0,50.0));
+          vect.append(QPointF(150.0,10.0));
           m_scene->addPolygon(QPolygonF(vect));
         a=false;
     }
