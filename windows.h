@@ -53,6 +53,9 @@ class windows : public QWidget
     int m_Timer_value;
     QTimer* m_timer;
     bool validStart;
+
+
+    int avancement;
 };
 
 

@@ -1,4 +1,4 @@
-#include "windows.h"
+﻿#include "windows.h"
 
 windows::windows() : QWidget()
 {
@@ -24,6 +24,8 @@ windows::windows() : QWidget()
     m_view = new QGraphicsView(m_scene,this);
     m_view->move(100,100);
     m_view->show();
+
+    avancement=0;
 }
 
 windows::windows(int dt) : QWidget()
@@ -52,6 +54,7 @@ windows::windows(int dt) : QWidget()
     m_view->move(100,100);
     m_view->show();
 
+
     this->m_LCD = new QLCDNumber(5, this);
 
     // Gestion du layout pour le placement des boutons
@@ -70,6 +73,8 @@ windows::windows(int dt) : QWidget()
     // On connecte les différents signaux et slots
     connect(this->m_bouton, SIGNAL(clicked()), this, SLOT(run()));
     connect(this->m_reset, SIGNAL(clicked()), this, SLOT(reset()));
+
+    avancement=0;
 
 }
 
@@ -92,14 +97,15 @@ void windows::afficher()
 
 
         QVector<QPointF> vect;
-        vect.append(QPointF(10.0,10.0));
-        vect.append(QPointF(10.0,100.0));
-        vect.append(QPointF(200.0,150.0));
-        vect.append(QPointF(300.0,100.0));
-        vect.append(QPointF(200.0,50.0));
-        vect.append(QPointF(150.0,10.0));
+        vect.append(QPointF(avancement+10.0,10.0));
+        vect.append(QPointF(avancement+10.0,100.0));
+        vect.append(QPointF(avancement+200.0,150.0));
+        vect.append(QPointF(avancement+300.0,100.0));
+        vect.append(QPointF(avancement+200.0,50.0));
+        vect.append(QPointF(avancement+150.0,10.0));
         dessiner(vect);
-        a=false;
+        //a=false;
+        avancement++;
     }
     else{
 

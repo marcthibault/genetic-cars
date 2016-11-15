@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 
 
 
-    windows fenetre(500);
+    windows fenetre(50);
     fenetre.show();
     return app.exec();
 }
