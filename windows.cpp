@@ -30,9 +30,10 @@ windows::windows(int dt) : QWidget()
 {
     setFixedSize(1000, 500);
 
+
     m_bouton = new QPushButton("Run !", this);
     m_bouton->setFont(QFont("Comic Sans MS", 14));
-    m_bouton->move(0, 0);
+    m_reset = new QPushButton("Stop", this);
 
     step=dt;
 
@@ -51,12 +52,31 @@ windows::windows(int dt) : QWidget()
     m_view->move(100,100);
     m_view->show();
 
+    this->m_LCD = new QLCDNumber(5, this);
+
+    // Gestion du layout pour le placement des boutons
+    QGridLayout *layout = new QGridLayout();
+    layout->addWidget(m_bouton,0,1);
+    layout->addWidget(m_reset,0,2);
+    layout->addWidget(m_LCD,1,0);
+    layout->addWidget(m_view,0,0);
+    this->setLayout(layout);
+
+    this->m_Timer_value=0;
+    this->m_timer = new QTimer(this);
+    connect(this->m_timer, SIGNAL(timeout()), this, SLOT(update()));
+    this->m_timer->setInterval(100);
+
+    // On connecte les différents signaux et slots
+    connect(this->m_bouton, SIGNAL(clicked()), this, SLOT(run()));
+    connect(this->m_reset, SIGNAL(clicked()), this, SLOT(reset()));
+
 }
 
 void windows::run()
 {
 
-
+    this->m_timer->start();
     timer->start(0);
 
 }
@@ -92,4 +112,18 @@ void windows::afficher()
         a=true;
     }
     timer->start(step);
+}
+
+void windows::reset()
+{
+    this->m_timer->stop();
+    m_Timer_value=0;
+    m_LCD->display(m_Timer_value);
+    timer->stop();
+}
+
+void windows::update()
+{
+    m_Timer_value++;
+    m_LCD->display(m_Timer_value);
 }

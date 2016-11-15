@@ -12,7 +12,11 @@
 #include <QGraphicsView>
 #include <QPolygonF>
 #include <QPointF>
-
+#include <QApplication>
+#include <QLCDNumber>
+#include <QPushButton>
+#include <QTimer>
+#include <QGridLayout>
 
 
 
@@ -27,6 +31,8 @@ class windows : public QWidget
     public slots:
     void run();
     void afficher();
+    void reset();
+    void update();
 
     private:
     QPushButton *m_bouton;
@@ -36,6 +42,13 @@ class windows : public QWidget
     static const int default_step=40;
     QGraphicsScene* m_scene;
     QGraphicsView* m_view;
+    QPushButton *m_reset;
+
+    // Pour le chrono
+    QLCDNumber* m_LCD;
+    int m_Timer_value;
+    QTimer* m_timer;
+    bool validStart;
 };
 
 
