@@ -61,6 +61,10 @@ void windows::run()
 
 }
 
+void windows::dessiner(QVector<QPointF> v){
+    m_scene->addPolygon(QPolygonF(v));
+}
+
 void windows::afficher()
 {
     /*QGraphicsScene* m_scene = new QGraphicsScene(this);
@@ -73,13 +77,13 @@ void windows::afficher()
 
 
         QVector<QPointF> vect;
-          vect.append(QPointF(10.0,10.0));
-          vect.append(QPointF(10.0,100.0));
-          vect.append(QPointF(200.0,150.0));
-          vect.append(QPointF(300.0,100.0));
-          vect.append(QPointF(200.0,50.0));
-          vect.append(QPointF(150.0,10.0));
-          m_scene->addPolygon(QPolygonF(vect));
+        vect.append(QPointF(10.0,10.0));
+        vect.append(QPointF(10.0,100.0));
+        vect.append(QPointF(200.0,150.0));
+        vect.append(QPointF(300.0,100.0));
+        vect.append(QPointF(200.0,50.0));
+        vect.append(QPointF(150.0,10.0));
+        dessiner(vect);
         a=false;
     }
     else{

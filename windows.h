@@ -12,6 +12,7 @@
 #include <QGraphicsView>
 #include <QPolygonF>
 #include <QPointF>
+#include <QVector>
 
 
 
@@ -23,6 +24,8 @@ class windows : public QWidget
     public:
     windows();
     windows(int dt);
+    void dessiner(QVector<QPointF> v);
+
 
     public slots:
     void run();
