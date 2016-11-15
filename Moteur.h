@@ -3,6 +3,8 @@
 
 #include<Box2D/Box2D.h>
 #include <vector>
+#include "b2Car.h"
+#include "Floor.h"
 
 class Moteur{
 private :
