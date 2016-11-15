@@ -1,4 +1,4 @@
-#include <QCoreApplication>
+// #include <QCoreApplication>
 #include "car.h"
 #include "preprocessing.h"
 #include <iostream>
@@ -6,11 +6,10 @@
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
+//  QCoreApplication a(argc, argv);
     std::cout << "Starting..." << std::endl;
 
 // Tester la génération de nouvelles voitures à partir d'un ranking
-    /*
     std::vector<double> angles;
     angles.push_back(3);
     angles.push_back(7);
@@ -29,13 +28,15 @@ int main(int argc, char *argv[])
 
     preprocessing preprocessor = preprocessing();
 
+    std::cout << "Impression de trois voitures générées à partir d'un ranking" << std::endl;
+
     preprocessor.printVector(preprocessor.openCar(my_car1));
     preprocessor.printVector(preprocessor.openCar(my_car2));
     preprocessor.printVector(preprocessor.openCar(my_car3));
-    preprocessor.printVector(preprocessor.openCar(preprocessor.generateCar(cars)));*/
+    preprocessor.printVector(preprocessor.openCar(preprocessor.generateCar(cars)));
 
 // Tester la génération d'une voiture aléatoire
- /*   std::vector<double> means;
+    std::vector<double> means;
     std::vector<double> variances;
     means.push_back(1.6);
     means.push_back(2.6);
@@ -57,11 +58,10 @@ int main(int argc, char *argv[])
     variances.push_back(0.1);
     variances.push_back(0.1);
     variances.push_back(0.1);
+    std::cout << "Impression d'une voiture générée aléatoirement" << std::endl;
+
     Car car = preprocessor.generateRandomCar(means, variances);
     car.printCar();
-*/
-
-
 
     std::cout << "Fin de l'affichage" << std::endl;
     // return a.exec();
