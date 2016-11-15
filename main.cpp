@@ -58,8 +58,8 @@ int main(int argc, char *argv[])
     variances.push_back(0.1);
     variances.push_back(0.1);
     variances.push_back(0.1);
-    std::cout << "Impression d'une voiture générée aléatoirement" << std::endl;
 
+    std::cout << "Impression d'une voiture générée aléatoirement" << std::endl;
     Car car = preprocessor.generateRandomCar(means, variances);
     car.printCar();
 
