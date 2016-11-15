@@ -2,6 +2,7 @@
 #include "car.h"
 #include "preprocessing.h"
 #include <iostream>
+#include <utility>
 
 
 int main(int argc, char *argv[])
@@ -66,4 +67,10 @@ int main(int argc, char *argv[])
     std::cout << "Fin de l'affichage" << std::endl;
     // return a.exec();
     return 0;
+
+}
+
+std::vector<Car> preprocessing::geneticMutation(std::vector< std::pair<Car,double>> cars){
+    std::vector<Car> ans;
+    return ans;
 }

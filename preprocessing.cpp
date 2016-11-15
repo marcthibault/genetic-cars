@@ -192,5 +192,3 @@ std::vector<std::vector<double>> preprocessing::CarsToMatrix(std::vector<std::pa
         M.push_back(data);
     }
 }
-
-
