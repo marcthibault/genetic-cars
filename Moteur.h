@@ -7,7 +7,7 @@
 class Moteur{
 private :
     b2World* world;
-    std::vector<Car>* b2Cars;
+    std::vector<b2Car> b2CarsList;
     Floor* b2floor;
 
 public :
