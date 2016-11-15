@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
     std::vector<double> distances;
     distances.push_back(3);
     distances.push_back(7.4);
+    distances.push_back(9.14);
 
     Car my_car1 = Car(2.3, 2, 4, 3, 3.5, 4, angles, distances);
     Car my_car2 = Car(1.3, 5, 2, 1.3, 3.9, 2, angles, distances);
@@ -28,17 +29,23 @@ int main(int argc, char *argv[])
     cars.push_back(my_car2);
     cars.push_back(my_car3);
 
+    /*
     std::vector<std::pair<Car,double>> output;
     output.push_back(make_pair(my_car1,1.0));
     output.push_back(make_pair(my_car2,2.0));
     output.push_back(make_pair(my_car3,3.0));
+    */
 
-    std::vector<std::vector<double>> Matrix;
+    // std::vector<std::vector<double>> Matrix;
 
     preprocessing preprocessor = preprocessing();
 
-    Matrix = preprocessor.CarsToMatrix(output);
+    // Matrix = preprocessor.CarsToMatrix(output);
 
+
+    pair<int,int> parents = preprocessor.selectParents(distances);
+    std::cout << "Papa = " << parents.first << std::endl;
+    std::cout << "Maman = " << parents.second << std::endl;
 
 
     std::cout << "Impression de trois voitures générées à partir d'un ranking" << std::endl;

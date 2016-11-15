@@ -4,7 +4,9 @@
 #include <math.h>
 #include <vector>
 #include <random>
+#include <stdlib.h>
 #include <iostream>
+#include <time.h>
 
 preprocessing::preprocessing(){
 
@@ -181,8 +183,36 @@ std::vector<std::vector<double>> preprocessing::CarsToMatrix(std::vector<std::pa
     }
 }
 
-pair<int,int> preprocessing::selectParent(std::vector<double> & distances) {
+pair<int,int> preprocessing::selectParents(std::vector<double> & distances) {
+    double distanceTotale = 0.0;
+    double distanceCourante = 0.0;
     for(std::vector<double>::iterator it = distances.begin(); it != distances.end(); ++it){
-
+        distanceTotale += *it;
     }
+     std::cout << "distanceTotale = " << distanceTotale << endl;
+    std::vector<double>::iterator it2 = distances.begin();
+    int n1 = -1;
+    int n2 = -1;
+    int cpt = 0;
+    srand(time(NULL));
+    double r1 = ((double) rand() / (RAND_MAX));
+    std::cout << "r1 = " << r1 << endl;
+    double r2 = ((double) rand() / (RAND_MAX));
+    std::cout << "r2 = " << r2 << endl;
+    while(n1 < 0 || n2 < 0){
+        distanceCourante += (*it2 / distanceTotale);
+        std::cout << "distanceCourante = " << distanceCourante << endl;
+        if(r1 <= distanceCourante && n1 < 0){
+            n1 = cpt;
+        }
+        if(r2 <= distanceCourante && n2 < 0){
+            n2 = cpt;
+        }
+        cpt++;
+        it2++;
+    }
+    if(n1 < n2)
+        return make_pair(n1,n2);
+    else
+        return make_pair(n2,n1);
 }
