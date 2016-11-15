@@ -126,6 +126,13 @@ std::vector<double> preprocessing::multiply(std::vector<double> lambda, std::vec
 // Generate the random coefficients for one car
 std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<double>> cars){
     std::vector<vector<double>> ans;
+    for (int i=0;i<cars.size();i++){
+        std::vector<double> tmp;
+        for (int j =0;j<cars[0].size()-1;j++){
+            tmp.push_back(1.0);
+        }
+        ans.push_back(tmp);
+    }
     return ans;
 }
 
@@ -133,11 +140,12 @@ std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<dou
 std::vector<vector<double>> preprocessing::generate(std::vector<vector<double>> cars){
     std::vector<vector<double>> newCars;
     for (int i=0;i<cars.size();i++){
-        newCars[i] = vector<double>(cars[0].size());
         vector<vector<double>> coeffs = preprocessing::generateCoeffs(cars);
+        vector<double> tmp(cars[0].size(),0);
         for (int j=0;j<cars.size();j++){
-            newCars[i] = preprocessing::add( newCars[i] , preprocessing::multiply( cars[j],coeffs[j] ) );
+            tmp  = preprocessing::add( tmp , preprocessing::multiply( cars[j],coeffs[j] ) );
         }
+        newCars.push_back(tmp);
     }
     return newCars;
 }
