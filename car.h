@@ -17,9 +17,6 @@ public :
     double d; //densité de la carrosserie
     vector<pair<double, double> > angles_distances; //coordonées polaires des points A3,...AN
 
-    bool ordered;
-    struct { bool operator()(pair<double, double> a, pair<double, double> b) { return std::get<0>(a),std::get<0>(b); } } pair_inf;
-
     Car(); //constructeur (random)
     Car(double r1, double d1, double r2, double d2, double D, double d, vector<pair<double, double> > angles_distances); //constructeur
 
@@ -28,6 +25,7 @@ public :
     bool violate_constraint(double candidate,vector<double> S); //renvoie True si l'angle candidat existe déjà dans S!
 
     vector<pair<double, double> > get_points(); //renvoie les sommets du polygones (dans l'ordre trigonométrique)
+    vector<pair<double, double> > get_points_without_wheels(); //renvoie les sommets du polygones (dans l'ordre trigonométrique) sans les roues
 
 };
 

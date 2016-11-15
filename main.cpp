@@ -50,8 +50,9 @@ int main(int argc, char *argv[])
     Car test_result=testlearner1.predict_scores_car();
 
     std::cout << test_result.r2 << std::endl;
-    std::cout << (test_result.get_points())[3].first << std::endl;
-
-
+    for (int j=0;j<point_voiture;j++){
+        std::cout << (test_result.get_points_without_wheels())[j].first << std::endl;
+        std::cout << (test_result.get_points_without_wheels())[j].second << std::endl;
+    }
     return 0;
 }

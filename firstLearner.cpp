@@ -31,8 +31,8 @@ std::vector<double> firstLearner::openCar(Car my_car){
     data.push_back(my_car.d);
     for(int i=0;i< point_voiture;i++){
 
-       data.push_back((my_car.get_points())[i].first);
-       data.push_back((my_car.get_points())[i].second);
+       data.push_back((my_car.get_points_without_wheels())[i].first);
+       data.push_back((my_car.get_points_without_wheels())[i].second);
     }
 
     return data;

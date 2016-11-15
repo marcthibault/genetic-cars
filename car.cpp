@@ -1,3 +1,4 @@
+#define _USE_MATH_DEFINES //Necessaire pour utiliser la constante M_PI
 #include "car.h"
 #include <vector>
 #include <utility>
@@ -13,6 +14,7 @@ static double D_max = 4;//Distance entre les deux roues maximale
 static double d_max = 1;//Densité maximale
 static double distance_max = 6;//Distance des points au centre maximale
 static int N=8;//Nombre de sommets du polygone
+
 
 Car::Car(){
     srand(time(0));
@@ -30,7 +32,6 @@ Car::Car(){
         double distance = (double) rand() / RAND_MAX * distance_max;
         angles_distances.push_back(pair<double, double> (angle,distance));
     }
-    ordered = false;
 }
 
 Car::Car(double r1, double d1, double r2, double d2, double D, double d, vector<pair<double, double> > angles_distances)
@@ -43,8 +44,8 @@ double Car::get_angle_wheel(){ //angle théta (cf schéma)
 vector<int> Car::get_wheels_index(){
     double theta = get_angle_wheel();
     vector<int> wheels_index;
-    wheels_index[0] = 0; //roue arrière
-    wheels_index[1] = 7; //roue avant
+    wheels_index.push_back(0); //roue arrière
+    wheels_index.push_back(7); //roue avant
     for(int i=0;i<N-2;i++){
         if (std::get<0>(angles_distances[i])<M_PI+theta) wheels_index[0]++;
         else if (std::get<0>(angles_distances[i])>2*M_PI-theta) wheels_index[1]--;
@@ -61,18 +62,19 @@ bool Car::violate_constraint(double candidate,vector<double> S){
 
 
 vector<pair<double, double> > Car::get_points(){ //renvoie les sommets du polygones (dans l'ordre trigonométrique)
-    vector<pair<double,double>> points;
+    vector<pair<double,double>> points = vector<pair<double,double>>(angles_distances);
 
     double theta=this->get_angle_wheel();
     double RC=sqrt(r1*r1+(D/2)*(D/2)); //distance from center C to wheel R
     points.push_back(pair<double,double>(M_PI+theta, RC));
     points.push_back(pair<double,double>(2*M_PI-theta, RC));
 
-    for (auto a_d : angles_distances){points.push_back(a_d);}
-
     std::sort(points.begin(),points.end());
     return points;
 }
 
-
-Car Jeep= Car();
+vector<pair<double, double> > Car::get_points_without_wheels(){
+    vector<pair<double,double>> points = vector<pair<double,double>>(angles_distances);
+    std::sort(points.begin(),points.end());
+    return points;
+}
