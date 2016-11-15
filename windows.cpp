@@ -51,11 +51,39 @@ void windows::run()
 void windows::afficher()
 {
     if(a){
-        setFixedSize(1000, 600);
+        QGraphicsScene* m_scene = new QGraphicsScene(this);
+
+        m_scene->setSceneRect(0,0,100,100);
+
+        QGraphicsView* m_view = new QGraphicsView(m_scene,this);
+        m_view->move(100,100);
+
+        m_view->show();
+
+        QVector<QPointF> vect;
+          vect.append(QPointF(10.0,10.0));
+          vect.append(QPointF(10.0,50.0));
+          vect.append(QPointF(50.0,30.0));
+          vect.append(QPointF(40.0,50.0));
+          vect.append(QPointF(20.0,10.0));
+          m_scene->addPolygon(QPolygonF(vect));
         a=false;
     }
     else{
-        setFixedSize(1000, 500);
+        QGraphicsScene* m_scene = new QGraphicsScene(this);
+
+        m_scene->setSceneRect(0,0,100,100);
+
+        QGraphicsView* m_view = new QGraphicsView(m_scene,this);
+        m_view->move(100,100);
+
+        m_view->show();
+
+        QVector<QPointF> vect;
+          vect.append(QPointF(10.0,10.0));
+          vect.append(QPointF(40.0,50.0));
+          vect.append(QPointF(20.0,10.0));
+          m_scene->addPolygon(QPolygonF(vect));
         a=true;
     }
     timer->start(step);

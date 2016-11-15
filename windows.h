@@ -8,6 +8,10 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QTimer>
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QPolygonF>
+#include <QPointF>
 
 
 
