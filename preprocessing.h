@@ -24,6 +24,7 @@ public:
     std::vector<vector<double>> generateCoeffs(std::vector<vector<double>> cars);
     std::vector<std::vector<double>> CarsToMatrix(std::vector<std::pair<Car,double>> output);
     std::vector<Car> geneticMutation(std::vector<pair<Car,double>> cars);
+    int selectParent(std::vector<double> distances);
 };
 
 #endif // PREPROCESSING_H

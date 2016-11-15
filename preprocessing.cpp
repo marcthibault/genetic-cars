@@ -180,3 +180,9 @@ std::vector<std::vector<double>> preprocessing::CarsToMatrix(std::vector<std::pa
         M.push_back(data);
     }
 }
+
+int preprocessing::selectParent(std::vector<double> & distances) {
+    for(std::vector<double>::iterator it = output.begin(); it != output.end(); ++it){
+
+    }
+}
