@@ -7,6 +7,9 @@ Moteur::Moteur(){
 
     b2floor =  new Floor();
 
+    b2Body* bodyFloor = world->CreateBody(b2floor->getBodyDef());
+    bodyFloor->CreateFixture(floor->getFixture());
+
     std::vector<b2Car> b2CarsList;
     b2CarsList->push_back(b2Car());
 }
