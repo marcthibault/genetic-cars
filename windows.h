@@ -13,7 +13,8 @@
 #include <QPolygonF>
 #include <QPointF>
 #include <QVector>
-
+#include <QPen>
+#include <QBrush>
 
 
 
@@ -24,7 +25,7 @@ class windows : public QWidget
     public:
     windows();
     windows(int dt);
-    void dessiner(QVector<QPointF> v);
+    void dessiner(QVector<QPointF> v,QPen pen=QPen(Qt::red),QBrush brush=QBrush(Qt::blue));
 
 
     public slots:
