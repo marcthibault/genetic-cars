@@ -134,6 +134,7 @@ void preprocessing::printVector(std::vector<double> vec){
         std::cout << *i << ' ';
     std::cout << ' ' << std::endl;
 }
+
 // Transforme l'output de la course en matrice
 std::vector<std::vector<double>> preprocessing::CarsToMatrix(std::vector<std::pair<Car,double>> output){
     std::vector<std::vector<double>> M;
