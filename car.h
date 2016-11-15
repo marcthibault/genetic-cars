@@ -25,6 +25,7 @@ public :
     bool violate_constraint(double angle); //renvoie False si l'angle ''angle'' ne rentre pas en conflit avec les angles dans angles_distances
 
     vector<pair<double, double> > get_points(); //renvoie les sommets du polygones (dans l'ordre trigonométrique)
+    vector<pair<double,double> > get_points_xy(); //idem en coordonnées cartésiennes
     vector<pair<double, double> > get_points_without_wheels(); //renvoie les sommets du polygones (dans l'ordre trigonométrique) sans les roues
 
 };

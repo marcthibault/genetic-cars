@@ -32,18 +32,18 @@ Car::Car(){
         double distance = (double) rand() / RAND_MAX * distance_max;
         angles_distances.push_back(pair<double, double> (angle,distance));
     }
-    double theta = get_angle_wheel();
-    if(violate_constraint(M_PI+theta)||violate_constraint(2*M_PI-theta)) {
-        std::cout<<"Raise Exception: angle constraint violated !" <<std::endl;
-    }
+    //double theta = get_angle_wheel();
+    //if(violate_constraint(M_PI+theta)||violate_constraint(2*M_PI-theta)) {
+        //std::cout<<"Raise Exception: angle constraint violated !" <<std::endl;
+    //}
 }
 
 Car::Car(double r1, double d1, double r2, double d2, double D, double d, vector<pair<double, double> > angles_distances)
     : r1(r1), d1(d1), r2(r2), d2(d2), D(D), d(d), angles_distances(angles_distances){
-    double theta = get_angle_wheel();
-    if(violate_constraint(M_PI+theta)||violate_constraint(2*M_PI-theta)) {
-        std::cout<<"Raise Exception: angle constraint violated !" <<std::endl;
-    }
+    //double theta = get_angle_wheel();
+    //if(violate_constraint(M_PI+theta)||violate_constraint(2*M_PI-theta)) {
+        //std::cout<<"Raise Exception: angle constraint violated !" <<std::endl;
+    //}
 }
 
 double Car::get_angle_wheel(){ //angle théta (cf schéma)
@@ -79,6 +79,16 @@ vector<pair<double, double> > Car::get_points(){ //renvoie les sommets du polygo
     points.push_back(pair<double,double>(2*M_PI-theta, RC));
 
     std::sort(points.begin(),points.end());
+    return points;
+}
+
+vector<pair<double, double> > Car::get_points_xy(){ //renvoie les sommets du polygones (dans l'ordre trigonométrique)
+    vector<pair<double,double> > points=this->get_points();
+    for (int i=0;i<N;i++){
+        double r=std::get<0>(points[i]);
+        double alpha=std::get<1>(points[i]);
+        points[i]=pair<double,double>(r*cos(alpha),r*sin(alpha));
+    }
     return points;
 }
 
