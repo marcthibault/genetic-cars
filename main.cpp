@@ -23,18 +23,32 @@ int main(int argc, char *argv[])
     Car my_car2 = Car(1.3, 5, 2, 1.3, 3.9, 2, angles, distances);
     Car my_car3 = Car(2.9, 2.5, 3, 3, 1.5, 1, angles, distances);
 
-    std::vector<Car> cars;
-    cars.push_back(my_car1);
-    cars.push_back(my_car2);
-    cars.push_back(my_car3);
+    std::vector<std::pair<Car,double>> cars;
+    cars.push_back(std::pair<Car,double>(my_car1,110));
+    cars.push_back(std::pair<Car,double>(my_car2,80));
+    cars.push_back(std::pair<Car,double>(my_car3,40));
 
     preprocessing preprocessor = preprocessing();
 
-    std::cout << "Impression de trois voitures générées à partir d'un ranking" << std::endl;
+    std::cout << "Car pair  created" << std::endl;
 
+    std::vector<vector<double>> cars_matrix = preprocessor.CarsToMatrix(cars);
+    std::cout << "cars_matrix ok" << std::endl;
+
+    std::vector<vector<double>> new_cars_matrix = preprocessor.generate(cars_matrix);
+    std::cout << "new_cars_matrix ok" << std::endl;
+
+    //std::vector<Car> new_cars =  preprocessor.matrixToCars(new_cars_matrix);
+    std::cout << "new_cars ok" << std::endl;
+
+    //for(int i=0;i<new_cars.size();i++){
+        //preprocessor.printVector(preprocessor.openCar(new_cars[i]));
+    //}
+    /*
     preprocessor.printVector(preprocessor.openCar(my_car1));
     preprocessor.printVector(preprocessor.openCar(my_car2));
     preprocessor.printVector(preprocessor.openCar(my_car3));
+    */
 
 // Tester la génération d'une voiture aléatoire
     std::vector<double> means;
@@ -60,9 +74,9 @@ int main(int argc, char *argv[])
     variances.push_back(0.1);
     variances.push_back(0.1);
 
-    std::cout << "Impression d'une voiture générée aléatoirement" << std::endl;
+    /*std::cout << "Impression d'une voiture générée aléatoirement" << std::endl;
     Car car = preprocessor.generateRandomCar(means, variances);
-    car.printCar();
+    car.printCar();*/
 
     std::cout << "Fin de l'affichage" << std::endl;
     // return a.exec();

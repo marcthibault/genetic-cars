@@ -20,8 +20,8 @@ public:
     std::vector<double> multiply(std::vector<double> lambda, std::vector<double> car);
     Car generateRandomCar(std::vector<double> means, std::vector<double> variances);
     void printVector(std::vector<double> vec);
-    std::vector<vector<double>> generate(std::vector<vector<double>> cars);
-    std::vector<vector<double>> generateCoeffs(std::vector<vector<double>> cars);
+    std::vector<vector<double>> generate(std::vector<vector<double>>& cars);
+    std::vector<vector<double>> generateCoeffs(std::vector<vector<double> >& cars);
     std::vector<std::vector<double>> CarsToMatrix(std::vector<std::pair<Car,double>> output);
     std::vector<Car> geneticMutation(std::vector<pair<Car,double>> cars);
 };
