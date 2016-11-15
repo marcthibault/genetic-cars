@@ -5,6 +5,7 @@
 #include <vector>
 #include <random>
 #include <iostream>
+#include <time.h>
 
 preprocessing::preprocessing(){
 }
@@ -136,3 +137,54 @@ void preprocessing::printVector(std::vector<double> vec){
 }
 
 
+// Calcule les coefficients pour la combinaison linéaire des voitures
+// première stratégie : on choisit deux parents parmis la population proportionnellement à leur performance (=distance parcourue)
+//
+
+// Tirage avec remise de deux parents, proportionnellement à la distance parcourue
+std::pair<int,int> preprocessing::selectParents(std::vector<double> distances){
+
+}
+
+std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<double>> carsAndDistance){
+    std::vector<vector<double>> coeffs;
+
+    std::vector<double> distances;
+    for (int i=0;i<carsAndDistance.size() ; i++){
+        distances.push_back(carsAndDistance[i][carsAndDistance[i].size()-1]);
+    }
+
+    std::pair<int,int> parents;
+    parents = selectParents(distances)
+
+    std::vector<double> coeff1;
+    std::vector<double> coeff2;
+
+    for (int i=0 ; i<carsAndDistance[0].size() -1 ; i++){
+        //on choisit chaque caractère entre parent 1 et 2 de manière aléatoire
+        srand(time(NULL));
+        double r = ((double)rand() / (RAND_MAX));
+        if (r <= 0.5){
+            coeff1.push_back(0);
+            coeff2.push_back(1);
+        }
+        else{
+            coeff1.push_back(1);
+            coeff2.push_back(0);
+        }
+    }
+    // on met tous les autres coeff à 0
+    std::vector<double> null(carsAndDistance.size()-1, 0.0);
+    for (int i=0;i<carsAndDistance.size() ; i++){
+        if (i==parents.first){
+            coeffs.push_back(coeff1);
+        }
+        if (i==parents.first){
+            coeffs.push_back(coeff1);
+        }
+        else {
+            coeffs.push_back(null);
+        }
+    }
+    return coeffs;
+}
