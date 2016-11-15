@@ -7,6 +7,15 @@
 #include <iostream>
 
 preprocessing::preprocessing(){
+
+}
+
+std::vector<Car> preprocessing::matrixToCars(std::vector<std::vector<double>> matrix){
+    std::vector<Car> cars;
+    for(int i=0;i<matrix.size();i++){
+        cars.push_back(returnCar(matrix[i]));
+    }
+    return cars;
 }
 
 // Transform an object Car in vector
@@ -55,7 +64,7 @@ double preprocessing::computeCoeff(int rank, int total){
 
 // Function that takes the ranking of the race and generates the coefficients
 std::vector<double> preprocessing::generateCoeff(int N){
-std::vector<double> coeffs;
+    std::vector<double> coeffs;
     for (int i=0;i<N;i++){
        coeffs.push_back(computeCoeff(i, N));
     }
@@ -64,7 +73,7 @@ std::vector<double> coeffs;
 
 // Compute the random evolution of the new cars
 //- We can imagine a model where the variability decreases (like temperature)
-void preprocessing::computeRandomVector(Car my_car,double V){
+void preprocessing::generateRandomVector(Car my_car,double V){
     std::vector<double> attributes = openCar(my_car);
     std::default_random_engine generator;
     for(int i=0;i<attributes.size();i++){
@@ -74,6 +83,36 @@ void preprocessing::computeRandomVector(Car my_car,double V){
         double variation = distribution(generator);
         attributes[i] += variation;
     }
+}
+
+std::vector<double> preprocessing::generateRandomVector(std::vector<std::vector<double>> cars){
+    std::vector<double> means;
+    std::vector<double> variances;
+    std::vector<double> noise;
+    std::default_random_engine generator;
+    // pour chaque paramètre i (sauf la distance parcourue)
+    for(int i=0;i<(cars[0].size()-1);i++){
+        // calcul de la moyenne
+       double m = 0;
+        // pour chaque voiture j
+       for(int j=0;j<cars.size();j++){
+           m += cars[j][i];
+       }
+       m /= cars.size();
+       double var = 0;
+       for(int j=0;j<cars.size();j++){
+           var += (cars[j][i] - m)*(cars[j][i] - m);
+       }
+       var /= cars.size();
+       variances.push_back(var);
+    }
+    // pour chaque param i
+    for(int i=0;i<(cars[0].size()-1);i++){
+        std::normal_distribution<double> distribution(0,variances[i]);
+        double param = distribution(generator);
+        noise.push_back(param);
+    }
+    return noise;
 }
 
 // Sum of two cars
