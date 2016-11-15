@@ -22,7 +22,7 @@ public :
 
     double get_angle_wheel(); //cf schéma, angle théta
     vector<int> get_wheels_index(); //renvoie les positions des roues avant et arrière dans le polygone
-    bool violate_constraint(double candidate,vector<double> S); //renvoie True si l'angle candidat existe déjà dans S!
+    bool violate_constraint(double angle); //renvoie False si l'angle ''angle'' ne rentre pas en conflit avec les angles dans angles_distances
 
     vector<pair<double, double> > get_points(); //renvoie les sommets du polygones (dans l'ordre trigonométrique)
     vector<pair<double, double> > get_points_without_wheels(); //renvoie les sommets du polygones (dans l'ordre trigonométrique) sans les roues

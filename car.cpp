@@ -32,10 +32,19 @@ Car::Car(){
         double distance = (double) rand() / RAND_MAX * distance_max;
         angles_distances.push_back(pair<double, double> (angle,distance));
     }
+    double theta = get_angle_wheel();
+    if(violate_constraint(M_PI+theta)||violate_constraint(2*M_PI-theta)) {
+        std::cout<<"Raise Exception: angle constraint violated !" <<std::endl;
+    }
 }
 
 Car::Car(double r1, double d1, double r2, double d2, double D, double d, vector<pair<double, double> > angles_distances)
-    : r1(r1), d1(d1), r2(r2), d2(d2), D(D), d(d), angles_distances(angles_distances){}
+    : r1(r1), d1(d1), r2(r2), d2(d2), D(D), d(d), angles_distances(angles_distances){
+    double theta = get_angle_wheel();
+    if(violate_constraint(M_PI+theta)||violate_constraint(2*M_PI-theta)) {
+        std::cout<<"Raise Exception: angle constraint violated !" <<std::endl;
+    }
+}
 
 double Car::get_angle_wheel(){ //angle théta (cf schéma)
     return atan(2*(this->r1)/(this->D));
@@ -53,9 +62,9 @@ vector<int> Car::get_wheels_index(){
     return  wheels_index;
 }
 
-bool Car::violate_constraint(double candidate,vector<double> S){
-    for (std::vector<double>::iterator i=S.begin();i!=S.end();i++){
-        if (candidate==(*i)) return true;
+bool Car::violate_constraint(double angle){
+    for (int i=0;i<N-2;i++){
+        if (angle==std::get<0>(angles_distances[i])) {return true;}
     }
     return false;
 }
@@ -75,6 +84,6 @@ vector<pair<double, double> > Car::get_points(){ //renvoie les sommets du polygo
 
 vector<pair<double, double> > Car::get_points_without_wheels(){
     vector<pair<double,double>> points = vector<pair<double,double>>(angles_distances);
-    std::sort(points.begin, points.end());
+    std::sort(points.begin(), points.end());
     return points;
 }
