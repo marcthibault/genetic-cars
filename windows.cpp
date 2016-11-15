@@ -24,6 +24,8 @@ windows::windows() : QWidget()
     m_view = new QGraphicsView(m_scene,this);
     m_view->move(100,100);
     m_view->show();
+
+    avancement=0;
 }
 
 windows::windows(int dt) : QWidget()
@@ -51,6 +53,8 @@ windows::windows(int dt) : QWidget()
     m_view->move(100,100);
     m_view->show();
 
+    avancement=0;
+
 }
 
 void windows::run()
@@ -72,14 +76,15 @@ void windows::afficher()
 
 
         QVector<QPointF> vect;
-        vect.append(QPointF(10.0,10.0));
-        vect.append(QPointF(10.0,100.0));
-        vect.append(QPointF(200.0,150.0));
-        vect.append(QPointF(300.0,100.0));
-        vect.append(QPointF(200.0,50.0));
-        vect.append(QPointF(150.0,10.0));
+        vect.append(QPointF(avancement+10.0,10.0));
+        vect.append(QPointF(avancement+10.0,100.0));
+        vect.append(QPointF(avancement+200.0,150.0));
+        vect.append(QPointF(avancement+300.0,100.0));
+        vect.append(QPointF(avancement+200.0,50.0));
+        vect.append(QPointF(avancement+150.0,10.0));
         dessiner(vect);
-        a=false;
+        //a=false;
+        avancement++;
     }
     else{
 

@@ -40,6 +40,8 @@ class windows : public QWidget
     static const int default_step=40;
     QGraphicsScene* m_scene;
     QGraphicsView* m_view;
+
+    int avancement;
 };
 
 
