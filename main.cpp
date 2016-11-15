@@ -252,6 +252,7 @@ int main(int argc, char *argv[])
 
     std::cout << "Fin de l'affichage" << std::endl;
     // return a.exec();
+
     return 0;
 
 }

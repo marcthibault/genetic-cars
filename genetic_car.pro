@@ -3,7 +3,6 @@ QT += widgets
 
 
 SOURCES += main.cpp \
-<<<<<<< HEAD
     Box2D/Collision/Shapes/b2ChainShape.cpp \
     Box2D/Collision/Shapes/b2CircleShape.cpp \
     Box2D/Collision/Shapes/b2EdgeShape.cpp \
@@ -55,7 +54,8 @@ SOURCES += main.cpp \
     Floor.cpp \
     car.cpp \
     preprocessing.cpp \
-    windows.cpp
+    windows.cpp \
+    firstLearner.cpp
 
 HEADERS += \
     Box2D/Collision/Shapes/b2ChainShape.h \
