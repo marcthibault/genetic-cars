@@ -2,30 +2,55 @@
 #include "b2Car.h"
 
 Moteur::Moteur(){
-    b2Vec2 gravity(0.0f, -10.0f);
-    b2World *world = new b2World(gravity);
+    car = std::vector<b2Car*>();
+}
 
-    b2floor =  new Floor();
+Moteur::Moteur(float32 g){
+    this->world = new b2World(b2Vec2 (0.0, -10.0));
+    this->timeStep = 1.0f / 60.0f;
+    this->velocityIterations = 5;
+    this->positionIterations = 5;
+    this->car = std::vector<b2Car*>();
 
-    b2Body* bodyFloor = world->CreateBody(b2floor->getBodyDef());
-    bodyFloor->CreateFixture(floor->getFixture());
+    Floor *fl = new Floor();
 
-    std::vector<b2Car> b2CarsList;
-    b2CarsList->push_back(b2Car());
+    fl->floorInitialize(world);
+
+    b2Car* car1 = new b2Car();
+    car.push_back(car1);
+
+    // Initialiser toutes les voitures du vecteur
+    // A refaire pourquoi pas avec un for_each !
+    for (std::vector<b2Car*>::iterator i = car.begin(); i!=car.end(); i++){
+        b2Car* currentCar = (*i);
+        currentCar->initializeTestCar(world);
+    }
 }
 
 void Moteur::next(){
-
-   // world->Step(timeStep, velocityIterations, positionIterations);
-
+    this->world->Step(this->timeStep, this->velocityIterations, this->positionIterations);
+    b2Car* car1 = car.at(0);
+    b2Vec2 position = car1->m_car->GetPosition();
+    float32 angle = car1->m_car->GetAngle();
+    std::cout << " X : " << position.x << " \t Y : " << position.y << " \t Angle : " << angle << std::endl;
 }
 
-std::vector<float[3]> Moteur::getPosition(){
-    std::vector< float[3] > v;
-    float zero [3];
-    zero[0] = 0;
-    zero[1] = 0;
-    zero[2] = 0;
-    v.push_back( zero );
-    return v;
+void Moteur::printPositions(){
+    for (std::vector<b2Car*>::iterator i = car.begin(); i!=car.end(); i++){
+        b2Car* currentCar = (*i);
+        currentCar->printPosition();
+    }
 }
+
+
+void Moteur::getPosition(){
+    // A refaire pourquoi pas avec un for_each !
+    for (std::vector<b2Car*>::iterator i = car.begin(); i!=car.end(); i++){
+        b2Car* currentCar = (*i);
+        float angle = currentCar->m_car->GetAngle();
+        float x = currentCar->m_car->GetPosition().x;
+        float y = currentCar->m_car->GetPosition().y;
+    }
+    return ;
+}
+
