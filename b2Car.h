@@ -9,15 +9,18 @@ class b2Car
 {
 public:
     b2Car(); // Constructeur vide
-    void initializeTestCar(b2World* m_world); // On construit une voiture test (celle de l'exemple Box2D) dans un monde pointé
+//    b2Car(Car car); constructeur d'une b2Car (pour box2d) à partir d'une Car (ensemble de double)
+
     b2Body* m_car;
     b2Vec2* positionMaximale; // Ce point enregistre les coordonnées du centre de la position la plus à droite de la voiture.
-    float32 tempsStagnation;
-    std::string nom;
+    float32 tempsStagnation; // Temps pendant lequel la voiture n'avance plus.
+    std::string nom; // Nom de la voiture
+    int classement; // Classement de la voiture en fin. Si non classée, -1.
+
+    void initializeTestCar(b2World* m_world); // On construit une voiture test (celle de l'exemple Box2D) dans un monde pointé
+    void initializeTestCarNulle(b2World* m_world); // On construit une voiture test (comme la précédente) mais qui avance moins vite pour tester les fonctions de classement
     void printPosition();
     bool bloquee(float tempsStagnationMax);
-    //    b2Car(Car car); constructeur d'une b2Car (pouyr box2d) à partir d'une Car (ensemble de double)
-
 };
 
 #endif // B2CAR_H

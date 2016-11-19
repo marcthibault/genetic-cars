@@ -6,31 +6,48 @@ Moteur::Moteur(){
 }
 
 Moteur::Moteur(float32 g){
-    this->world = new b2World(b2Vec2 (0.0, -10.0));
+
     this->timeStep = 1.0f / 60.0f;
     this->velocityIterations = 5;
     this->positionIterations = 5;
-    this->car = std::vector<b2Car*>();
 
     Floor *fl = new Floor(15.0);
-    fl->floorInitialize(world);
 
+    this->car = std::vector<b2Car*>();
     b2Car* car1 = new b2Car();
     car.push_back(car1);
+    b2Car* car2 = new b2Car();
+    car.push_back(car2);
+
+    int     compteur = 0;
+    for(std::vector<b2Car*>::iterator i = car.begin(); i != car.end(); i++){
+        b2Car* currentCar = (*i);
+        b2World* currentWorld = new b2World(b2Vec2(0.0, -g));
+        if (compteur == 0){ currentCar->initializeTestCar(currentWorld); } else{currentCar->initializeTestCarNulle(currentWorld);}
+        fl->floorInitialize(currentWorld);
+        world.push_back(currentWorld);
+        compteur++;
+    }
+
+
+
+
 
     // Initialiser toutes les voitures du vecteur
-    // A refaire pourquoi pas avec un for_each !
-    for (std::vector<b2Car*>::iterator i = car.begin(); i!=car.end(); i++){
-        b2Car* currentCar = (*i);
-        currentCar->initializeTestCar(world);
-    }
+//    for (std::vector<b2Car*>::iterator i = car.begin(); i!=car.end(); i++){
+//        b2Car* currentCar = (*i);
+//        currentCar->initializeTestCar(world);
+//    }
 }
 
 void Moteur::next(float dt){
     // On fait avancer le moteur physique
     unsigned int n = floor(dt/timeStep);
     for (unsigned int i=0; i<n; i++){
-        this->world->Step(this->timeStep, this->velocityIterations, this->positionIterations);
+        for(std::vector<b2World*>::iterator i = world.begin(); i != world.end(); i++){
+            b2World* currentWorld = (*i);
+            currentWorld->Step(this->timeStep, this->velocityIterations, this->positionIterations);
+        }
     }
     t += n*timeStep;
     // On met à jour les paramètres des voitures qui ne sont pas pris en compte par Box2D
@@ -46,6 +63,7 @@ void Moteur::next(float dt){
             currentCar->tempsStagnation += n*timeStep;
         }
     }
+    this->classement();
 }
 
 void Moteur::printPositions(){
@@ -81,3 +99,25 @@ bool Moteur::toutesCarBloquees(float tempsStagnationMax){
     }
     return retour;
 }
+
+void Moteur::classement(){
+    // Récupération des couples position/voiture
+    std::vector<CouplePositionXVoiture> positionVoiture = std::vector<CouplePositionXVoiture> ();
+    unsigned int compteur = 0;
+    for (std::vector<b2Car*>::iterator i = car.begin(); i!=car.end(); i++){
+        b2Car* currentCar = (*i);
+        positionVoiture.push_back(CouplePositionXVoiture(currentCar->m_car->GetPosition().x, compteur));
+        compteur ++;
+    }
+    // Tri des positionHorizontale
+    compteur = 1;
+    std::sort(positionVoiture.begin(), positionVoiture.end(), greater_than());
+    // On réaffecte le classment
+    for (std::vector<CouplePositionXVoiture>::iterator i = positionVoiture.begin(); i!=positionVoiture.end(); i++){
+        CouplePositionXVoiture currentPositionVoiture = (*i);
+        (car.at(currentPositionVoiture.voiture))->classement = compteur;
+        compteur++;
+    }
+}
+
+

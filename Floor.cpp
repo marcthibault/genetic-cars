@@ -74,17 +74,25 @@ void Floor::floorInitialize(b2World* world){
     fd.density = 0.0f;
     fd.friction = 0.9f;
 
+
+    // q permet de reconstruire p après l'initialisation
+    std::list<b2Vec2>* q = new std::list<b2Vec2>();
+
     // on parcourt la liste des points en ajoutant une à une les edges
     while(p->size() > 2){
         // on récupère les deux premiers points
         b2Vec2 q1 = p->front();
         p->pop_front();
+        q->push_back(q1);
         b2Vec2 q2 = p->front();
+        q->push_back(q2);
 
         // on crée le fixture de l'edge suivant et on l'ajoute
         edge.Set(q1, q2);
         ground->CreateFixture(&fd);
     }
+    q->push_back(p->front());
+    p=q;
 }
 
 /*
