@@ -19,7 +19,9 @@ Moteur::Moteur(float32 g){
     b2Car* car2 = new b2Car();
     car.push_back(car2);
 
-    int     compteur = 0;
+
+    // Le compteur ici ne sert que pour les tests. A terme avec l'implémentation des voitures dans box2D, il devra etre supprimé
+    int compteur = 0;
     for(std::vector<b2Car*>::iterator i = car.begin(); i != car.end(); i++){
         b2Car* currentCar = (*i);
         b2World* currentWorld = new b2World(b2Vec2(0.0, -g));
@@ -28,16 +30,6 @@ Moteur::Moteur(float32 g){
         world.push_back(currentWorld);
         compteur++;
     }
-
-
-
-
-
-    // Initialiser toutes les voitures du vecteur
-//    for (std::vector<b2Car*>::iterator i = car.begin(); i!=car.end(); i++){
-//        b2Car* currentCar = (*i);
-//        currentCar->initializeTestCar(world);
-//    }
 }
 
 void Moteur::next(float dt){
@@ -75,7 +67,6 @@ void Moteur::printPositions(){
     }
 }
 
-
 void Moteur::getPosition(){
     // A refaire pourquoi pas avec un for_each !
     for (std::vector<b2Car*>::iterator i = car.begin(); i!=car.end(); i++){
@@ -84,7 +75,7 @@ void Moteur::getPosition(){
         float x = currentCar->m_car->GetPosition().x;
         float y = currentCar->m_car->GetPosition().y;
     }
-    // A compléter
+    // A compléter pour l'interface graphique
     // TODO
     return ;
 }
@@ -119,5 +110,3 @@ void Moteur::classement(){
         compteur++;
     }
 }
-
-

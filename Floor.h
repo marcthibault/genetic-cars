@@ -8,17 +8,17 @@
 class Floor
 {
 public:
-    Floor();
-    Floor(float mur);
-    Floor(double l, double v);
-    double getLength();
-    double getVariance();
-    void createArrayb2Vec2(int N);
-    void floorInitialize(b2World* world);
+    Floor(); // Constuit un sol plat de 100m. ICI un sol = une liste de points
+    Floor(float mur); // Construit un sol plat de 100m avec un mur vertical en x = mur
+    Floor(double l, double v); // initialisateur 'classique' de la classe
+    double getLength(); // récupère les éléments private
+    double getVariance(); // récupère les éléments private
+    void createArrayb2Vec2(int N); // Construit un sol aléatoire avec la méthode de Thibault
+    void floorInitialize(b2World* world); // Construit effectivement le sol dans le monde pointé
 //    void extend();
 private:
-    double length;
-    double variance;
-    std::list<b2Vec2>* p;
+    double length; // Longueur de chaque bout de segments
+    double variance; // Variance -> génère le chaos du sol
+    std::list<b2Vec2>* p; // Liste des points du sol dans l'ordre gauche -> droite
 };
 #endif // FLOOR_H
