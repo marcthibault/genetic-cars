@@ -8,7 +8,10 @@ void b2Car::initializeTestCar(b2World* m_world){
 
     float m_hz = 4.0f;
     float m_zeta = 0.7f;
-    float m_speed = 50.0f;
+
+    nom = "Voiture de test";
+    tempsStagnation = 0;
+    positionMaximale = new b2Vec2(0.0, 0.0);
 
     b2PolygonShape chassis;
     b2Vec2 vertices[8];
@@ -68,7 +71,11 @@ void b2Car::initializeTestCar(b2World* m_world){
 void b2Car::printPosition(){
     b2Vec2 position = this->m_car->GetPosition();
     float32 angle = this->m_car->GetAngle();
-    std::cout << " X : " << position.x << " \t Y : " << position.y << " \t Angle : " << angle << std::endl;
+    std::cout << " X : " << position.x << " \t Y : " << position.y << " \t Angle : " << angle << "\t Temps de stagnation : " << tempsStagnation << std::endl;
+}
+
+bool b2Car::bloquee(float tempsStagnationMax){
+    return tempsStagnation > tempsStagnationMax;
 }
 
 //b2Car::b2Car(Car car){

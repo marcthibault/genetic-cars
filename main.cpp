@@ -6,8 +6,9 @@ using namespace std;
 int main()
 {
     Moteur* m = new Moteur(10.0);
-    for (int i = 0; i<600; i++){
-        m->next();
+    while (!m->toutesCarBloquees(5.0)){
+        m->next(1.0/20.0);
+        m->printPositions();
     }
     return 0;
 }

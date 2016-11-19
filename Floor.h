@@ -9,6 +9,7 @@ class Floor
 {
 public:
     Floor();
+    Floor(float mur);
     Floor(double l, double v);
     double getLength();
     double getVariance();

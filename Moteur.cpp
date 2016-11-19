@@ -12,8 +12,7 @@ Moteur::Moteur(float32 g){
     this->positionIterations = 5;
     this->car = std::vector<b2Car*>();
 
-    Floor *fl = new Floor();
-
+    Floor *fl = new Floor(15.0);
     fl->floorInitialize(world);
 
     b2Car* car1 = new b2Car();
@@ -27,17 +26,33 @@ Moteur::Moteur(float32 g){
     }
 }
 
-void Moteur::next(){
-    this->world->Step(this->timeStep, this->velocityIterations, this->positionIterations);
-    b2Car* car1 = car.at(0);
-    b2Vec2 position = car1->m_car->GetPosition();
-    float32 angle = car1->m_car->GetAngle();
-    std::cout << " X : " << position.x << " \t Y : " << position.y << " \t Angle : " << angle << std::endl;
+void Moteur::next(float dt){
+    // On fait avancer le moteur physique
+    unsigned int n = floor(dt/timeStep);
+    for (unsigned int i=0; i<n; i++){
+        this->world->Step(this->timeStep, this->velocityIterations, this->positionIterations);
+    }
+    t += n*timeStep;
+    // On met à jour les paramètres des voitures qui ne sont pas pris en compte par Box2D
+    for (std::vector<b2Car*>::iterator i = car.begin(); i!=car.end(); i++){
+        b2Car* currentCar = (*i);
+        if (currentCar->positionMaximale->x < currentCar->m_car->GetPosition().x){
+            // on est dans le cas où la voiture avance
+            *(currentCar->positionMaximale) = currentCar->m_car->GetPosition();
+        }
+        else{
+            // on est dans le cas où la voiture stagne
+            // on incrémente le temps de stagnation de la voiture
+            currentCar->tempsStagnation += n*timeStep;
+        }
+    }
 }
 
 void Moteur::printPositions(){
+    std::cout << "Au temps : " << t << std::endl;
     for (std::vector<b2Car*>::iterator i = car.begin(); i!=car.end(); i++){
         b2Car* currentCar = (*i);
+        std::cout << "\n" << currentCar->nom;
         currentCar->printPosition();
     }
 }
@@ -51,6 +66,18 @@ void Moteur::getPosition(){
         float x = currentCar->m_car->GetPosition().x;
         float y = currentCar->m_car->GetPosition().y;
     }
+    // A compléter
+    // TODO
     return ;
 }
 
+bool Moteur::toutesCarBloquees(float tempsStagnationMax){
+    std::vector<b2Car*>::iterator i = car.begin();
+    bool retour = true;
+    while (retour && i!=car.end()){
+        b2Car* currentCar = (*i);
+        retour = currentCar->bloquee(tempsStagnationMax) & retour;
+        i++;
+    }
+    return retour;
+}

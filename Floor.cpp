@@ -10,6 +10,21 @@ Floor::Floor(){
     }
 }
 
+// Sol plat avec un mur à x = mur
+// Pour les tests de temps de stagnation
+Floor::Floor(float mur){
+    this->length=1.0;
+    this->variance=0.1;
+    this->p=new std::list<b2Vec2> ();
+    for(int i=0;i<101;i++){
+        p->push_back(b2Vec2(i*length-10.0,-2.0));
+    }
+    // Construction du mur, #Trump
+    p->push_back(b2Vec2(mur, 100.0));
+    p->push_back(b2Vec2(mur, -100.0));
+    p->push_back(b2Vec2(mur, 100.0));
+}
+
 /* Permet de créer un sol sont on peut fixer les paramètres des blocs*/
 Floor::Floor(double l, double v){
     this->length=l;
