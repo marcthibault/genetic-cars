@@ -140,18 +140,19 @@ std::vector<vector<double>> preprocessing::generateCoeffsRandom(std::vector<vect
 }
 
 // Generate all the new cars
-std::vector<vector<double>> preprocessing::generate(std::vector<vector<double>> cars){
-    std::cout << "starting generate" << std::endl;
-    std::vector<vector<double>> newCars;
-    for (int i=0;i<cars.size();i++){
-        vector<vector<double>> coeffs = preprocessing::generateCoeffsRandom(cars);
-        vector<double> tmp(cars[0].size(),0);
-        for (int j=0;j<cars.size();j++){
-            tmp  = preprocessing::add( tmp , preprocessing::multiply( cars[j],coeffs[j] ) );
+void preprocessing::generate(std::vector<std::vector<double>> *cars,std::vector<std::vector<double>> *newCars,int nbCars){
+    for (int i=0;i<nbCars;i++){
+        std::vector<std::vector<double>> coeffs = preprocessing::generateCoeffs(*cars);
+        std::cout << "Ligne 0 de COoffs" << std::endl;
+        printVector(&coeffs[0]);
+        std::vector<double> newCar((*cars)[0].size(),0);
+        for (int j=0;j<cars->size();j++){
+            newCar = preprocessing::add( newCar , preprocessing::multiply( (*cars)[j],coeffs[j] ) );
+            std::cout << "Etape de newCar " << std::endl;
+            printVector(&newCar);
         }
-        newCars.push_back(tmp);
+        newCars->push_back(newCar);
     }
-    return newCars;
 }
 
 // Compute a random car
