@@ -29,11 +29,15 @@ int main(int argc, char** argv)
 
   //TEST UI TEAM
 */
+
     QApplication app(argc, argv);
+
     windows fenetre(100);
+    std::cout<<"test"<<std::endl;
+
+    fenetre.displayFloor();
+
     fenetre.show();
-
-
 
 
 

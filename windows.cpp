@@ -169,20 +169,24 @@ void windows::afficher()
         if(V[i][3]==1)indice=i;
         QVector<QPointF> vect;
         double abs=5*V[i][1];
-        vect.append(QPointF(10.0+abs,10.0));
-        vect.append(QPointF(10.0+abs,100.0));
-        vect.append(QPointF(200.0+abs,150.0));
-        vect.append(QPointF(300.0+abs,100.0));
-        vect.append(QPointF(200.0+abs,50.0));
-        vect.append(QPointF(150.0+abs,10.0));
+        double ord=5*V[i][2];
+        vect.append(QPointF(10.0+abs,10.0+ord));
+        vect.append(QPointF(10.0+abs,100.0+ord));
+        vect.append(QPointF(200.0+abs,150.0+ord));
+        vect.append(QPointF(300.0+abs,100.0+ord));
+        vect.append(QPointF(200.0+abs,50.0+ord));
+        vect.append(QPointF(150.0+abs,10.0+ord));
         //dessiner(vect);
 
         if(i==0) dessiner(vect);
         else dessiner(vect,QPen(Qt::green),QBrush(Qt::yellow));
 
+
+
     }
     double abs0=5*V[indice][1];
-    std::cout<<abs0<<std::endl;
+    double ord0=5*V[indice][2];
+
 
     QVector<QPointF> vect2;
     vect2.append(QPointF(10.0,160.0));
@@ -194,7 +198,8 @@ void windows::afficher()
 
     this->displayFloor(vect2);
 
-    m_scene->setSceneRect(abs0,0,500,300);
+    m_scene->setSceneRect(abs0,ord0,500,300);
+
 
     timer->start(step);
 }
@@ -230,3 +235,11 @@ void windows::displayFloor(QVector<QPointF> v){
     }
 
 }
+
+void windows::displayFloor(){
+    std::list<b2Vec2>* p=this->moteur->b2floor->p;
+
+
+}
+
+

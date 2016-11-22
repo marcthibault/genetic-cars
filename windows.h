@@ -25,6 +25,9 @@
 #include <Moteur.h>
 #include <array>
 #include <iostream>
+#include <list>
+#include <Floor.h>
+#include <Box2D/Box2D.h>
 
 
 
@@ -38,6 +41,7 @@ class windows : public QWidget
     void dessiner(QVector<QPointF> v,QPen pen=QPen(Qt::red),QBrush brush=QBrush(Qt::blue));
     static QPointF cartesien(double x, double y, double angle, double longueur, double repere);
     void displayFloor(QVector<QPointF> v);
+    void displayFloor();
 
 
     public slots:

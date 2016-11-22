@@ -23,13 +23,13 @@ Moteur::Moteur(float32 g){
     car.push_back(car2);
 
     world = new b2World(b2Vec2(0.0, -g));
-
+    fl->floorInitialize(world);
     // Le compteur ici ne sert que pour les tests. A terme avec l'implémentation des voitures dans box2D, il devra etre supprimé
     int compteur = 0;
     for(std::vector<b2Car*>::iterator i = car.begin(); i != car.end(); i++){
         b2Car* currentCar = (*i);
         if (compteur == 0){ currentCar->initializeTestCar(world); } else{currentCar->initializeTestCarNulle(world);}
-        fl->floorInitialize(world);
+        //fl->floorInitialize(world);
         compteur++;
     }
 }
