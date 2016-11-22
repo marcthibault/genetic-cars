@@ -18,7 +18,9 @@ Moteur::Moteur(float32 g){
     this->velocityIterations = 5;
     this->positionIterations = 5;
 
-    Floor *fl = new Floor(15.0);
+    //test sol aléatoire
+    Floor *fl = new Floor(1.0, 0.01, true);
+    fl->createArrayb2Vec2(1000);
 
     this->car = std::vector<b2Car*>();
     b2Car* car1 = new b2Car();

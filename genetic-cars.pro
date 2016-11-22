@@ -108,5 +108,6 @@ HEADERS += \
     b2Car.h \
     Floor.h \
     FooTest.h \
-    Moteur.h
+    Moteur.h \
+    CCar.h
 
