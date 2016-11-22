@@ -46,6 +46,8 @@ int main(int argc, char *argv[])
     std::cout << "Maman = " << parents.second << std::endl;
 
 
+
+
     std::cout << "Impression de trois voitures générées à partir d'un ranking" << std::endl;
 
     preprocessor.printVector(preprocessor.openCar(my_car1));
