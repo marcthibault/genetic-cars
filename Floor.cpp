@@ -5,6 +5,7 @@ Floor::Floor(){
     this->length=1.0;
     this->variance=0.1;
     this->p=new std::list<b2Vec2> ();
+    this->chaos=false
     for(int i=0;i<101;i++){
         p->push_back(b2Vec2(i*length-10.0,-2.0));
     }
@@ -26,9 +27,10 @@ Floor::Floor(float mur){
 }
 
 /* Permet de créer un sol sont on peut fixer les paramètres des blocs*/
-Floor::Floor(double l, double v){
+Floor::Floor(double l, double v, bool c){
     this->length=l;
     this->variance=v;
+    this->chaos = c;
     this->p=new std::list<b2Vec2>();
 }
 
@@ -45,14 +47,25 @@ void  Floor::createArrayb2Vec2(int N){
     double x = -10.0;
     double y = -2.0;
     p->push_back(b2Vec2(x, y));
-
-    for(int i =1;i<N;i++){
-    std::default_random_engine generator;
-    std::normal_distribution<double> distribution(a,this->variance*i);
-        a = distribution(generator);
-        x=x+this->length*cos(a);
-        y=y+this->length*sin(a);
-        p->push_back(b2Vec2(x, y));
+    if(this->chaos){
+        for(int i =1;i<N;i++){
+            std::default_random_engine generator;
+            std::normal_distribution<double> distribution(0,this->variance*i);
+            a = distribution(generator);
+            x=x+this->length*cos(a);
+            y=y+this->length*sin(a);
+            p->push_back(b2Vec2(x, y));
+        }
+    }
+    else{
+        for(int i =1;i<N;i++){
+            std::default_random_engine generator;
+            std::normal_distribution<double> distribution(a,this->variance*i);
+            a = distribution(generator);
+            x=x+this->length*cos(a);
+            y=y+this->length*sin(a);
+            p->push_back(b2Vec2(x, y));
+        }
     }
 }
 

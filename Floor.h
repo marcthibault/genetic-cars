@@ -20,5 +20,6 @@ private:
     double length; // Longueur de chaque bout de segments
     double variance; // Variance -> génère le chaos du sol
     std::list<b2Vec2>* p; // Liste des points du sol dans l'ordre gauche -> droite
+    bool chaos; // booleen qui s'il est faux lisse le sol car l'angle dépend du précédent. sinon l'angle sera totalement aléatoire
 };
 #endif // FLOOR_H
