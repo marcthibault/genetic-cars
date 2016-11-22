@@ -135,3 +135,9 @@ void windows::update()
     m_Timer_value++;
     m_LCD->display(m_Timer_value);
 }
+
+QPointF windows::cartesien(double x, double y, double angle, double longueur, double repere){
+    double x0=x+longueur*cos(angle+repere);
+    double y0=y+longueur*sin(angle+repere);
+    return QPointF(x0,y0);
+}

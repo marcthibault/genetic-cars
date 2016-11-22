@@ -13,9 +13,11 @@
 #include <QPolygonF>
 #include <QPointF>
 #include <utility>
+#include <iostream>
 
 int main(int argc, char *argv[])
 {
+    /*
   //TEST CAR TEAM
    // QCoreApplication a(argc, argv);
 
@@ -25,12 +27,13 @@ int main(int argc, char *argv[])
     //Jeep->get_points_xy();
 
   //TEST UI TEAM
-
+*/
     QApplication app(argc, argv);
     windows fenetre(40);
     fenetre.show();
-    /*return */app.exec();
 
+    app.exec();
+/*
   //TEST PHY TEAM
 
     //return a.exec();
@@ -48,7 +51,7 @@ int main(int argc, char *argv[])
     fdGround.density = 0.0f;
     fdGround.friction = 0.9f;
     groundBody->CreateFixture(&fdGround);//shape, density
-
+*/
 /*
     b2BodyDef bd;
     bd.type = b2_dynamicBody;
@@ -114,6 +117,7 @@ int main(int argc, char *argv[])
     b2WheelJoint* liaisonArriere;
     liaisonArriere = (b2WheelJoint*)m_world->CreateJoint(&joint);
 */
+    /*
     b2Body* m_car;
     b2Body* m_wheel1;
     b2Body* m_wheel2;
@@ -251,7 +255,7 @@ int main(int argc, char *argv[])
 
     std::cout << "Fin de l'affichage" << std::endl;
     // return a.exec();
-
+*/
     return 0;
 
 }

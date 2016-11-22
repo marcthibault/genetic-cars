@@ -19,6 +19,7 @@
 #include <QVector>
 #include <QPen>
 #include <QBrush>
+#include <math.h>
 
 
 
@@ -30,6 +31,7 @@ class windows : public QWidget
     windows();
     windows(int dt);
     void dessiner(QVector<QPointF> v,QPen pen=QPen(Qt::red),QBrush brush=QBrush(Qt::blue));
+    static QPointF cartesien(double x, double y, double angle, double longueur, double repere);
 
 
     public slots:
