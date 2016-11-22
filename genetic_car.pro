@@ -1,6 +1,12 @@
 QT += widgets
 
 
+TARGET = genetic_car
+
+CONFIG -= app_bundle
+
+TEMPLATE = app
+
 
 SOURCES += main.cpp \
     Box2D/Collision/Shapes/b2ChainShape.cpp \
@@ -54,8 +60,7 @@ SOURCES += main.cpp \
     Floor.cpp \
     car.cpp \
     preprocessing.cpp \
-    windows.cpp \
-    firstLearner.cpp
+    windows.cpp 
 
 
 HEADERS += \
