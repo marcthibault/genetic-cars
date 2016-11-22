@@ -48,8 +48,12 @@ windows::windows(int dt) : QWidget()
 
     QObject::connect(m_bouton, SIGNAL(clicked()), this, SLOT(run()));
 
+
+
     m_scene = new QGraphicsScene(this);
     m_scene->setSceneRect(0,0,500,300);
+
+
     m_view = new QGraphicsView(m_scene,this);
     m_view->move(0,0);
     m_view->show();
@@ -95,7 +99,7 @@ void windows::afficher()
     m_scene->clear();
     if(a){
 
-
+        /*
         QVector<QPointF> vect;
         vect.append(QPointF(avancement+10.0,10.0));
         vect.append(QPointF(avancement+10.0,100.0));
@@ -105,6 +109,38 @@ void windows::afficher()
         vect.append(QPointF(avancement+150.0,10.0));
         dessiner(vect);
         //a=false;
+        avancement++;
+        QVector<QPointF> vect2;
+        vect2.append(QPointF(10.0,160.0));
+        vect2.append(QPointF(100.0,150.0));
+        vect2.append(QPointF(200.0,160.0));
+        vect2.append(QPointF(300.0,170.0));
+        vect2.append(QPointF(400.0,150.0));
+        vect2.append(QPointF(550.0,110.0));
+
+        this->displayFloor(vect2);
+        */
+        QVector<QPointF> vect;
+        vect.append(QPointF(10.0,10.0));
+        vect.append(QPointF(10.0,100.0));
+        vect.append(QPointF(200.0,150.0));
+        vect.append(QPointF(300.0,100.0));
+        vect.append(QPointF(200.0,50.0));
+        vect.append(QPointF(150.0,10.0));
+        dessiner(vect);
+
+
+        QVector<QPointF> vect2;
+        vect2.append(QPointF(10.0-avancement,160.0));
+        vect2.append(QPointF(100.0-avancement,150.0));
+        vect2.append(QPointF(200.0-avancement,160.0));
+        vect2.append(QPointF(300.0-avancement,170.0));
+        vect2.append(QPointF(400.0-avancement,150.0));
+        vect2.append(QPointF(550.0-avancement,110.0));
+
+        this->displayFloor(vect2);
+        m_scene->setSceneRect(-avancement,0,500,300);
+
         avancement++;
     }
     else{
