@@ -1,4 +1,4 @@
-#include "windows.h"
+﻿#include "windows.h"
 
 windows::windows() : QWidget()
 {
@@ -24,15 +24,18 @@ windows::windows() : QWidget()
     m_view = new QGraphicsView(m_scene,this);
     m_view->move(100,100);
     m_view->show();
+
+    avancement=0;
 }
 
 windows::windows(int dt) : QWidget()
 {
     setFixedSize(1000, 500);
 
+
     m_bouton = new QPushButton("Run !", this);
     m_bouton->setFont(QFont("Comic Sans MS", 14));
-    m_bouton->move(0, 0);
+    m_reset = new QPushButton("Stop", this);
 
     step=dt;
 
@@ -48,33 +51,63 @@ windows::windows(int dt) : QWidget()
     m_scene = new QGraphicsScene(this);
     m_scene->setSceneRect(0,0,500,300);
     m_view = new QGraphicsView(m_scene,this);
-    m_view->move(100,100);
+    m_view->move(0,0);
     m_view->show();
+
+
+    this->m_LCD = new QLCDNumber(5, this);
+
+    // Gestion du layout pour le placement des boutons
+    QGridLayout *layout = new QGridLayout();
+    layout->addWidget(m_bouton,0,1);
+    layout->addWidget(m_reset,0,2);
+    layout->addWidget(m_LCD,1,0);
+    layout->addWidget(m_view,0,0);
+    this->setLayout(layout);
+
+    this->m_Timer_value=0;
+    this->m_timer = new QTimer(this);
+    connect(this->m_timer, SIGNAL(timeout()), this, SLOT(update()));
+    this->m_timer->setInterval(100);
+
+    // On connecte les différents signaux et slots
+    connect(this->m_bouton, SIGNAL(clicked()), this, SLOT(run()));
+    connect(this->m_reset, SIGNAL(clicked()), this, SLOT(reset()));
+
+    avancement=0;
 
 }
 
 void windows::run()
 {
 
-
+    this->m_timer->start();
     timer->start(0);
 
 }
 
-void windows::dessiner(QVector<QPointF> v){
-    m_scene->addPolygon(QPolygonF(v));
+void windows::dessiner(QVector<QPointF> v,QPen pen,QBrush brush){
+    m_scene->addPolygon(QPolygonF(v),pen,brush);
 }
 
 void windows::afficher()
 {
-    /*QGraphicsScene* m_scene = new QGraphicsScene(this);
-    m_scene->setSceneRect(0,0,100,100);
-    QGraphicsView* m_view = new QGraphicsView(m_scene,this);
-    m_view->move(100,100);
-    m_view->show();*/
     m_scene->clear();
     if(a){
 
+
+        QVector<QPointF> vect;
+        vect.append(QPointF(avancement+10.0,10.0));
+        vect.append(QPointF(avancement+10.0,100.0));
+        vect.append(QPointF(avancement+200.0,150.0));
+        vect.append(QPointF(avancement+300.0,100.0));
+        vect.append(QPointF(avancement+200.0,50.0));
+        vect.append(QPointF(avancement+150.0,10.0));
+        dessiner(vect);
+        //a=false;
+        avancement++;
+    }
+    else{
 
         QVector<QPointF> vect;
         vect.append(QPointF(10.0,10.0));
@@ -83,17 +116,40 @@ void windows::afficher()
         vect.append(QPointF(300.0,100.0));
         vect.append(QPointF(200.0,50.0));
         vect.append(QPointF(150.0,10.0));
-        dessiner(vect);
-        a=false;
-    }
-    else{
-
-        QVector<QPointF> vect;
-          vect.append(QPointF(10.0,10.0));
-          vect.append(QPointF(40.0,50.0));
-          vect.append(QPointF(20.0,10.0));
-          m_scene->addPolygon(QPolygonF(vect));
+        dessiner(vect,QPen(Qt::green),QBrush(Qt::yellow));
         a=true;
     }
     timer->start(step);
+}
+
+void windows::reset()
+{
+    this->m_timer->stop();
+    m_Timer_value=0;
+    m_LCD->display(m_Timer_value);
+    timer->stop();
+}
+
+void windows::update()
+{
+    m_Timer_value++;
+    m_LCD->display(m_Timer_value);
+}
+
+QPointF windows::cartesien(double x, double y, double angle, double longueur, double repere){
+    double x0=x+longueur*cos(angle+repere);
+    double y0=y+longueur*sin(angle+repere);
+    return QPointF(x0,y0);
+}
+
+void windows::displayFloor(QVector<QPointF> v){
+    QPointF p1=v.first();
+    v.pop_front();
+    while(!v.isEmpty()){
+        QPointF p2=v.first();
+        v.pop_front();
+        m_scene->addLine(QLineF ( p1, p2));
+        p1=p2;
+    }
+
 }

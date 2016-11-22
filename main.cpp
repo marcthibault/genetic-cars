@@ -18,6 +18,7 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
+    /*
   //TEST CAR TEAM
    // QCoreApplication a(argc, argv);
 
@@ -27,19 +28,31 @@ int main(int argc, char** argv)
     //Jeep->get_points_xy();
 
   //TEST UI TEAM
-
+*/
     QApplication app(argc, argv);
-    windows fenetre(500);
+    windows fenetre(40);
     fenetre.show();
-    /*return */app.exec();
 
     Moteur* m = new Moteur(10.0);
+
     while (!m->toutesCarBloquees(5.0))
     {
         m->next(1.0/20.0);
         m->printPositions();
     //std::vector< std::array<float,4> > bidule = m->getPosition() ; //test de la fonction getPosition
     }
+
+    // QVector<QPointF> vect;
+    // vect.append(QPointF(10.0,10.0));
+    // vect.append(QPointF(10.0,100.0));
+    // vect.append(QPointF(200.0,150.0));
+    // vect.append(QPointF(300.0,100.0));
+    // vect.append(QPointF(200.0,50.0));
+    // vect.append(QPointF(150.0,10.0));
+    //
+    // fenetre.displayFloor(vect);
+
+    app.exec();
 
     std::cout << "Starting..." << std::endl;
 
@@ -102,7 +115,6 @@ int main(int argc, char** argv)
 
     std::cout << "Fin de l'affichage" << std::endl;
     // return a.exec();
-
     return 0;
 
 }
@@ -111,4 +123,3 @@ std::vector<Car> preprocessing::geneticMutation(std::vector< std::pair<Car,doubl
     std::vector<Car> ans;
     return ans;
 }
-//test

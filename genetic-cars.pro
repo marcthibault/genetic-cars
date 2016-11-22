@@ -8,6 +8,10 @@ QMAKE_CXXFLAGS += -std=c++11
 CONFIG -= app_bundle
 #CONFIG -= qt
 
+CONFIG += console c++11
+CONFIG += c++11
+CONFIG += gnu++11
+QMAKE_CXXFLAGS += -std=c++11
 
 SOURCES += main.cpp \
     Box2D/Collision/Shapes/b2ChainShape.cpp \
@@ -63,7 +67,6 @@ SOURCES += main.cpp \
     windows.cpp \
     Moteur.cpp
 
-
 HEADERS += \
     Box2D/Collision/Shapes/b2ChainShape.h \
     Box2D/Collision/Shapes/b2CircleShape.h \
@@ -73,7 +76,7 @@ HEADERS += \
     Box2D/Collision/b2BroadPhase.h \
     Box2D/Collision/b2Collision.h \
     Box2D/Collision/b2Distance.h \
-    Box2D/Collision/b2DynamicTree.h \
+    Box2D/C2ollision/b2DynamicTree.h \
     Box2D/Collision/b2TimeOfImpact.h \
     Box2D/Common/b2BlockAllocator.h \
     Box2D/Common/b2Draw.h \
