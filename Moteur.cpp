@@ -1,5 +1,12 @@
 #include "Moteur.h"
 #include "b2Car.h"
+//template <class T, std::size_t N>
+//std::ostream& operator<<(std::ostream& o, const std::array<T, N>& arr)
+//{
+//    copy(arr.cbegin(), arr.cend(), std::ostream_iterator<T>(o, " "));
+//    return o;
+//}
+
 
 Moteur::Moteur(){
     car = std::vector<b2Car*>();
@@ -64,17 +71,34 @@ void Moteur::printPositions(){
     }
 }
 
-void Moteur::getPosition(){
+/*Crée une fonction qui retourne les positions des centres de chaques voitures.
+ * Pour chaque voiture de la course, on transmet un tableau contenant angle, x,y de son centre,
+ * */
+
+std::vector<std::array<float, 4> > Moteur::getPosition(){
     // A refaire pourquoi pas avec un for_each !
+    std::vector<std::array<float, 4>> positions;
     for (std::vector<b2Car*>::iterator i = car.begin(); i!=car.end(); i++){
         b2Car* currentCar = (*i);
-        float angle = currentCar->m_car->GetAngle();
-        float x = currentCar->m_car->GetPosition().x;
-        float y = currentCar->m_car->GetPosition().y;
+        std::array<float, 4> positionCourante;
+        positionCourante[0] = currentCar->m_car->GetAngle();
+        //float angle = currentCar->m_car->GetAngle();
+        positionCourante[1] = currentCar->m_car->GetPosition().x;
+        //float x = currentCar->m_car->GetPosition().x;
+        positionCourante[2] = currentCar->m_car->GetPosition().y;
+        //float y = currentCar->m_car->GetPosition().y;
+        positionCourante[3] = currentCar->classement;
+        //float classement; = currentCar->classement;
+        positions.push_back(positionCourante);
+
+//        std::cout << "angle = " << positionCourante[0] << std::endl;
+//        std::cout << "x = " << positionCourante[1] << std::endl;
+//        std::cout << "y = " << positionCourante[2] << std::endl;
+//        std::cout << "classement = " << positionCourante[3] << std::endl;
     }
     // A compléter pour l'interface graphique
     // TODO
-    return ;
+    return positions;
 }
 
 bool Moteur::toutesCarBloquees(float tempsStagnationMax){
