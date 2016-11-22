@@ -60,7 +60,8 @@ SOURCES += main.cpp \
     Floor.cpp \
     car.cpp \
     preprocessing.cpp \
-    windows.cpp 
+    windows.cpp \ 
+    strategy.cpp
 
 
 HEADERS += \
@@ -116,4 +117,5 @@ HEADERS += \
     Floor.h \
     preprocessing.h \
     car.h \
-    windows.h
+    windows.h \
+    strategy.h
