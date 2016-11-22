@@ -1,5 +1,12 @@
 QT += widgets
 
+TEMPLATE = app
+CONFIG += console c++11
+CONFIG += c++11
+CONFIG += gnu++11
+QMAKE_CXXFLAGS += -std=c++11
+CONFIG -= app_bundle
+CONFIG -= qt
 
 
 SOURCES += main.cpp \
@@ -49,12 +56,12 @@ SOURCES += main.cpp \
     Box2D/Dynamics/b2World.cpp \
     Box2D/Dynamics/b2WorldCallbacks.cpp \
     Box2D/Rope/b2Rope.cpp \
-    Moteur.cpp \
     b2Car.cpp \
     Floor.cpp \
     car.cpp \
     preprocessing.cpp \
-    windows.cpp 
+    windows.cpp \
+    Moteur.cpp
 
 
 HEADERS += \
@@ -105,9 +112,10 @@ HEADERS += \
     Box2D/Dynamics/b2WorldCallbacks.h \
     Box2D/Rope/b2Rope.h \
     Box2D/Box2D.h \
-    Moteur.h \
     b2Car.h \
     Floor.h \
     preprocessing.h \
     car.h \
-    windows.h
+    windows.h \
+    FooTest.h \
+    Moteur.h
