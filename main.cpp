@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
   // TEST GEN TEAM
 
 // Tester la génération de nouvelles voitures à partir d'un ranking
-    std::vector<double> angles;
+    /*std::vector<double> angles;
     std::vector<Car> ranking;
     angles.push_back(3);
     angles.push_back(7);
@@ -42,16 +42,16 @@ int main(int argc, char *argv[])
     std::vector<std::pair<Car,double>> cars;
     cars.push_back(std::pair<Car,double>(my_car1,110));
     cars.push_back(std::pair<Car,double>(my_car2,80));
-    cars.push_back(std::pair<Car,double>(my_car3,40));
+    cars.push_back(std::pair<Car,double>(my_car3,40));*/
 
 
     preprocessing preprocessor = preprocessing();
 
     std::cout << "Impression de trois voitures générées à partir d'un ranking" << std::endl;
 
-    preprocessor.printVector(preprocessor.openCar(&my_car1));
+    /*preprocessor.printVector(preprocessor.openCar(&my_car1));
     preprocessor.printVector(preprocessor.openCar(&my_car2));
-    preprocessor.printVector(preprocessor.openCar(&my_car3));
+    preprocessor.printVector(preprocessor.openCar(&my_car3));*/
 
 // Tester la génération d'une voiture aléatoire
     std::vector<double> means;
