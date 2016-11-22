@@ -10,7 +10,7 @@ preprocessing::preprocessing(){
 
 }
 
-std::vector<Car> preprocessing::matrixToCars(std::vector<std::vector<double>> matrix){
+std::vector<Car> preprocessing::matrixToCars(std::vector<std::vector<double>  > matrix){
     std::vector<Car> cars;
     for(int i=0;i<matrix.size();i++){
         cars.push_back(returnCar(matrix[i]));
@@ -74,7 +74,7 @@ std::vector<double> preprocessing::generateCoeff(int N){
 
 // Compute the random evolution of the new cars
 //- We can imagine a model where the variability decreases (like temperature)
-std::vector<double> preprocessing::generateRandomVector(std::vector<std::vector<double>> cars){
+std::vector<double> preprocessing::generateRandomVector(std::vector<std::vector<double>  > cars){
     std::vector<double> means;
     std::vector<double> variances;
     std::vector<double> noise;
@@ -123,17 +123,17 @@ std::vector<double> preprocessing::multiply(std::vector<double> lambda, std::vec
 }
 
 // Generate the random coefficients for one car
-std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<double>> cars){
-    std::vector<vector<double>> ans;
+std::vector<vector<double>  > preprocessing::generateCoeffs(std::vector<vector<double>  > cars){
+    std::vector<vector<double>  > ans;
     return ans;
 }
 
 // Generate all the new cars
-std::vector<vector<double>> preprocessing::generate(std::vector<vector<double>> cars){
-    std::vector<vector<double>> newCars;
+std::vector<vector<double>  > preprocessing::generate(std::vector<vector<double>  > cars){
+    std::vector<vector<double>  > newCars;
     for (int i=0;i<cars.size();i++){
         newCars[i] = vector<double>(cars[0].size());
-        vector<vector<double>> coeffs = preprocessing::generateCoeffs(cars);
+        vector<vector<double>  > coeffs = preprocessing::generateCoeffs(cars);
         for (int j=0;j<cars.size();j++){
             newCars[i] = preprocessing::add( newCars[i] , preprocessing::multiply( cars[j],coeffs[j] ) );
         }
@@ -172,12 +172,13 @@ void preprocessing::printVector(std::vector<double> vec){
 }
 
 // Transforme l'output de la course en matrice
-std::vector<std::vector<double>> preprocessing::CarsToMatrix(std::vector<std::pair<Car,double>> output){
-    std::vector<std::vector<double>> M;
-    for(std::vector<std::pair<Car,double>>::iterator it = output.begin(); it != output.end(); ++it){
+std::vector<std::vector<double>  > preprocessing::CarsToMatrix(std::vector<std::pair<Car,double>  > output){
+    std::vector<std::vector<double>  > M;
+    for(std::vector<std::pair<Car,double>  >::iterator it = output.begin(); it != output.end(); ++it){
         std::vector<double> data;
         data = openCar((*it).first);
         data.push_back((*it).second);
         M.push_back(data);
     }
 }
+

@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
   //TEST UI TEAM
 
     QApplication app(argc, argv);
-    windows fenetre(500);
+    windows fenetre(40);
     fenetre.show();
     /*return */app.exec();
 
