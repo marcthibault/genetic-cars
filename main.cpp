@@ -19,6 +19,16 @@ int main(int argc, char *argv[])
 
   // TEST GEN TEAM
 
+    /* Pipeline :
+     * 1. Création d'une première génération.
+     * 2. Pour chaque génération :
+     *  a. Transformer les résultats de la course en matrice (carsToMatrix)
+     *  b. Générer les nouvelles voitures à l'aide des résultats :
+     *     i. Générer des coefficients à l'aide de plusieurs stratégies (fonctions de la classe strategy)
+     *     ii. Pour chacune des stratégies, créer des voitures à partir des coefficient (generate)
+     *  c. Transformer cette matrice en vecteur de voitures (matrixToCars)
+     */
+
     preprocessing preprocessor = preprocessing();
     // Tester la génération d'une voiture aléatoire
     std::vector<double> means = {1.6, 2.6, 3.6, 4.6, 22.6, 22.6, 22.6, 22.6, 22.6, 22.6};
@@ -39,6 +49,7 @@ int main(int argc, char *argv[])
     std::vector<std::vector<double>> vec_tab = preprocessor.carsToMatrix(&cars);
     preprocessor.printVector(&vec_tab[0]);
 
+    std::cout<<"Creation d'une nouvelle generation de voitures :" <<std::endl;
     std::vector<std::vector<double>> newMatrix;
     preprocessor.generate(&vec_tab,&newMatrix,3);
     preprocessor.printVector(&(newMatrix[0]));

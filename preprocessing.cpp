@@ -89,7 +89,7 @@ std::vector<double> preprocessing::multiply(std::vector<double> lambda, std::vec
     return c;
 }
 
-// Pour la debug : print vector
+// Pour la debug : print vector.
 void preprocessing::printVector(std::vector<double>* vec){
     for (std::vector<double>::const_iterator i = vec->begin(); i != vec->end(); ++i)
         std::cout << *i << ' ';
@@ -97,12 +97,14 @@ void preprocessing::printVector(std::vector<double>* vec){
 }
 
 
-// Generate all the new cars
+// Generate cars of a new generation from the result of a race.
 void preprocessing::generate(std::vector<std::vector<double>> *cars,std::vector<std::vector<double>> *newCars,int nbCars){
+    std::vector<std::vector<double>> coeffs = preprocessing::generateCoeffs(*cars);
+    std::cout << "Ligne 0 de COoffs" << std::endl;
+    printVector(&coeffs[0]);
+    printVector(&coeffs[1]);
+    printVector(&coeffs[2]);
     for (int i=0;i<nbCars;i++){
-        std::vector<std::vector<double>> coeffs = preprocessing::generateCoeffs(*cars);
-        std::cout << "Ligne 0 de COoffs" << std::endl;
-        printVector(&coeffs[0]);
         std::vector<double> newCar((*cars)[0].size(),0);
         for (int j=0;j<cars->size();j++){
             newCar = preprocessing::add( newCar , preprocessing::multiply( (*cars)[j],coeffs[j] ) );
@@ -113,7 +115,7 @@ void preprocessing::generate(std::vector<std::vector<double>> *cars,std::vector<
     }
 }
 
-// Compute a random car
+// Compute a random car with coherent coefficients (around coherent means and with a large variance).
 Car preprocessing::generateRandomCar(std::vector<double> means, std::vector<double> variances){
     std::vector<double> attributes;
     std::default_random_engine generator;
@@ -136,6 +138,7 @@ Car preprocessing::generateRandomCar(std::vector<double> means, std::vector<doub
     return returnCar(&attributes);
 }
 
+// Function called to launch the simulation by generating N random cars.
 std::vector<Car> preprocessing::initialise(int N, std::vector<double> means, std::vector<double> variances){
     std::vector<Car> firstCars;
     for (int i=0;i<N;i++){
@@ -143,5 +146,3 @@ std::vector<Car> preprocessing::initialise(int N, std::vector<double> means, std
     }
     return firstCars;
 }
-
-
