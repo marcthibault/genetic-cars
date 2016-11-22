@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
     std::pair<Car,double> p2 (car2,2.);
     std::pair<Car,double> p3 (car3,3.);
     std::vector<std::pair<Car,double>> cars = { p1,p2,p3};
-    std::vector<std::vector<double>> vec_tab = preprocessor.CarsToMatrix(&cars);
+    std::vector<std::vector<double>> vec_tab = preprocessor.carsToMatrix(&cars);
     preprocessor.printVector(&vec_tab[0]);
     std::cout << "Test de MatrixToCars" << std::endl;
     std::vector<Car> car_tab = preprocessor.matrixToCars(&vec_tab);

@@ -188,7 +188,7 @@ void preprocessing::printVector(std::vector<double>* vec){
     Get: list of pair (Car, rankingof the car)
     Return: list of vector with params of the car + ranking at end of vector
 */
-std::vector<std::vector<double>> preprocessing::CarsToMatrix(std::vector<std::pair<Car,double>>* output){
+std::vector<std::vector<double>> preprocessing::carsToMatrix(std::vector<std::pair<Car,double>>* output){
     std::vector<std::vector<double>> M;
     for(std::vector<std::pair<Car,double>>::iterator it = output->begin(); it != output->end(); ++it){
         std::vector<double> data;
