@@ -6,7 +6,7 @@ CONFIG += c++11
 CONFIG += gnu++11
 QMAKE_CXXFLAGS += -std=c++11
 CONFIG -= app_bundle
-CONFIG -= qt
+#CONFIG -= qt
 
 
 SOURCES += main.cpp \

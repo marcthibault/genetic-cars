@@ -1,4 +1,3 @@
-#include <QCoreApplication>
 #include <Box2D/Box2D.h>
 #include <QApplication>
 #include <QCoreApplication>
@@ -17,7 +16,7 @@
 
 using namespace std;
 
-int main()
+int main(int argc, char** argv)
 {
   //TEST CAR TEAM
    // QCoreApplication a(argc, argv);
