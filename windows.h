@@ -22,6 +22,9 @@
 #include <math.h>
 #include <vector>
 #include <QLineF>
+#include <Moteur.h>
+#include <array>
+#include <iostream>
 
 
 
@@ -52,6 +55,8 @@ class windows : public QWidget
     QGraphicsScene* m_scene;
     QGraphicsView* m_view;
     QPushButton *m_reset;
+
+    Moteur* moteur;
 
     // Pour le chrono
     QLCDNumber* m_LCD;

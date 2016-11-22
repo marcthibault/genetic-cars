@@ -58,6 +58,8 @@ windows::windows(int dt) : QWidget()
     m_view->move(0,0);
     m_view->show();
 
+    moteur=new Moteur(10.0);
+
 
     this->m_LCD = new QLCDNumber(5, this);
 
@@ -96,8 +98,9 @@ void windows::dessiner(QVector<QPointF> v,QPen pen,QBrush brush){
 
 void windows::afficher()
 {
-    m_scene->clear();
-    if(a){
+
+   // m_scene->clear();
+    //if(a){
 
         /*
         QVector<QPointF> vect;
@@ -120,6 +123,7 @@ void windows::afficher()
 
         this->displayFloor(vect2);
         */
+    /*
         QVector<QPointF> vect;
         vect.append(QPointF(10.0,10.0));
         vect.append(QPointF(10.0,100.0));
@@ -155,6 +159,13 @@ void windows::afficher()
         dessiner(vect,QPen(Qt::green),QBrush(Qt::yellow));
         a=true;
     }
+    */
+
+
+    moteur->next(0.2);
+    std::vector<std::array<float, 4> > V =moteur->getPosition();
+    std::cout<<V[0][1]<<std::endl;
+
     timer->start(step);
 }
 
