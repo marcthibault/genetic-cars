@@ -25,6 +25,8 @@ public:
     void initializeTestCarNulle(b2World* m_world); // On construit une voiture test (comme la précédente) mais qui avance moins vite pour tester les fonctions de classement
     void printPosition(); // imprime position, angle, temps de stagnation, classment en console. Pour les tests
     bool bloquee(float tempsStagnationMax); // true si la voiture est morte
+
+    void b2Car::creationChassis(b2Body* m_car, Car c); //crée un chassis correspondant à la car c sur m_car qui doit déjà avoir été ajouté au m_world
 };
 
 #endif // B2CAR_H

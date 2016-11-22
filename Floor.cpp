@@ -61,10 +61,10 @@ void  Floor::createArrayb2Vec2(int N){
         }
         b2Vec2 v = p->back();
         p->push_back(b2Vec2(v.x,v.y+100.0));
-        /*A décommenter si ça ne fonctionne pas
-          p->push_back(b2Vec2(v.x,v.y-100.0));
-           p->push_back(b2Vec2(v.x,v.y+100.0));
-        */
+//        A décommenter si ça ne fonctionne pas
+        p->push_back(b2Vec2(v.x,v.y-100.0));
+        p->push_back(b2Vec2(v.x,v.y+100.0));
+
     }
     else{
         for(int i =1;i<N;i++){
@@ -77,10 +77,10 @@ void  Floor::createArrayb2Vec2(int N){
         }
         b2Vec2 v = p->back();
         p->push_back(b2Vec2(v.x,v.y+100.0));
-        /*A décommenter si ça ne fonctionne pas
-          p->push_back(b2Vec2(v.x,v.y-100.0));
-           p->push_back(b2Vec2(v.x,v.y+100.0));
-        */
+        //A décommenter si ça ne fonctionne pas
+        p->push_back(b2Vec2(v.x,v.y-100.0));
+        p->push_back(b2Vec2(v.x,v.y+100.0));
+
     }
 }
 

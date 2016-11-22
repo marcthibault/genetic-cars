@@ -159,3 +159,39 @@ bool b2Car::bloquee(float tempsStagnationMax){
 //b2Car::b2Car(Car car){
 //    //constructeur qui crée la forme + les joints + les roues etc ...
 //}
+
+
+
+void b2Car::creationChassis(b2Body* m_car, Car c){
+/* Prend en paramètre un b2Body et lui assigne le chassis conrrespondant à la car c
+Attention, la voiture doit déjà avoir été ajouté au monde */
+
+
+    vector<pair<double,double> > pos = c.get_points_xy(); //ensemble des positions des sommets du chassis avec origine situé au centre des roues en x et à r1 (rayon roue 1) en y
+
+//    b2Vec2 * vertices = new b2Vec2[c.N]; //conversion en b2Vec2
+//    for(int i=0;i<c.N;++i)
+//    {
+//        std::cout<<(float)pos[i].first<<" / "<<(float)pos[i].second<<std::endl;
+//        vertices[i].Set((float)pos[i].first,(float)pos[i].second);
+//    }
+
+
+    for(int i = 0; i<c.N; i++){ //décomposition en triangle élémentaire du polygone chassi, un sommet du triangle au centre et les autres sur deux sommets
+        b2PolygonShape morceauChassis;
+        b2Vec2* triangle = new b2Vec2[3];
+        triangle->SetZero();
+        triangle[1].Set((float)pos[i].first, (float)pos[i].second);
+        triangle[2].Set((float)pos[( (i+1)%(c.N) )].first, (float)pos[( (i+1)%(c.N) )].second); //le modulo permet de gérer le retour au premier sommet quand on arrive au dernier sommet
+//        triangle[2].Set(vertices[( (i+1)%(c.N) )].x, vertices[( (i+1)%(c.N) )].y);
+        morceauChassis.Set(triangle, 3);
+
+        b2FixtureDef fdChassis;
+        fdChassis.shape = &morceauChassis;
+        fdChassis.density = 1.0f;
+        fdChassis.filter.groupIndex = -1;
+
+        m_car->CreateFixture(&fdChassis); //ajout fixture sur m_car,attention car doit déjà avoir été donné au world
+    }
+
+}

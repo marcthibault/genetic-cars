@@ -121,4 +121,5 @@ HEADERS += \
     car.h \
     windows.h \
     FooTest.h \
-    Moteur.h
+    Moteur.h \
+    CCar.h

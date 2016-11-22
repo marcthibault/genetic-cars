@@ -29,11 +29,13 @@ int main(int argc, char** argv)
 
   //TEST UI TEAM
 */
-    QApplication app(argc, argv);
+   /* QApplication app(argc, argv);
     windows fenetre(40);
     fenetre.show();
-
+*/
     Moteur* m = new Moteur(10.0);
+
+    //TEST TEAM PHY
 
     while (!m->toutesCarBloquees(5.0))
     {
@@ -51,6 +53,8 @@ int main(int argc, char** argv)
     // vect.append(QPointF(150.0,10.0));
     //
     // fenetre.displayFloor(vect);
+
+    /*
 
     app.exec();
 
@@ -116,6 +120,8 @@ int main(int argc, char** argv)
     std::cout << "Fin de l'affichage" << std::endl;
     // return a.exec();
     return 0;
+
+    */
 
 }
 
