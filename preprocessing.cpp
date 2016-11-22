@@ -9,7 +9,8 @@
 #include <time.h>
 
 preprocessing::preprocessing(){
-
+    srand(time(NULL));
+    std::default_random_engine generator;
 }
 
 // Transfor a vector of vector of car parameters into a vector of cars
@@ -110,7 +111,7 @@ std::vector<double> preprocessing::generateRandomVector(std::vector<std::vector<
 
 // Sum of two cars
 std::vector<double> preprocessing::add(std::vector<double> a, std::vector<double> b){
-    std::vector<double> c(a.size(), 0.0);
+    std::vector<double> c;
     for (int i=0;i<a.size();i++){
         c.push_back(a[i] + b[i]);
     }
@@ -119,7 +120,7 @@ std::vector<double> preprocessing::add(std::vector<double> a, std::vector<double
 
 //Multiply car with a scalar
 std::vector<double> preprocessing::multiply(std::vector<double> lambda, std::vector<double> car){
-    std::vector<double> c(car.size(), 0.0);
+    std::vector<double> c;
     for (int i=0;i<car.size();i++){
         c.push_back( lambda[i] * car[i]);
     }
@@ -141,18 +142,16 @@ std::vector<vector<double>> preprocessing::generateCoeffsRandom(std::vector<vect
 
 // Generate all the new cars
 void preprocessing::generate(std::vector<std::vector<double>> *cars,std::vector<std::vector<double>> *newCars,int nbCars){
-    std::vector<std::vector<double>> coeffs = preprocessing::generateCoeffs(*cars);
-    std::cout << "Ligne 0 de COoffs" << std::endl;
-    printVector(&coeffs[0]);
-    printVector(&coeffs[1]);
-    printVector(&coeffs[2]);
-    for (int i=0;i<nbCars;i++){
-        std::vector<double> newCar((*cars)[0].size(),0);
+    for (int i=0;i<nbCars;i++){//nbCars
+        std::vector<std::vector<double>> coeffs = preprocessing::generateCoeffs(*cars);
+        std::vector<double> newCar((*cars)[0].size()-1,0);
         for (int j=0;j<cars->size();j++){
-            newCar = preprocessing::add( newCar , preprocessing::multiply( (*cars)[j],coeffs[j] ) );
-            std::cout << "Etape de newCar " << std::endl;
-            printVector(&newCar);
+            std::vector<double> my_car = (*cars)[j];
+            my_car.pop_back();
+            std::vector<double> prod = preprocessing::multiply( my_car,coeffs[j] );
+            newCar = preprocessing::add( newCar , prod );
         }
+        printVector(&newCar);
         newCars->push_back(newCar);
     }
 }
@@ -160,7 +159,6 @@ void preprocessing::generate(std::vector<std::vector<double>> *cars,std::vector<
 // Compute a random car
 Car preprocessing::generateRandomCar(std::vector<double> means, std::vector<double> variances){
     std::vector<double> attributes;
-    std::default_random_engine generator;
     for(int i = 0;i < 6; i++){
         std::normal_distribution<double> distribution(means[i], variances[i]);
         double value = distribution(generator);
@@ -223,7 +221,6 @@ std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<dou
     std::vector<double> coeff1;
     std::vector<double> coeff2;
 
-    srand(time(NULL));
     for (int i=0 ; i<carsAndDistance[0].size() -1 ; i++){
         //on choisit chaque caractère entre parent 1 et 2 de manière aléatoire
         double r = ((double)rand() / (RAND_MAX));
@@ -237,10 +234,6 @@ std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<dou
     }
     // on met tous les autres coeff à 0
     std::vector<double> null(carsAndDistance[0].size()-1, 0.0);
-    std::cout << "Coeffs" << std::endl;
-    printVector(&coeff1);
-    printVector(&coeff2);
-    printVector(&null);
     for (int i=0;i<carsAndDistance.size() ; i++){
         if(parents.first ==  parents.second && i == parents.first){
             std::vector<double> ones(carsAndDistance[0].size()-1, 1.0);
@@ -253,6 +246,7 @@ std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<dou
             coeffs.push_back(null);
         }
     }
+    printVector(&coeff1);
     return coeffs;
 }
 

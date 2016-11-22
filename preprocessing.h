@@ -3,13 +3,19 @@
 
 #include "car.h"
 #include <utility> //std::pair
+#include <math.h>
 #include <vector>
+#include <random>
+#include <stdlib.h>
+#include <iostream>
+#include <time.h>
 
 
 class preprocessing
 {
 public:
     preprocessing();
+    std::default_random_engine generator;
     std::vector<double> openCar(Car* my_car);
     std::vector<Car> matrixToCars(std::vector<std::vector<double>>* matrix);
     Car returnCar(std::vector<double>* attributes);
