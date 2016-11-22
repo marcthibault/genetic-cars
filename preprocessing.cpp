@@ -140,16 +140,19 @@ std::vector<vector<double>> preprocessing::generateCoeffsRandom(std::vector<vect
 }
 
 // Generate all the new cars
-std::vector<vector<double>> preprocessing::generate(std::vector<std::vector<double>> *cars,std::vector<std::vector<double>> *newCars,int nbCars){
+void preprocessing::generate(std::vector<std::vector<double>> *cars,std::vector<std::vector<double>> *newCars,int nbCars){
     for (int i=0;i<nbCars;i++){
-        std::vector<std::vector<double>> coeffs = preprocessing::generateCoeffs(cars);
-        std::abortvector<double> newCar(cars[0].size(),0);
+        std::vector<std::vector<double>> coeffs = preprocessing::generateCoeffs(*cars);
+        std::cout << "Ligne 0 de COoffs" << std::endl;
+        printVector(&coeffs[0]);
+        std::vector<double> newCar((*cars)[0].size(),0);
         for (int j=0;j<cars->size();j++){
-            newCar  = preprocessing::add( tmp , preprocessing::multiply( cars[j],coeffs[j] ) );
+            newCar = preprocessing::add( newCar , preprocessing::multiply( (*cars)[j],coeffs[j] ) );
+            std::cout << "Etape de newCar " << std::endl;
+            printVector(&newCar);
         }
-        newCars.push_back(newCar);
+        newCars->push_back(newCar);
     }
-    return newCars;
 }
 
 // Compute a random car
@@ -186,7 +189,7 @@ void preprocessing::printVector(std::vector<double>* vec){
     Get: list of pair (Car, rankingof the car)
     Return: list of vector with params of the car + ranking at end of vector
 */
-std::vector<std::vector<double>> preprocessing::CarsToMatrix(std::vector<std::pair<Car,double>>*output){
+std::vector<std::vector<double>> preprocessing::carsToMatrix(std::vector<std::pair<Car,double>>* output){
     std::vector<std::vector<double>> M;
     for(std::vector<std::pair<Car,double>>::iterator it = output->begin(); it != output->end(); ++it){
         std::vector<double> data;
