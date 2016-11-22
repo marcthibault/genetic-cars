@@ -31,13 +31,19 @@ void b2Car::initializeTestCar(b2World* m_world){
     b2BodyDef bd;
     bd.type = b2_dynamicBody;
     bd.position.Set(0.0f, 1.0f);
+    b2FixtureDef fd_car;
+    fd_car.shape = &chassis;
+    fd_car.density = 1.0f;
+    fd_car.friction = 0.9f;
+    fd_car.filter.groupIndex = -1;
     m_car = m_world->CreateBody(&bd);
-    m_car->CreateFixture(&chassis, 1.0f);
+    m_car->CreateFixture(&fd_car);
 
     b2FixtureDef fd;
     fd.shape = &circle;
     fd.density = 1.0f;
     fd.friction = 0.9f;
+    fd.filter.groupIndex = -1;
 
     b2Body* m_wheel1;
     bd.position.Set(-1.0f, 0.35f);
@@ -96,13 +102,19 @@ void b2Car::initializeTestCarNulle(b2World* m_world){
     b2BodyDef bd;
     bd.type = b2_dynamicBody;
     bd.position.Set(0.0f, 1.0f);
+    b2FixtureDef fd_car;
+    fd_car.shape = &chassis;
+    fd_car.density = 1.0f;
+    fd_car.friction = 0.9f;
+    fd_car.filter.groupIndex = -1;
     m_car = m_world->CreateBody(&bd);
-    m_car->CreateFixture(&chassis, 1.0f);
+    m_car->CreateFixture(&fd_car);
 
     b2FixtureDef fd;
     fd.shape = &circle;
     fd.density = 1.0f;
     fd.friction = 0.9f;
+    fd.filter.groupIndex = -1;
 
     b2Body* m_wheel1;
     bd.position.Set(-1.0f, 0.35f);

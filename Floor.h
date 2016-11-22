@@ -10,7 +10,7 @@ class Floor
 public:
     Floor(); // Constuit un sol plat de 100m. ICI un sol = une liste de points
     Floor(float mur); // Construit un sol plat de 100m avec un mur vertical en x = mur
-    Floor(double l, double v); // initialisateur 'classique' de la classe
+    Floor(double l, double v, bool c); // initialisateur 'classique' de la classe
     double getLength(); // récupère les éléments private
     double getVariance(); // récupère les éléments private
     void createArrayb2Vec2(int N); // Construit un sol aléatoire avec la méthode de Thibault
