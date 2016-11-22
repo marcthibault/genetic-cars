@@ -122,17 +122,16 @@ std::vector<double> preprocessing::multiply(std::vector<double> lambda, std::vec
 }
 
 // Generate the random coefficients for one car
-std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<double> > &cars){
-    /*std::vector<vector<double>> ans;
+std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<double>> cars){
+    std::vector<vector<double>> ans;
     for (int i=0;i<cars.size();i++){
-        std::vector<double> line;
-        for (int j=0;j<cars[0].size();j++){
-            line.push_back(1.0);
+        std::vector<double> tmp;
+        for (int j =0;j<cars[0].size()-1;j++){
+            tmp.push_back(1.0);
         }
-        ans.push_back(line);
+        ans.push_back(tmp);
     }
-    return ans;*/
-    return cars;
+    return ans;
 }
 
 // Generate all the new cars
@@ -140,14 +139,12 @@ std::vector<vector<double>> preprocessing::generate(std::vector<vector<double>>&
     std::cout << "starting generate" << std::endl;
     std::vector<vector<double>> newCars;
     for (int i=0;i<cars.size();i++){
-        std::cout << "hello " << i << std::endl;
-        newCars.push_back(vector<double>(cars[0].size()));
-        std::cout << "push back " << i << std::endl;
         vector<vector<double>> coeffs = preprocessing::generateCoeffs(cars);
-        std::cout << "generaterd coeff " << std::endl;
+        vector<double> tmp(cars[0].size(),0);
         for (int j=0;j<cars.size();j++){
-            newCars[i] = preprocessing::add( newCars[i] , preprocessing::multiply( cars[j],coeffs[j] ) );
+            tmp  = preprocessing::add( tmp , preprocessing::multiply( cars[j],coeffs[j] ) );
         }
+        newCars.push_back(tmp);
     }
     return newCars;
 }
@@ -190,5 +187,11 @@ std::vector<std::vector<double>> preprocessing::CarsToMatrix(std::vector<std::pa
         data = openCar((*it).first);
         data.push_back((*it).second);
         M.push_back(data);
+    }
+}
+
+pair<int,int> preprocessing::selectParent(std::vector<double> & distances) {
+    for(std::vector<double>::iterator it = distances.begin(); it != distances.end(); ++it){
+
     }
 }
