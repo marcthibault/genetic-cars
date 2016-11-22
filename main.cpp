@@ -32,6 +32,16 @@ int main(int argc, char *argv[])
     windows fenetre(40);
     fenetre.show();
 
+    QVector<QPointF> vect;
+    vect.append(QPointF(10.0,10.0));
+    vect.append(QPointF(10.0,100.0));
+    vect.append(QPointF(200.0,150.0));
+    vect.append(QPointF(300.0,100.0));
+    vect.append(QPointF(200.0,50.0));
+    vect.append(QPointF(150.0,10.0));
+
+    fenetre.displayFloor(vect);
+
     app.exec();
 /*
   //TEST PHY TEAM

@@ -51,7 +51,7 @@ windows::windows(int dt) : QWidget()
     m_scene = new QGraphicsScene(this);
     m_scene->setSceneRect(0,0,500,300);
     m_view = new QGraphicsView(m_scene,this);
-    m_view->move(100,100);
+    m_view->move(0,0);
     m_view->show();
 
 
@@ -140,4 +140,16 @@ QPointF windows::cartesien(double x, double y, double angle, double longueur, do
     double x0=x+longueur*cos(angle+repere);
     double y0=y+longueur*sin(angle+repere);
     return QPointF(x0,y0);
+}
+
+void windows::displayFloor(QVector<QPointF> v){
+    QPointF p1=v.first();
+    v.pop_front();
+    while(!v.isEmpty()){
+        QPointF p2=v.first();
+        v.pop_front();
+        m_scene->addLine(QLineF ( p1, p2));
+        p1=p2;
+    }
+
 }
