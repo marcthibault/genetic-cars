@@ -140,10 +140,10 @@ std::vector<vector<double>> preprocessing::generateCoeffsRandom(std::vector<vect
 }
 
 // Generate all the new cars
-std::vector<vector<double>> preprocessing::generate(std::vector<vector<double>> *cars,std::vector<vector<double>> *newCars, vector<vector<double>> (*generateCoeffs)(vector<vector<double>>),int nbCars){
+std::vector<vector<double>> preprocessing::generate(std::vector<std::vector<double>> *cars,std::vector<std::vector<double>> *newCars,int nbCars){
     for (int i=0;i<nbCars;i++){
-        vector<vector<double>> coeffs = preprocessing::generateCoeffs(cars);
-        vector<double> newCar(cars[0].size(),0);
+        std::vector<std::vector<double>> coeffs = preprocessing::generateCoeffs(cars);
+        std::abortvector<double> newCar(cars[0].size(),0);
         for (int j=0;j<cars->size();j++){
             newCar  = preprocessing::add( tmp , preprocessing::multiply( cars[j],coeffs[j] ) );
         }
@@ -183,7 +183,7 @@ void preprocessing::printVector(std::vector<double> vec){
 }
 
 // Transforme l'output de la course en matrice
-std::vector<std::vector<double>> preprocessing::CarsToMatrix(std::vector<std::pair<Car,double>> output){
+std::vector<std::vector<double>> preprocessing::carsToMatrix(std::vector<std::pair<Car,double>> output){
     std::vector<std::vector<double>> M;
     for(std::vector<std::pair<Car,double>>::iterator it = output.begin(); it != output.end(); ++it){
         std::vector<double> data;
@@ -191,6 +191,7 @@ std::vector<std::vector<double>> preprocessing::CarsToMatrix(std::vector<std::pa
         data.push_back((*it).second);
         M.push_back(data);
     }
+    return M;
 }
 
 // Calcule les coefficients pour la combinaison linéaire des voitures
