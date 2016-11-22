@@ -161,10 +161,40 @@ void windows::afficher()
     }
     */
 
-
-    moteur->next(0.2);
+    m_scene->clear();
+    moteur->next(0.1);
     std::vector<std::array<float, 4> > V =moteur->getPosition();
-    std::cout<<V[0][1]<<std::endl;
+    int indice=-1;
+    for(int i=0;i<V.size();i++){
+        if(V[i][3]==1)indice=i;
+        QVector<QPointF> vect;
+        double abs=5*V[i][1];
+        vect.append(QPointF(10.0+abs,10.0));
+        vect.append(QPointF(10.0+abs,100.0));
+        vect.append(QPointF(200.0+abs,150.0));
+        vect.append(QPointF(300.0+abs,100.0));
+        vect.append(QPointF(200.0+abs,50.0));
+        vect.append(QPointF(150.0+abs,10.0));
+        //dessiner(vect);
+
+        if(i==0) dessiner(vect);
+        else dessiner(vect,QPen(Qt::green),QBrush(Qt::yellow));
+
+    }
+    double abs0=5*V[indice][1];
+    std::cout<<abs0<<std::endl;
+
+    QVector<QPointF> vect2;
+    vect2.append(QPointF(10.0,160.0));
+    vect2.append(QPointF(100.0,150.0));
+    vect2.append(QPointF(200.0,160.0));
+    vect2.append(QPointF(300.0,170.0));
+    vect2.append(QPointF(400.0,150.0));
+    vect2.append(QPointF(550.0,110.0));
+
+    this->displayFloor(vect2);
+
+    m_scene->setSceneRect(abs0,0,500,300);
 
     timer->start(step);
 }

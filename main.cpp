@@ -30,7 +30,7 @@ int main(int argc, char** argv)
   //TEST UI TEAM
 */
     QApplication app(argc, argv);
-    windows fenetre(40);
+    windows fenetre(100);
     fenetre.show();
 
 
