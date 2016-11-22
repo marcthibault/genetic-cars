@@ -72,7 +72,7 @@ void Moteur::printPositions(){
 }
 
 /*Crée une fonction qui retourne les positions des centres de chaques voitures.
- * Pour chaque voiture de la course, on transmet un tableau contenant angle, x,y de son centre,
+ * Pour chaque voiture de la course, on transmet un tableau contenant angle, x,y de son centre, et classement
  * */
 
 std::vector<std::array<float, 4> > Moteur::getPosition(){
