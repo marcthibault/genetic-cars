@@ -13,10 +13,10 @@ preprocessing::preprocessing(){
 }
 
 // Transfor a vector of vector of car parameters into a vector of cars
-std::vector<Car> preprocessing::matrixToCars(std::vector<std::vector<double>> matrix){
+std::vector<Car> preprocessing::matrixToCars(std::vector<std::vector<double>>* matrix){
     std::vector<Car> cars;
-    for(int i=0;i<matrix.size();i++){
-        cars.push_back(returnCar(matrix[i]));
+    for(int i=0;i<(*matrix).size();i++){
+        cars.push_back(returnCar(&(*matrix)[i]));
     }
     return cars;
 }
@@ -40,17 +40,17 @@ std::vector<double> preprocessing::openCar(Car* my_car){
 }
 
 // Convert vector in car
-Car preprocessing::returnCar(std::vector<double> attributes){
+Car preprocessing::returnCar(std::vector<double>* attributes){
     Car my_car = Car();
-    my_car.r1 = attributes[0];
-    my_car.d1 = attributes[1];
-    my_car.r2 = attributes[2];
-    my_car.d2 = attributes[3];
-    my_car.D = attributes[4];
-    my_car.d = attributes[5];
-    int len = (attributes.size() - 6)/2;
+    my_car.r1 = (*attributes)[0];
+    my_car.d1 = (*attributes)[1];
+    my_car.r2 = (*attributes)[2];
+    my_car.d2 = (*attributes)[3];
+    my_car.D = (*attributes)[4];
+    my_car.d = (*attributes)[5];
+    int len = ((*attributes).size() - 6)/2;
     for(int i = 0; i < len; i++){
-        std::pair <double,double> pair (attributes[6+i],attributes[6+len+i]);
+        std::pair <double,double> pair ((*attributes)[6+i],(*attributes)[6+len+i]);
         my_car.angles_distances.push_back(pair);
     }
     return my_car;
@@ -172,20 +172,23 @@ Car preprocessing::generateRandomCar(std::vector<double> means, std::vector<doub
         double value_variance = distribution_variances(generator);
         attributes.push_back(value_variance);
     }
-    return returnCar(attributes);
+    return returnCar(&attributes);
 }
 
 // Pour la debug : print vector
-void preprocessing::printVector(std::vector<double> vec){
-    for (std::vector<double>::const_iterator i = vec.begin(); i != vec.end(); ++i)
+void preprocessing::printVector(std::vector<double>* vec){
+    for (std::vector<double>::const_iterator i = vec->begin(); i != vec->end(); ++i)
         std::cout << *i << ' ';
     std::cout << ' ' << std::endl;
 }
 
-// Transforme l'output de la course en matrice
-std::vector<std::vector<double>> preprocessing::carsToMatrix(std::vector<std::pair<Car,double>> output){
+/* Transforme l'output de la course en matrice
+    Get: list of pair (Car, rankingof the car)
+    Return: list of vector with params of the car + ranking at end of vector
+*/
+std::vector<std::vector<double>> preprocessing::CarsToMatrix(std::vector<std::pair<Car,double>>*output){
     std::vector<std::vector<double>> M;
-    for(std::vector<std::pair<Car,double>>::iterator it = output.begin(); it != output.end(); ++it){
+    for(std::vector<std::pair<Car,double>>::iterator it = output->begin(); it != output->end(); ++it){
         std::vector<double> data;
         data = openCar(&(*it).first);
         data.push_back((*it).second);
