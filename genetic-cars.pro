@@ -1,10 +1,17 @@
+QT += widgets
+
 TEMPLATE = app
 CONFIG += console c++11
 CONFIG += c++11
 CONFIG += gnu++11
 QMAKE_CXXFLAGS += -std=c++11
 CONFIG -= app_bundle
-CONFIG -= qt
+#CONFIG -= qt
+
+CONFIG += console c++11
+CONFIG += c++11
+CONFIG += gnu++11
+QMAKE_CXXFLAGS += -std=c++11
 
 SOURCES += main.cpp \
     Box2D/Collision/Shapes/b2ChainShape.cpp \
@@ -55,6 +62,9 @@ SOURCES += main.cpp \
     Box2D/Rope/b2Rope.cpp \
     b2Car.cpp \
     Floor.cpp \
+    car.cpp \
+    preprocessing.cpp \
+    windows.cpp \
     Moteur.cpp
 
 HEADERS += \
@@ -66,7 +76,7 @@ HEADERS += \
     Box2D/Collision/b2BroadPhase.h \
     Box2D/Collision/b2Collision.h \
     Box2D/Collision/b2Distance.h \
-    Box2D/Collision/b2DynamicTree.h \
+    Box2D/C2ollision/b2DynamicTree.h \
     Box2D/Collision/b2TimeOfImpact.h \
     Box2D/Common/b2BlockAllocator.h \
     Box2D/Common/b2Draw.h \
@@ -89,7 +99,7 @@ HEADERS += \
     Box2D/Dynamics/Joints/b2GearJoint.h \
     Box2D/Dynamics/Joints/b2Joint.h \
     Box2D/Dynamics/Joints/b2MotorJoint.h \
-    Box2D/Dynamics/Joints/b2MouseJoint.h \
+    Box2D/Dynamics/archi.cppJoints/b2MouseJoint.h \
     Box2D/Dynamics/Joints/b2PrismaticJoint.h \
     Box2D/Dynamics/Joints/b2PulleyJoint.h \
     Box2D/Dynamics/Joints/b2RevoluteJoint.h \
@@ -107,6 +117,8 @@ HEADERS += \
     Box2D/Box2D.h \
     b2Car.h \
     Floor.h \
+    preprocessing.h \
+    car.h \
+    windows.h \
     FooTest.h \
     Moteur.h
-

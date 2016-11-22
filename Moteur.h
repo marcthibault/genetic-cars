@@ -8,6 +8,8 @@
 #include <vector>
 #include <algorithm>
 #include <math.h>
+#include <array>
+
 
 
 
@@ -45,7 +47,7 @@ public :
 
     void next(float dt); // Avance de dt dans le moteur physique et mets à jour les paramètres
     void printPositions(); // Imprime les positions, angles, temps de stagnation et classement de toutes nos voitures
-    void getPosition(); // Pour l'interface graphique.
+    std::vector<std::array<float, 4> > getPosition(); // Pour l'interface graphique.
     void classement(); // Met à jour le classement des voitures.
     bool toutesCarBloquees(float tempsStagnationMax); // Si true ie si toutes les voitures n'avancent plus depuis suffisamment longtemps la course s'arrete
 };

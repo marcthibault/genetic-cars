@@ -15,7 +15,7 @@ public:
     double getVariance(); // récupère les éléments private
     void createArrayb2Vec2(int N); // Construit un sol aléatoire avec la méthode de Thibault
     void floorInitialize(b2World* world);// Construit effectivement le sol dans le monde pointé
-    list<b2Vec2> getPoints();
+    std::list<float32>* getPoints();
 //    void extend();
 private:
     double length; // Longueur de chaque bout de segments

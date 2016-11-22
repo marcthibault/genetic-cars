@@ -1,6 +1,7 @@
 #ifndef B2CAR_H
 #define B2CAR_H
 
+#include "car.h"
 #include "Box2D/Box2D.h"
 #include <iostream>
 #include <string>
@@ -27,4 +28,3 @@ public:
 };
 
 #endif // B2CAR_H
-

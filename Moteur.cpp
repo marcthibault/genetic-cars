@@ -1,5 +1,8 @@
-#include "Moteur.h"
+#include "Floor.h"
+#include "car.h"
 #include "b2Car.h"
+#include "Moteur.h"
+
 
 Moteur::Moteur(){
     car = std::vector<b2Car*>();
@@ -11,7 +14,9 @@ Moteur::Moteur(float32 g){
     this->velocityIterations = 5;
     this->positionIterations = 5;
 
-    Floor *fl = new Floor(15.0);
+    //test sol aléatoire
+    Floor *fl = new Floor(1.0, 0.01, true);
+    fl->createArrayb2Vec2(1000);
 
     this->car = std::vector<b2Car*>();
     b2Car* car1 = new b2Car();
@@ -20,7 +25,6 @@ Moteur::Moteur(float32 g){
     car.push_back(car2);
 
     world = new b2World(b2Vec2(0.0, -g));
-
 
     // Le compteur ici ne sert que pour les tests. A terme avec l'implémentation des voitures dans box2D, il devra etre supprimé
     int compteur = 0;
@@ -64,17 +68,34 @@ void Moteur::printPositions(){
     }
 }
 
-void Moteur::getPosition(){
+/*Crée une fonction qui retourne les positions des centres de chaques voitures.
+ * Pour chaque voiture de la course, on transmet un tableau contenant angle, x,y de son centre, et classement
+ * */
+
+std::vector<std::array<float, 4> > Moteur::getPosition(){
     // A refaire pourquoi pas avec un for_each !
+    std::vector<std::array<float, 4>> positions;
     for (std::vector<b2Car*>::iterator i = car.begin(); i!=car.end(); i++){
         b2Car* currentCar = (*i);
-        float angle = currentCar->m_car->GetAngle();
-        float x = currentCar->m_car->GetPosition().x;
-        float y = currentCar->m_car->GetPosition().y;
+        std::array<float, 4> positionCourante;
+        positionCourante[0] = currentCar->m_car->GetAngle();
+        //float angle = currentCar->m_car->GetAngle();
+        positionCourante[1] = currentCar->m_car->GetPosition().x;
+        //float x = currentCar->m_car->GetPosition().x;
+        positionCourante[2] = currentCar->m_car->GetPosition().y;
+        //float y = currentCar->m_car->GetPosition().y;
+        positionCourante[3] = currentCar->classement;
+        //float classement; = currentCar->classement;
+        positions.push_back(positionCourante);
+
+//        std::cout << "angle = " << positionCourante[0] << std::endl;
+//        std::cout << "x = " << positionCourante[1] << std::endl;
+//        std::cout << "y = " << positionCourante[2] << std::endl;
+//        std::cout << "classement = " << positionCourante[3] << std::endl;
     }
     // A compléter pour l'interface graphique
     // TODO
-    return ;
+    return positions;
 }
 
 bool Moteur::toutesCarBloquees(float tempsStagnationMax){
@@ -87,6 +108,7 @@ bool Moteur::toutesCarBloquees(float tempsStagnationMax){
     }
     return retour;
 }
+
 
 void Moteur::classement(){
     // Récupération des couples position/voiture
