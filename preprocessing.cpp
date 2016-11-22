@@ -182,7 +182,7 @@ void preprocessing::printVector(std::vector<double> vec){
 }
 
 // Transforme l'output de la course en matrice
-std::vector<std::vector<double>> preprocessing::CarsToMatrix(std::vector<std::pair<Car,double>> output){
+std::vector<std::vector<double>> preprocessing::carsToMatrix(std::vector<std::pair<Car,double>> output){
     std::vector<std::vector<double>> M;
     for(std::vector<std::pair<Car,double>>::iterator it = output.begin(); it != output.end(); ++it){
         std::vector<double> data;
@@ -190,6 +190,7 @@ std::vector<std::vector<double>> preprocessing::CarsToMatrix(std::vector<std::pa
         data.push_back((*it).second);
         M.push_back(data);
     }
+    return M;
 }
 
 // Calcule les coefficients pour la combinaison linéaire des voitures
@@ -198,11 +199,11 @@ std::vector<std::vector<double>> preprocessing::CarsToMatrix(std::vector<std::pa
 
 // Tirage avec remise de deux parents, proportionnellement à la distance parcourue
 
-std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<double>> carsAndDistance){
+std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<double>> *carsAndDistance){
     std::vector<vector<double>> coeffs;
 
     std::vector<double> distances;
-    for (int i=0;i<carsAndDistance.size() ; i++){
+    for (int i=0;i<carsAndDistance->size() ; i++){
         distances.push_back(carsAndDistance[i][carsAndDistance[i].size()-1]);
     }
 
@@ -225,14 +226,14 @@ std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<dou
             coeff2.push_back(0);
         }
     }
-    // on met tous les autres coeff à 0
-    std::vector<double> null(carsAndDistance.size()-1, 0.0);
-    for (int i=0;i<carsAndDistance.size() ; i++){
+    // on met tous les coeffs de toutes les autres voitures à (0,0...)
+    std::vector<double> null(carsAndDistance->size()-1, 0.0);
+    for (int i=0;i<carsAndDistance->size() ; i++){
         if (i==parents.first){
             coeffs.push_back(coeff1);
         }
-        if (i==parents.first){
-            coeffs.push_back(coeff1);
+        if (i==parents.second){
+            coeffs.push_back(coeff2);
         }
         else {
             coeffs.push_back(null);
