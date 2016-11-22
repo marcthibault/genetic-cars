@@ -90,7 +90,7 @@ void windows::dessiner(QVector<QPointF> v,QPen pen,QBrush brush){
     m_scene->addPolygon(QPolygonF(v),pen,brush);
 }
 
-
+QPointF windows::cartesien(double x, double y, double )
 
 void windows::afficher()
 {
