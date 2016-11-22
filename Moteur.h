@@ -40,7 +40,7 @@ public :
     Floor* b2floor; // Sol de notre monde
     float gravite; // Valeur absolue de l'intensite de la pesanteur dans notre monde
 
-    std::vector<b2World*> world; // Tableau de pointeurs vers nos mondes. Un monde par voiture pour faire les courses en meme temps sans que les voitures se genent.
+    b2World* world; // Tableau de pointeurs vers nos mondes. Un monde par voiture pour faire les courses en meme temps sans que les voitures se genent.
     std::vector<b2Car*> car; // Tableau de nos voitures box2d
 
     void next(float dt); // Avance de dt dans le moteur physique et mets à jour les paramètres

@@ -5,7 +5,7 @@ Floor::Floor(){
     this->length=1.0;
     this->variance=0.1;
     this->p=new std::list<b2Vec2> ();
-    this->chaos=false
+    this->chaos=false;
     for(int i=0;i<101;i++){
         p->push_back(b2Vec2(i*length-10.0,-2.0));
     }
