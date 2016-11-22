@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     // std::vector<std::vector<double>> Matrix;
 
 
-    // Matrix = preprocessor.CarsToMatrix(output);
+    Matrix = preprocessor.CarsToMatrix(output);
 
     pair<int,int> parents = preprocessor.selectParents(distances);
     std::cout << "Papa = " << parents.first << std::endl;
