@@ -12,6 +12,7 @@ preprocessing::preprocessing(){
 
 }
 
+// Transfor a vector of vector of car parameters into a vector of cars
 std::vector<Car> preprocessing::matrixToCars(std::vector<std::vector<double>> matrix){
     std::vector<Car> cars;
     for(int i=0;i<matrix.size();i++){
@@ -21,19 +22,19 @@ std::vector<Car> preprocessing::matrixToCars(std::vector<std::vector<double>> ma
 }
 
 // Transform an object Car in vector
-std::vector<double> preprocessing::openCar(Car my_car){
+std::vector<double> preprocessing::openCar(Car* my_car){
     std::vector<double> data;
-    data.push_back(my_car.r1);
-    data.push_back(my_car.r2);
-    data.push_back(my_car.D);
-    data.push_back(my_car.d1);
-    data.push_back(my_car.d2);
-    data.push_back(my_car.d);
-    for(int i=0;i<my_car.angles_distances.size();i++){
-       data.push_back(my_car.angles_distances[i].first);
+    data.push_back(my_car->r1);
+    data.push_back(my_car->d1);
+    data.push_back(my_car->r2);
+    data.push_back(my_car->d2);
+    data.push_back(my_car->D);
+    data.push_back(my_car->d);
+    for(int i=0;i<my_car->angles_distances.size();i++){
+        data.push_back(my_car->angles_distances[i].first);
     }
-    for(int i=0;i<my_car.angles_distances.size();i++){
-       data.push_back(my_car.angles_distances[i].second);
+    for(int i=0;i<my_car->angles_distances.size();i++){
+        data.push_back(my_car->angles_distances[i].second);
     }
     return data;
 }
@@ -42,17 +43,17 @@ std::vector<double> preprocessing::openCar(Car my_car){
 Car preprocessing::returnCar(std::vector<double> attributes){
     Car my_car = Car();
     my_car.r1 = attributes[0];
-    my_car.r2 = attributes[1];
-    my_car.D = attributes[2];
-    my_car.d1 = attributes[3];
-    my_car.d2 = attributes[4];
-    my_car.D = attributes[5];
+    my_car.d1 = attributes[1];
+    my_car.r2 = attributes[2];
+    my_car.d2 = attributes[3];
+    my_car.D = attributes[4];
+    my_car.d = attributes[5];
     int len = (attributes.size() - 6)/2;
     for(int i = 0; i < len; i++){
-        my_car.angles_distances.push_back(make_pair(attributes[6+i], attributes[6+len+i]));
-        //my_car.angles.push_back(attributes[6+i]);
-        //my_car.distances.push_back(attributes[6+len+i]);
+        std::pair <double,double> pair (attributes[6+i],attributes[6+len+i]);
+        my_car.angles_distances.push_back(pair);
     }
+    return my_car;
 }
 
 // Compute the coeff associated to the ranking of the car
@@ -79,7 +80,7 @@ std::vector<double> preprocessing::generateCoeff(int N){
 std::vector<double> preprocessing::generateRandomVector(std::vector<std::vector<double>> cars){
     std::vector<double> means;
     std::vector<double> variances;
-    std::vector<double> noise;
+    std::vector<double> new_car;
     std::default_random_engine generator;
     // pour chaque paramètre i (sauf la distance parcourue)
     for(int i=0;i<(cars[0].size()-1);i++){
@@ -90,6 +91,7 @@ std::vector<double> preprocessing::generateRandomVector(std::vector<std::vector<
            m += cars[j][i];
        }
        m /= cars.size();
+       // Calcul de la variance
        double var = 0;
        for(int j=0;j<cars.size();j++){
            var += (cars[j][i] - m)*(cars[j][i] - m);
@@ -101,9 +103,9 @@ std::vector<double> preprocessing::generateRandomVector(std::vector<std::vector<
     for(int i=0;i<(cars[0].size()-1);i++){
         std::normal_distribution<double> distribution(0,variances[i]);
         double param = distribution(generator);
-        noise.push_back(param);
+        new_car.push_back(param);
     }
-    return noise;
+    return new_car;
 }
 
 // Sum of two cars
@@ -185,7 +187,7 @@ std::vector<std::vector<double>> preprocessing::CarsToMatrix(std::vector<std::pa
     std::vector<std::vector<double>> M;
     for(std::vector<std::pair<Car,double>>::iterator it = output.begin(); it != output.end(); ++it){
         std::vector<double> data;
-        data = openCar((*it).first);
+        data = openCar(&(*it).first);
         data.push_back((*it).second);
         M.push_back(data);
     }

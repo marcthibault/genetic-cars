@@ -232,7 +232,7 @@ int main(int argc, char *argv[])
 
     std::vector<std::vector<double>> matrix = preprocessor.CarsToMatrix(output);
 
-    std::vector<std::vector<double>> newMatrix;
+    std::vector<std::vector<double>> newMatrix);
 
     preprocessor.generate(&matrix,&newMatrix,preprocessing::generateCoeffs,4);
 
@@ -347,8 +347,4 @@ int main(int argc, char *argv[])
 
 //}
 
-//std::vector<Car> preprocessing::geneticMutation(std::vector< std::pair<Car,double>> cars){
-//    std::vector<Car> ans;
-//    return ans;
-//}
 //test
