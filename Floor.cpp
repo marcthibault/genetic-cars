@@ -7,7 +7,7 @@ Floor::Floor(){
     this->p=new std::list<b2Vec2> ();
     this->chaos=false;
     for(int i=0;i<101;i++){
-        p->push_back(b2Vec2(i*length-50.0,-2.0));
+        p->push_back(b2Vec2(i*length-10.0,-2.0));
     }
 }
 
@@ -18,7 +18,7 @@ Floor::Floor(float mur){
     this->variance=0.1;
     this->p=new std::list<b2Vec2> ();
     for(int i=0;i<101;i++){
-        p->push_back(b2Vec2(i*length-50.0,-2.0));
+        p->push_back(b2Vec2(i*length-10.0,-2.0));
     }
     // Construction du mur, #Trump
     p->push_back(b2Vec2(mur, 100.0));
@@ -42,9 +42,12 @@ double Floor::getVariance(){
     return this->variance;
 }
 
+
+//Crée un tableau de points permettant ensuite de générer le sol
+//Un mur est ajouté à la fin pour stopper les voitures à la fin du cirrcuit
 void  Floor::createArrayb2Vec2(int N){
     double a = 0.0;
-    double x = -50.0;
+    double x = -10.0;
     double y = -2.0;
     p->push_back(b2Vec2(x, y));
     if(this->chaos){
@@ -56,6 +59,12 @@ void  Floor::createArrayb2Vec2(int N){
             y=y+this->length*sin(a);
             p->push_back(b2Vec2(x, y));
         }
+        b2Vec2 v = p->back();
+        p->push_back(b2Vec2(v.x,v.y+100.0));
+        /*A décommenter si ça ne fonctionne pas
+          p->push_back(b2Vec2(v.x,v.y-100.0));
+           p->push_back(b2Vec2(v.x,v.y+100.0));
+        */
     }
     else{
         for(int i =1;i<N;i++){
@@ -66,6 +75,12 @@ void  Floor::createArrayb2Vec2(int N){
             y=y+this->length*sin(a);
             p->push_back(b2Vec2(x, y));
         }
+        b2Vec2 v = p->back();
+        p->push_back(b2Vec2(v.x,v.y+100.0));
+        /*A décommenter si ça ne fonctionne pas
+          p->push_back(b2Vec2(v.x,v.y-100.0));
+           p->push_back(b2Vec2(v.x,v.y+100.0));
+        */
     }
 }
 
