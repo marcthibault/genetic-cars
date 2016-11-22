@@ -195,6 +195,7 @@ int main(int argc, char *argv[])
 
   // TEST GEN TEAM
 
+    preprocessing preprocessor = new preprocessing();
     // Tester la génération d'une voiture aléatoire
     std::vector<double> means = {1.6, 2.6, 3.6, 4.6, 22.6, 22.6, 22.6, 22.6, 22.6, 22.6};
     std::vector<double> variances = {0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
@@ -209,7 +210,7 @@ int main(int argc, char *argv[])
     std::vector<double> vec = preprocessor.openCar(&car);
     preprocessor.printVector(&vec);
     std::cout << "Test de CarsToMatrix" << std::endl;
-    std::pair<Car,double> p1 (car,1.);
+    std::pair<Car,double> p1 (car1,1.);
     std::pair<Car,double> p2 (car2,2.);
     std::pair<Car,double> p3 (car3,3.);
 
