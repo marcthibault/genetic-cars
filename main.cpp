@@ -1,12 +1,9 @@
 #include <QCoreApplication>
 #include <Box2D/Box2D.h>
 #include <QApplication>
-<<<<<<< HEAD
-=======
 #include <QCoreApplication>
 #include "car.h"
 #include "preprocessing.h"
->>>>>>> ccdbdbb6e321fc7b599db73b45e06bf0495fee33
 #include <iostream>
 #include "windows.h"
 #include <QWidget>
@@ -29,12 +26,8 @@ int main(int argc, char *argv[])
 
   //TEST UI TEAM
 
-<<<<<<< HEAD
-    windows fenetre(50);
-=======
     QApplication app(argc, argv);
     windows fenetre(500);
->>>>>>> ccdbdbb6e321fc7b599db73b45e06bf0495fee33
     fenetre.show();
     /*return */app.exec();
 

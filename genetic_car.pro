@@ -2,9 +2,6 @@ QT += widgets
 
 
 SOURCES += main.cpp \
-<<<<<<< HEAD
-    windows.cpp \
-=======
     Box2D/Collision/Shapes/b2ChainShape.cpp \
     Box2D/Collision/Shapes/b2CircleShape.cpp \
     Box2D/Collision/Shapes/b2EdgeShape.cpp \
@@ -58,8 +55,6 @@ SOURCES += main.cpp \
     preprocessing.cpp \
     windows.cpp 
 
->>>>>>> ccdbdbb6e321fc7b599db73b45e06bf0495fee33
-
 HEADERS += \
     Box2D/Collision/Shapes/b2ChainShape.h \
     Box2D/Collision/Shapes/b2CircleShape.h \
@@ -69,7 +64,7 @@ HEADERS += \
     Box2D/Collision/b2BroadPhase.h \
     Box2D/Collision/b2Collision.h \
     Box2D/Collision/b2Distance.h \
-    Box2D/Collision/b2DynamicTree.h \
+    Box2D/C2ollision/b2DynamicTree.h \
     Box2D/Collision/b2TimeOfImpact.h \
     Box2D/Common/b2BlockAllocator.h \
     Box2D/Common/b2Draw.h \
