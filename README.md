@@ -1,9 +1,9 @@
-# Genetic Cars
+# GENETIC CARS
 
 This is the Genetic Cars Git repository.
 
 
-Here is the link to the dream we have to reproduce : 
+Here is the link to the dream we have to reproduce :
 
 http://rednuht.org/genetic_cars_2/
 
@@ -13,7 +13,7 @@ And a preview :
 
 
 ## Git tuto
-Here's how to use Git : 
+Here's how to use Git :
 
 - Install *Git*
 
@@ -21,29 +21,30 @@ Here's how to use Git :
 
 - Install *SourceTree*
 
-    Just type on Google `install sourcetree pc/mac/linux`
-    
+    Just type on Google `install sourcetree pc/mac`
+    Or `install smartgit linux`
+
 - Clone the repository
 
     Click on "Clone"
-    
+
     As a project url, type `https://gitlab.binets.fr/marc.thibault/genetic-cars.git`
-    
+
     You will be asked your LDAP IDs, just type them in
-    
+
     You have successfully cloned the whole project !
-    
+
 ## Git workflow
 
-Here's the workflow we'll be using : 
+Here's the workflow we'll be using :
 
-As you start working, update your repository by pulling the server repository : 
+As you start working, update your repository by pulling the server repository :
 
 `git pull origin master`
 
 `git pull origin mybranch`
 
-Do your modifications on the source code. You can then add them to your local branch : 
+Do your modifications on the source code. You can then add them to your local branch :
 
 `git add --all`
 
