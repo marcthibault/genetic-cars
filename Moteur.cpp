@@ -1,11 +1,7 @@
-#include "Moteur.h"
+#include "Floor.h"
+#include "car.h"
 #include "b2Car.h"
-//template <class T, std::size_t N>
-//std::ostream& operator<<(std::ostream& o, const std::array<T, N>& arr)
-//{
-//    copy(arr.cbegin(), arr.cend(), std::ostream_iterator<T>(o, " "));
-//    return o;
-//}
+#include "Moteur.h"
 
 
 Moteur::Moteur(){
@@ -29,7 +25,6 @@ Moteur::Moteur(float32 g){
     car.push_back(car2);
 
     world = new b2World(b2Vec2(0.0, -g));
-
 
     // Le compteur ici ne sert que pour les tests. A terme avec l'implémentation des voitures dans box2D, il devra etre supprimé
     int compteur = 0;
@@ -113,6 +108,7 @@ bool Moteur::toutesCarBloquees(float tempsStagnationMax){
     }
     return retour;
 }
+
 
 void Moteur::classement(){
     // Récupération des couples position/voiture
