@@ -13,10 +13,10 @@ preprocessing::preprocessing(){
 }
 
 // Transfor a vector of vector of car parameters into a vector of cars
-std::vector<Car> preprocessing::matrixToCars(std::vector<std::vector<double>> matrix){
+std::vector<Car> preprocessing::matrixToCars(std::vector<std::vector<double>>* matrix){
     std::vector<Car> cars;
-    for(int i=0;i<matrix.size();i++){
-        cars.push_back(returnCar(&matrix[i]));
+    for(int i=0;i<(*matrix).size();i++){
+        cars.push_back(returnCar(&(*matrix)[i]));
     }
     return cars;
 }
@@ -184,15 +184,19 @@ void preprocessing::printVector(std::vector<double>* vec){
     std::cout << ' ' << std::endl;
 }
 
-// Transforme l'output de la course en matrice
-std::vector<std::vector<double>> preprocessing::CarsToMatrix(std::vector<std::pair<Car,double>> output){
+/* Transforme l'output de la course en matrice
+    Get: list of pair (Car, rankingof the car)
+    Return: list of vector with params of the car + ranking at end of vector
+*/
+std::vector<std::vector<double>> preprocessing::CarsToMatrix(std::vector<std::pair<Car,double>>* output){
     std::vector<std::vector<double>> M;
-    for(std::vector<std::pair<Car,double>>::iterator it = output.begin(); it != output.end(); ++it){
+    for(std::vector<std::pair<Car,double>>::iterator it = output->begin(); it != output->end(); ++it){
         std::vector<double> data;
         data = openCar(&(*it).first);
         data.push_back((*it).second);
         M.push_back(data);
     }
+    return M;
 }
 
 // Calcule les coefficients pour la combinaison linéaire des voitures
