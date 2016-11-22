@@ -138,15 +138,14 @@ std::vector<vector<double>> preprocessing::generateCoeffsRandom(std::vector<vect
 }
 
 // Generate all the new cars
-std::vector<vector<double>> preprocessing::generate(std::vector<vector<double>> cars){
-    std::vector<vector<double>> newCars;
-    for (int i=0;i<cars.size();i++){
-        vector<vector<double>> coeffs = preprocessing::generateCoeffsRandom(cars);
-        vector<double> tmp(cars[0].size(),0);
-        for (int j=0;j<cars.size();j++){
-            tmp  = preprocessing::add( tmp , preprocessing::multiply( cars[j],coeffs[j] ) );
+std::vector<vector<double>> preprocessing::generate(std::vector<vector<double>> *cars,std::vector<vector<double>> *newCars, vector<vector<double>> (*generateCoeffs)(vector<vector<double>>),int nbCars){
+    for (int i=0;i<nbCars;i++){
+        vector<vector<double>> coeffs = preprocessing::generateCoeffs(cars);
+        vector<double> newCar(cars[0].size(),0);
+        for (int j=0;j<cars->size();j++){
+            newCar  = preprocessing::add( tmp , preprocessing::multiply( cars[j],coeffs[j] ) );
         }
-        newCars.push_back(tmp);
+        newCars.push_back(newCar);
     }
     return newCars;
 }
