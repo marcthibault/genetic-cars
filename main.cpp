@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
     std::vector<double> distances;
     distances.push_back(3);
     distances.push_back(7.4);
+    distances.push_back(9.14);
 
     Car my_car1 = Car(2.3, 2, 4, 3, 3.5, 4, angles, distances);
     Car my_car2 = Car(1.3, 5, 2, 1.3, 3.9, 2, angles, distances);
@@ -28,23 +29,25 @@ int main(int argc, char *argv[])
     cars.push_back(std::pair<Car,double>(my_car2,80));
     cars.push_back(std::pair<Car,double>(my_car3,40));
 
-    std::vector<std::pair<Car,double>> pairs;
-    pairs.push_back(std::pair<Car,double>(my_car1,1));
-    pairs.push_back(std::pair<Car,double>(my_car2,2));
-    pairs.push_back(std::pair<Car,double>(my_car3,3));
-
     preprocessing preprocessor = preprocessing();
-
-    std::cout << "Impression de trois voitures" << std::endl;
 
     std::vector<std::pair<Car,double>> output;
     output.push_back(make_pair(my_car1,1.0));
     output.push_back(make_pair(my_car2,2.0));
     output.push_back(make_pair(my_car3,3.0));
 
-    std::vector<std::vector<double>> Matrix;
+    // std::vector<std::vector<double>> Matrix;
+
+
+    // Matrix = preprocessor.CarsToMatrix(output);
+
+    pair<int,int> parents = preprocessor.selectParents(distances);
+    std::cout << "Papa = " << parents.first << std::endl;
+    std::cout << "Maman = " << parents.second << std::endl;
 
     Matrix = preprocessor.CarsToMatrix(output);
+
+    std::cout << "Impression de trois voitures générées à partir d'un ranking" << std::endl;
 
     std::vector<vector<double>> cars_matrix = preprocessor.CarsToMatrix(cars);
     std::cout << "cars_matrix ok" << std::endl;
@@ -114,7 +117,7 @@ int main(int argc, char *argv[])
     matrix.push_back(car3);
 
     //test de generateCoeffs
-    vector<vector<double>> coeffs = preprocessor.generateCoeffs(matrix);
+    vector<vector<double>> coeffs = preprocessor.generateCoeffsRandom(matrix);
     preprocessor.printVector(matrix[0]);
     preprocessor.printVector(coeffs[0]);
 
