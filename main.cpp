@@ -53,34 +53,18 @@ int main(int argc, char *argv[])
     preprocessor.printVector(preprocessor.openCar(&my_car2));
     preprocessor.printVector(preprocessor.openCar(&my_car3));*/
 
-// Tester la génération d'une voiture aléatoire
-    std::vector<double> means;
-    std::vector<double> variances;
-    means.push_back(1.6);
-    means.push_back(2.6);
-    means.push_back(3.6);
-    means.push_back(4.6);
-    means.push_back(22.6);
-    means.push_back(22.6);
-    means.push_back(22.6);
-    means.push_back(22.6);
-    means.push_back(22.6);
-    means.push_back(22.6);
-    variances.push_back(0.1);
-    variances.push_back(0.1);
-    variances.push_back(0.1);
-    variances.push_back(0.1);
-    variances.push_back(0.1);
-    variances.push_back(0.1);
-    variances.push_back(0.1);
-    variances.push_back(0.1);
-    variances.push_back(0.1);
-    variances.push_back(0.1);
+    // Tester la génération d'une voiture aléatoire
+    std::vector<double> means = {1.6, 2.6, 3.6, 4.6, 22.6, 22.6, 22.6, 22.6, 22.6, 22.6};
+    std::vector<double> variances = {0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
 
     std::cout << "Impression d'une voiture générée aléatoirement" << std::endl;
     Car car = preprocessor.generateRandomCar(means, variances);
-
-    preprocessor.printVector(preprocessor.openCar(&car));
+    std::vector<double> vec = preprocessor.openCar(&car);
+    Car car2 = preprocessor.returnCar(&vec);
+    preprocessor.printVector(&vec);
+    preprocessor.openCar(&car2);
+    std::vector<double> vec2 = preprocessor.openCar(&car2);
+    preprocessor.printVector(&vec2);
     std::cout << "Fin de l'affichage" << std::endl;
     // return a.exec();
 

@@ -12,7 +12,7 @@ public:
     preprocessing();
     std::vector<double> openCar(Car* my_car);
     std::vector<Car> matrixToCars(std::vector<std::vector<double>> matrix);
-    Car returnCar(std::vector<double> attributes);
+    Car returnCar(std::vector<double>* attributes);
     double computeCoeff(int rank, int total);
     std::vector<double> generateRandomVector(std::vector<std::vector<double>> cars);
     std::vector<double> generateCoeff(int N);
@@ -26,6 +26,7 @@ public:
     std::vector<std::vector<double>> CarsToMatrix(std::vector<std::pair<Car,double>> output);
     std::vector<Car> geneticMutation(std::vector<pair<Car,double>> cars);
     std::pair<int,int> selectParents(std::vector<double> & distances);
+    void printVector(std::vector<double>* vec);
 };
 
 #endif // PREPROCESSING_H
