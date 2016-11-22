@@ -108,11 +108,11 @@ void Floor::floorInitialize(b2World* world){
     p=q;
 }
 //Convertit la liste de b2Vec2 en une liste de float32 à destination de l'UI. Les coordonnées x et y s'enchainent à la suite.
-std::list<float32> Floor::getPoints(){
-    std::list<float32> res=new std::list<float32>();
-    for (list<b2Vec2>::iterator iiplist=(iplist->begin()); iiplist!=(iplist->end()); iiplist++){
-        res.push_back(iiplist.x);
-        res.push_back(iiplist.y);
+std::list<float32> *Floor::getPoints(){
+    std::list<float32>* res=new std::list<float32>();
+    for (std::list<b2Vec2>::iterator iiplist=(this->p->begin()); iiplist!=(p->end()); iiplist++){
+        res->push_back((*iiplist).x);
+        res->push_back((*iiplist).y);
     }
     return res;
 }
