@@ -140,16 +140,14 @@ std::vector<vector<double>> preprocessing::generateCoeffsRandom(std::vector<vect
 }
 
 // Generate all the new cars
-std::vector<vector<double>> preprocessing::generate(std::vector<vector<double>> cars){
-    std::cout << "starting generate" << std::endl;
-    std::vector<vector<double>> newCars;
-    for (int i=0;i<cars.size();i++){
-        vector<vector<double>> coeffs = preprocessing::generateCoeffsRandom(cars);
-        vector<double> tmp(cars[0].size(),0);
-        for (int j=0;j<cars.size();j++){
-            tmp  = preprocessing::add( tmp , preprocessing::multiply( cars[j],coeffs[j] ) );
+std::vector<vector<double>> preprocessing::generate(std::vector<std::vector<double>> *cars,std::vector<std::vector<double>> *newCars,int nbCars){
+    for (int i=0;i<nbCars;i++){
+        std::vector<std::vector<double>> coeffs = preprocessing::generateCoeffs(cars);
+        std::abortvector<double> newCar(cars[0].size(),0);
+        for (int j=0;j<cars->size();j++){
+            newCar  = preprocessing::add( tmp , preprocessing::multiply( cars[j],coeffs[j] ) );
         }
-        newCars.push_back(tmp);
+        newCars.push_back(newCar);
     }
     return newCars;
 }
@@ -184,16 +182,11 @@ void preprocessing::printVector(std::vector<double>* vec){
     std::cout << ' ' << std::endl;
 }
 
-<<<<<<< HEAD
-// Transforme l'output de la course en matrice
-std::vector<std::vector<double>> preprocessing::carsToMatrix(std::vector<std::pair<Car,double>> output){
-=======
 /* Transforme l'output de la course en matrice
     Get: list of pair (Car, rankingof the car)
     Return: list of vector with params of the car + ranking at end of vector
 */
-std::vector<std::vector<double>> preprocessing::CarsToMatrix(std::vector<std::pair<Car,double>>* output){
->>>>>>> 444935f26ec59b6e98d53765cfa3e641801bbda0
+std::vector<std::vector<double>> preprocessing::CarsToMatrix(std::vector<std::pair<Car,double>>*output){
     std::vector<std::vector<double>> M;
     for(std::vector<std::pair<Car,double>>::iterator it = output->begin(); it != output->end(); ++it){
         std::vector<double> data;
@@ -210,11 +203,11 @@ std::vector<std::vector<double>> preprocessing::CarsToMatrix(std::vector<std::pa
 
 // Tirage avec remise de deux parents, proportionnellement à la distance parcourue
 
-std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<double>> *carsAndDistance){
+std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<double>> carsAndDistance){
     std::vector<vector<double>> coeffs;
 
     std::vector<double> distances;
-    for (int i=0;i<carsAndDistance->size() ; i++){
+    for (int i=0;i<carsAndDistance.size() ; i++){
         distances.push_back(carsAndDistance[i][carsAndDistance[i].size()-1]);
     }
 
@@ -237,14 +230,14 @@ std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<dou
             coeff2.push_back(0);
         }
     }
-    // on met tous les coeffs de toutes les autres voitures à (0,0...)
-    std::vector<double> null(carsAndDistance->size()-1, 0.0);
-    for (int i=0;i<carsAndDistance->size() ; i++){
+    // on met tous les autres coeff à 0
+    std::vector<double> null(carsAndDistance.size()-1, 0.0);
+    for (int i=0;i<carsAndDistance.size() ; i++){
         if (i==parents.first){
             coeffs.push_back(coeff1);
         }
-        if (i==parents.second){
-            coeffs.push_back(coeff2);
+        if (i==parents.first){
+            coeffs.push_back(coeff1);
         }
         else {
             coeffs.push_back(null);
