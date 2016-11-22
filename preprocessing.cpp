@@ -141,10 +141,12 @@ std::vector<vector<double>> preprocessing::generateCoeffsRandom(std::vector<vect
 
 // Generate all the new cars
 void preprocessing::generate(std::vector<std::vector<double>> *cars,std::vector<std::vector<double>> *newCars,int nbCars){
+    std::vector<std::vector<double>> coeffs = preprocessing::generateCoeffs(*cars);
+    std::cout << "Ligne 0 de COoffs" << std::endl;
+    printVector(&coeffs[0]);
+    printVector(&coeffs[1]);
+    printVector(&coeffs[2]);
     for (int i=0;i<nbCars;i++){
-        std::vector<std::vector<double>> coeffs = preprocessing::generateCoeffs(*cars);
-        std::cout << "Ligne 0 de COoffs" << std::endl;
-        printVector(&coeffs[0]);
         std::vector<double> newCar((*cars)[0].size(),0);
         for (int j=0;j<cars->size();j++){
             newCar = preprocessing::add( newCar , preprocessing::multiply( (*cars)[j],coeffs[j] ) );
@@ -216,33 +218,38 @@ std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<dou
 
     std::pair<int,int> parents;
     parents = selectParents(distances);
+    std::cout << "Parents:" << parents.first << parents.second << std::endl;
 
     std::vector<double> coeff1;
     std::vector<double> coeff2;
 
+    srand(time(NULL));
     for (int i=0 ; i<carsAndDistance[0].size() -1 ; i++){
         //on choisit chaque caractère entre parent 1 et 2 de manière aléatoire
-        srand(time(NULL));
         double r = ((double)rand() / (RAND_MAX));
         if (r <= 0.5){
             coeff1.push_back(0);
             coeff2.push_back(1);
-        }
-        else{
+        }else{
             coeff1.push_back(1);
             coeff2.push_back(0);
         }
     }
     // on met tous les autres coeff à 0
-    std::vector<double> null(carsAndDistance.size()-1, 0.0);
+    std::vector<double> null(carsAndDistance[0].size()-1, 0.0);
+    std::cout << "Coeffs" << std::endl;
+    printVector(&coeff1);
+    printVector(&coeff2);
+    printVector(&null);
     for (int i=0;i<carsAndDistance.size() ; i++){
-        if (i==parents.first){
+        if(parents.first ==  parents.second && i == parents.first){
+            std::vector<double> ones(carsAndDistance[0].size()-1, 1.0);
+            coeffs.push_back(ones);
+        } else if (i==parents.first){
             coeffs.push_back(coeff1);
-        }
-        if (i==parents.first){
-            coeffs.push_back(coeff1);
-        }
-        else {
+        } else if (i==parents.second){
+            coeffs.push_back(coeff2);
+        } else {
             coeffs.push_back(null);
         }
     }
