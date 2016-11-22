@@ -21,7 +21,7 @@ public:
     Car generateRandomCar(std::vector<double> means, std::vector<double> variances);
     std::vector<vector<double>> generateCoeffsRandom(std::vector<vector<double>> cars);
     void printVector(std::vector<double> vec);
-    std::vector<vector<double>> generate(std::vector<vector<double>> *cars,std::vector<vector<double>> *newCars,int nbCars){
+    std::vector<vector<double>> generate(std::vector<vector<double>> *cars,std::vector<vector<double>> *newCars,int nbCars);
     std::vector<vector<double>> generateCoeffsRandom(std::vector<vector<double>> cars);
     std::vector<vector<double>> generateCoeffs(std::vector<vector<double>> carsAndDistance);
     std::vector<std::vector<double>> carsToMatrix(std::vector<std::pair<Car,double>>* output);

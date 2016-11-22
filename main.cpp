@@ -14,6 +14,7 @@
 //#include <QPointF>
 //#include <utility>
 
+
 int main(int argc, char *argv[])
 {
 //  //TEST CAR TEAM
@@ -189,7 +190,7 @@ int main(int argc, char *argv[])
 //    }
 //    //return 0;
 
-////  QCoreApplication a(argc, argv);
+//  QCoreApplication a(argc, argv);
 //    std::cout << "Starting..." << std::endl;
 
 
