@@ -62,6 +62,7 @@ class windows : public QWidget
     QPushButton *m_reset;
 
     Moteur* moteur;
+    QVector<QPointF> sol;
 
     // Pour le chrono
     QLCDNumber* m_LCD;

@@ -60,6 +60,16 @@ windows::windows(int dt) : QWidget()
 
     moteur=new Moteur(10.0);
 
+    std::list<float32>* liste_sol=this->moteur->b2floor->getPoints();
+    for(std::list<float32>::iterator it=liste_sol->begin();it!=liste_sol->end();it++){
+        float32 x=*it;
+        float32 y=*(++it);
+        sol.append(QPointF(5*x,5*y));
+        /*
+        std::cout<<x<<" ,";
+        std::cout<<y<<std::endl;*/
+    }
+
 
     this->m_LCD = new QLCDNumber(5, this);
 
@@ -242,17 +252,7 @@ void windows::displayFloor(QVector<QPointF> v){
 }
 
 void windows::displayFloor(){
-    QVector<QPointF> liste_sol;
-    std::list<float32>* sol=this->moteur->b2floor->getPoints();
-    for(std::list<float32>::iterator it=sol->begin();it!=sol->end();it++){
-        float32 x=*it;
-        float32 y=*(++it);
-        liste_sol.append(QPointF(5*x,5*y));
-        /*
-        std::cout<<x<<" ,";
-        std::cout<<y<<std::endl;*/
-    }
-    this->displayFloor(liste_sol);
+    this->displayFloor(this->sol);
 }
 
 

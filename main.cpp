@@ -32,7 +32,7 @@ int main(int argc, char** argv)
 
     QApplication app(argc, argv);
 
-    windows fenetre(100);
+    windows fenetre(10);
     std::cout<<"test"<<std::endl;
 
     fenetre.displayFloor();
