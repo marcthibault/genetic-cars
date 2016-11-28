@@ -170,12 +170,12 @@ void windows::afficher()
         QVector<QPointF> vect;
         double abs=5*V[i][1];
         double ord=5*V[i][2];
-        vect.append(QPointF(10.0+abs,10.0+ord));
-        vect.append(QPointF(10.0+abs,100.0+ord));
-        vect.append(QPointF(200.0+abs,150.0+ord));
-        vect.append(QPointF(300.0+abs,100.0+ord));
-        vect.append(QPointF(200.0+abs,50.0+ord));
-        vect.append(QPointF(150.0+abs,10.0+ord));
+        vect.append(QPointF(abs,10.0+ord));
+        vect.append(QPointF(abs,100.0+ord));
+        vect.append(QPointF(190.0+abs,150.0+ord));
+        vect.append(QPointF(290.0+abs,100.0+ord));
+        vect.append(QPointF(190.0+abs,50.0+ord));
+        vect.append(QPointF(140.0+abs,10.0+ord));
         //dessiner(vect);
 
         if(i==0) dessiner(vect);
@@ -187,7 +187,9 @@ void windows::afficher()
     double abs0=5*V[indice][1];
     double ord0=5*V[indice][2];
 
+    std::cout<<abs0<<std::endl;
 
+    /*
     QVector<QPointF> vect2;
     vect2.append(QPointF(10.0,160.0));
     vect2.append(QPointF(100.0,150.0));
@@ -197,6 +199,9 @@ void windows::afficher()
     vect2.append(QPointF(550.0,110.0));
 
     this->displayFloor(vect2);
+    */
+
+    this->displayFloor();
 
     m_scene->setSceneRect(abs0,ord0,500,300);
 
@@ -237,10 +242,17 @@ void windows::displayFloor(QVector<QPointF> v){
 }
 
 void windows::displayFloor(){
-    //std::list<float32>* p=this->moteur->b2floor->getPoints();
-    std::list<b2Vec2>* p=this->moteur->b2floor->p;
-    p->front();
-
+    QVector<QPointF> liste_sol;
+    std::list<float32>* sol=this->moteur->b2floor->getPoints();
+    for(std::list<float32>::iterator it=sol->begin();it!=sol->end();it++){
+        float32 x=*it;
+        float32 y=*(++it);
+        liste_sol.append(QPointF(5*x,5*y));
+        /*
+        std::cout<<x<<" ,";
+        std::cout<<y<<std::endl;*/
+    }
+    this->displayFloor(liste_sol);
 }
 
 
