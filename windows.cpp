@@ -237,8 +237,9 @@ void windows::displayFloor(QVector<QPointF> v){
 }
 
 void windows::displayFloor(){
+    //std::list<float32>* p=this->moteur->b2floor->getPoints();
     std::list<b2Vec2>* p=this->moteur->b2floor->p;
-
+    p->front();
 
 }
 
