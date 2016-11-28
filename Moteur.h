@@ -34,7 +34,7 @@ class Moteur{
 public :
     Moteur(); // Constructeur vide
     Moteur(float32 g); // Constructeur que j'utilise pour les test. NE PAS SUPPRIMER. Le constructeur final prendra beaucoup à celui-ci.
-
+    Moteur(float32 g, Car c); // constructeur de test, fait rouler 2 voitures issues de la même Car c
     float t; // Temps dans le moteur physique
     float32 timeStep; // Pas de temps dans le moteur physique box2d
     int32 velocityIterations; // Paramètre box2d

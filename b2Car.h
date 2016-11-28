@@ -10,7 +10,7 @@ class b2Car
 {
 public:
     b2Car(); // Constructeur vide
-//    b2Car(Car car); constructeur d'une b2Car (pour box2d) à partir d'une Car (ensemble de double)
+    b2Car(Car car, b2World * m_world); // constructeur d'une b2Car (pour box2d) à partir d'une Car (ensemble de double)
 
     //idée : remplacer les initialize par des contructeurs + un boolean de test qui permet de ne pas donner de car mais de prendre la car de test
     //créer b2(Car car, b2world* m_world, bool test)
@@ -26,7 +26,7 @@ public:
     void printPosition(); // imprime position, angle, temps de stagnation, classment en console. Pour les tests
     bool bloquee(float tempsStagnationMax); // true si la voiture est morte
 
-    void b2Car::creationChassis(b2Body* m_car, Car c); //crée un chassis correspondant à la car c sur m_car qui doit déjà avoir été ajouté au m_world
+    void creationChassis(b2Body* m_car, const vector< pair<double, double> > &pos, Car &c); //crée un chassis correspondant à la car c sur m_car qui doit déjà avoir été ajouté au m_world
 };
 
 #endif // B2CAR_H

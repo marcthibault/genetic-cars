@@ -13,6 +13,7 @@
 #include <QPointF>
 #include <utility>
 #include "Moteur.h"
+#include <math.h>
 
 using namespace std;
 
@@ -33,9 +34,28 @@ int main(int argc, char** argv)
     windows fenetre(40);
     fenetre.show();
 */
-    Moteur* m = new Moteur(10.0);
 
-    //TEST TEAM PHY
+  //TEST TEAM PHY
+    //Car(int N, double r1, double d1, double r2, double d2, double D, double d, vector<pair<double, double> > angles_distances); //constructeur
+    vector < pair < double, double > > sommetsPolaire; // création d'une voiture rectangulaire de largeur 4 et de hauteur 2
+    sommetsPolaire.push_back( std::make_pair(M_PI/4, 2*sqrt(2)) );
+    sommetsPolaire.push_back( std::make_pair(3*M_PI/4, 2*sqrt(2)) );
+
+//    sommetsPolaire.push_back( std::make_pair(0, 2) );
+//    sommetsPolaire.push_back( std::make_pair(M_PI, 2) );
+//    sommetsPolaire.push_back( std::make_pair(M_PI/6, 2) );
+//    sommetsPolaire.push_back( std::make_pair(2*M_PI/6, 2) );
+//    sommetsPolaire.push_back( std::make_pair(3*M_PI/6, 2) );
+//    sommetsPolaire.push_back( std::make_pair(4*M_PI/4, 2) );
+
+
+    Car c (4, 0.4 ,1, 0.4,1, 4, 1, sommetsPolaire);
+  //  Car c;
+
+   //Moteur* m = new Moteur(10.0);
+   Moteur* m = new Moteur(10.0, c);
+
+
 
     while (!m->toutesCarBloquees(5.0))
     {

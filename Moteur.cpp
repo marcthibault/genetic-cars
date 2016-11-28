@@ -18,6 +18,10 @@ Moteur::Moteur(float32 g){
     Floor *fl = new Floor(1.0, 0.01, true);
     fl->createArrayb2Vec2(1000);
 
+    //test sol plat de 100m avec mur à 50m
+//    Floor *fl = new Floor(50);
+//    fl->createArrayb2Vec2(1000);
+
     this->car = std::vector<b2Car*>();
     b2Car* car1 = new b2Car();
     car.push_back(car1);
@@ -34,6 +38,34 @@ Moteur::Moteur(float32 g){
         fl->floorInitialize(world);
         compteur++;
     }
+}
+
+Moteur::Moteur(float32 g, Car c){
+    // crée un monde avec 2 voitures identiques basées sur Car c
+
+    this->timeStep = 1.0f / 60.0f;
+    this->velocityIterations = 8;
+    this->positionIterations = 3;
+
+    world = new b2World(b2Vec2(0.0, -g));
+
+    //test sol aléatoire
+//    Floor *fl = new Floor(1.0, 0.01, true);
+//    fl->createArrayb2Vec2(1000);
+//    fl->floorInitialize(world);
+
+    //test sol plat de 100m avec mur à 50m
+    Floor *fl = new Floor(50);
+    fl->createArrayb2Vec2(1000);
+    fl->floorInitialize(world);
+
+    this->car = std::vector<b2Car*>();
+    b2Car* car1 = new b2Car(c, world);
+    car.push_back(car1);
+    b2Car* car2 = new b2Car(c, world);
+    car.push_back(car2);
+
+
 }
 
 void Moteur::next(float dt){
