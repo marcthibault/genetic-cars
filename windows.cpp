@@ -60,11 +60,13 @@ windows::windows(int dt) : QWidget()
 
     moteur=new Moteur(10.0);
 
+    double lambda=10;
     std::list<float32>* liste_sol=this->moteur->b2floor->getPoints();
     for(std::list<float32>::iterator it=liste_sol->begin();it!=liste_sol->end();it++){
         float32 x=*it;
         float32 y=*(++it);
-        sol.append(QPointF(5*x,-5*y));
+        //sol.append(QPointF(5*x,-5*y));
+        sol.append(QPointF(lambda*x,-lambda*y));
         /*
         std::cout<<x<<" ,";
         std::cout<<y<<std::endl;*/
@@ -170,7 +172,7 @@ void windows::afficher()
         a=true;
     }
     */
-
+    double lambda=10;
     m_scene->clear();
     moteur->next(0.1);
     std::vector<std::array<float, 4> > V =moteur->getPosition();
@@ -178,6 +180,7 @@ void windows::afficher()
     for(int i=0;i<V.size();i++){
         if(V[i][3]==1)indice=i;
         QVector<QPointF> vect;
+        /*
         double abs=5*V[i][1];
         double ord=5*V[i][2];
         vect.append(QPointF(abs-290,-(10.0+ord)));
@@ -187,6 +190,17 @@ void windows::afficher()
         vect.append(QPointF(abs-100,-(50.0+ord)));
         vect.append(QPointF(abs-150,-(10.0+ord)));
         //dessiner(vect);
+        */
+        double abs=V[i][1];
+        double ord=V[i][2];
+
+        vect.append(QPointF(lambda*(abs-1.5),-lambda*(ord -0.5)));
+        vect.append(QPointF(lambda*(abs+1.5),-lambda*(ord -0.5)));
+        vect.append(QPointF(lambda*(abs+1.5),-lambda*(ord +0.0)));
+        vect.append(QPointF(lambda*(abs+0.0),-lambda*(ord +0.9)));
+        vect.append(QPointF(lambda*(abs-1.15),-lambda*(ord+0.9)));
+        vect.append(QPointF(lambda*(abs-1.5),-lambda*(ord +0.2)));
+
 
         if(i==0) dessiner(vect);
         else dessiner(vect,QPen(Qt::green),QBrush(Qt::yellow));
@@ -194,9 +208,12 @@ void windows::afficher()
 
 
     }
+    /*
     double abs0=5*V[indice][1];
     double ord0=5*V[indice][2];
-
+    */
+    double abs0=lambda*V[indice][1];
+    double ord0=lambda*V[indice][2];
     std::cout<<abs0<<std::endl;
 
     /*
@@ -213,7 +230,7 @@ void windows::afficher()
 
     this->displayFloor();
 
-    m_scene->setSceneRect(abs0,ord0,abs0,-ord0);
+    m_scene->setSceneRect(abs0,0,0,-ord0);
 
 
     timer->start(step);
