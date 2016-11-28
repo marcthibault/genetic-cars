@@ -64,7 +64,7 @@ windows::windows(int dt) : QWidget()
     for(std::list<float32>::iterator it=liste_sol->begin();it!=liste_sol->end();it++){
         float32 x=*it;
         float32 y=*(++it);
-        sol.append(QPointF(5*x,5*y));
+        sol.append(QPointF(5*x,-5*y));
         /*
         std::cout<<x<<" ,";
         std::cout<<y<<std::endl;*/
@@ -180,12 +180,12 @@ void windows::afficher()
         QVector<QPointF> vect;
         double abs=5*V[i][1];
         double ord=5*V[i][2];
-        vect.append(QPointF(abs,10.0+ord));
-        vect.append(QPointF(abs,100.0+ord));
-        vect.append(QPointF(190.0+abs,150.0+ord));
-        vect.append(QPointF(290.0+abs,100.0+ord));
-        vect.append(QPointF(190.0+abs,50.0+ord));
-        vect.append(QPointF(140.0+abs,10.0+ord));
+        vect.append(QPointF(abs-290,-(10.0+ord)));
+        vect.append(QPointF(abs-290,-(100.0+ord)));
+        vect.append(QPointF(abs-100,-(150.0+ord)));
+        vect.append(QPointF(abs,-(100.0+ord)));
+        vect.append(QPointF(abs-100,-(50.0+ord)));
+        vect.append(QPointF(abs-150,-(10.0+ord)));
         //dessiner(vect);
 
         if(i==0) dessiner(vect);
@@ -213,7 +213,7 @@ void windows::afficher()
 
     this->displayFloor();
 
-    m_scene->setSceneRect(abs0,ord0,500,300);
+    m_scene->setSceneRect(abs0,ord0,abs0,-ord0);
 
 
     timer->start(step);
