@@ -9,7 +9,8 @@
 #include <time.h>
 
 preprocessing::preprocessing(){
-
+    srand(time(NULL));
+    std::default_random_engine generator;
 }
 
 // Transfor a vector of vector of car parameters into a vector of cars
@@ -73,7 +74,7 @@ Car preprocessing::returnCar(std::vector<double>* attributes){
 
 // Sum of two cars
 std::vector<double> preprocessing::add(std::vector<double> a, std::vector<double> b){
-    std::vector<double> c(a.size(), 0.0);
+    std::vector<double> c;
     for (int i=0;i<a.size();i++){
         c.push_back(a[i] + b[i]);
     }
@@ -82,7 +83,7 @@ std::vector<double> preprocessing::add(std::vector<double> a, std::vector<double
 
 //Multiply car with a scalar
 std::vector<double> preprocessing::multiply(std::vector<double> lambda, std::vector<double> car){
-    std::vector<double> c(car.size(), 0.0);
+    std::vector<double> c;
     for (int i=0;i<car.size();i++){
         c.push_back( lambda[i] * car[i]);
     }
@@ -96,21 +97,18 @@ void preprocessing::printVector(std::vector<double>* vec){
     std::cout << ' ' << std::endl;
 }
 
-
 // Generate cars of a new generation from the result of a race.
 void preprocessing::generate(std::vector<std::vector<double>> *cars,std::vector<std::vector<double>> *newCars,int nbCars){
-    std::vector<std::vector<double>> coeffs = preprocessing::generateCoeffs(*cars);
-    std::cout << "Ligne 0 de COoffs" << std::endl;
-    printVector(&coeffs[0]);
-    printVector(&coeffs[1]);
-    printVector(&coeffs[2]);
-    for (int i=0;i<nbCars;i++){
-        std::vector<double> newCar((*cars)[0].size(),0);
+    for (int i=0;i<nbCars;i++){//nbCars
+        std::vector<std::vector<double>> coeffs = preprocessing::generateCoeffs(*cars);
+        std::vector<double> newCar((*cars)[0].size()-1,0);
         for (int j=0;j<cars->size();j++){
-            newCar = preprocessing::add( newCar , preprocessing::multiply( (*cars)[j],coeffs[j] ) );
-            std::cout << "Etape de newCar " << std::endl;
-            printVector(&newCar);
+            std::vector<double> my_car = (*cars)[j];
+            my_car.pop_back();
+            std::vector<double> prod = preprocessing::multiply( my_car,coeffs[j] );
+            newCar = preprocessing::add( newCar , prod );
         }
+        printVector(&newCar);
         newCars->push_back(newCar);
     }
 }
@@ -118,7 +116,6 @@ void preprocessing::generate(std::vector<std::vector<double>> *cars,std::vector<
 // Compute a random car with coherent coefficients (around coherent means and with a large variance).
 Car preprocessing::generateRandomCar(std::vector<double> means, std::vector<double> variances){
     std::vector<double> attributes;
-    std::default_random_engine generator;
     for(int i = 0;i < 6; i++){
         std::normal_distribution<double> distribution(means[i], variances[i]);
         double value = distribution(generator);
@@ -143,6 +140,12 @@ std::vector<Car> preprocessing::initialise(int N, std::vector<double> means, std
     std::vector<Car> firstCars;
     for (int i=0;i<N;i++){
         firstCars.push_back(preprocessing::generateRandomCar(means,variances));
-    }
-    return firstCars;
+
+// Pour la debug : print vector
+void preprocessing::printVector(std::vector<double>* vec){
+    for (std::vector<double>::const_iterator i = vec->begin(); i != vec->end(); ++i)
+        std::cout << *i << ' ';
+    std::cout << ' ' << std::endl;
 }
+
+

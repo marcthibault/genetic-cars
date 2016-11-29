@@ -41,6 +41,10 @@ int main(int argc, char *argv[])
     std::cout << "Impression d'un voiture" << std::endl;
     std::vector<double> vec = preprocessor.openCar(&car);
     preprocessor.printVector(&vec);
+    vec = preprocessor.openCar(&car2);
+    preprocessor.printVector(&vec);
+    vec = preprocessor.openCar(&car3);
+    preprocessor.printVector(&vec);
     std::cout << "Test de CarsToMatrix" << std::endl;
     std::pair<Car,double> p1 (car,1.);
     std::pair<Car,double> p2 (car2,2.);
@@ -52,7 +56,6 @@ int main(int argc, char *argv[])
     std::cout<<"Creation d'une nouvelle generation de voitures :" <<std::endl;
     std::vector<std::vector<double>> newMatrix;
     preprocessor.generate(&vec_tab,&newMatrix,3);
-    preprocessor.printVector(&(newMatrix[0]));
 
     std::cout << "Fin de l'affichage" << std::endl;
     // return a.exec();
