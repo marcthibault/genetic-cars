@@ -161,3 +161,11 @@ void Moteur::classement(){
         compteur++;
     }
 }
+
+std::vector< std::pair< Car, double> > Moteur::getResult(){ //renvoie la car associé à sa distance parcourrue à la fin
+    std::vector < pair < Car, double> > result;
+    for(auto b2carCurrent : car){
+        result.push_back(std::make_pair(b2carCurrent->voitureparent, (double) b2carCurrent->m_car->GetPosition().x));
+    }
+    return result;
+}

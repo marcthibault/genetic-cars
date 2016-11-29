@@ -179,7 +179,7 @@ Attention, la voiture doit déjà avoir été ajoutée au monde */
         b2Vec2* triangle = new b2Vec2[3];
         triangle[0].SetZero();
         triangle[1].Set((float32)pos[i].first, (float32)pos[i].second);
-        int k = (i+1)%(c.N);
+//        int k = (i+1)%(c.N);
         triangle[2].Set((float32)pos[( (i+1)%(c.N) )].first, (float32)pos[( (i+1)%(c.N) )].second); //le modulo permet de gérer le retour au premier sommet quand on arrive au dernier sommet
 //        triangle[2].Set(vertices[( (i+1)%(c.N) )].x, vertices[( (i+1)%(c.N) )].y);
         morceauChassis.Set(triangle, 3);
@@ -197,6 +197,7 @@ Attention, la voiture doit déjà avoir été ajoutée au monde */
 
 b2Car::b2Car(Car car, b2World* m_world){
 
+    voitureparent = car;
     float m_hz = 4.0f;
     float m_zeta = 0.7f;
     float m_speed = -50.0f;

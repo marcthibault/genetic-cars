@@ -50,6 +50,7 @@ public :
     std::vector<std::array<float, 4> > getPosition(); // Pour l'interface graphique.
     void classement(); // Met à jour le classement des voitures.
     bool toutesCarBloquees(float tempsStagnationMax); // Si true ie si toutes les voitures n'avancent plus depuis suffisamment longtemps la course s'arrete
+    std::vector< pair< Car, double> > getResult(); //renvoie la car associé à sa distance parcourrue à la fin
 };
 
 #endif // MOTEUR_H
