@@ -137,15 +137,15 @@ std::vector<std::array<float,6> > Moteur::getWheels(){
     for (std::vector<b2Car*>::iterator i = car.begin(); i!=car.end(); i++){
         b2Car* currentCar = (*i);
         std::array<float, 6> positionCourante;
-        positionCourante[0] = currentCar->m_wheel1->GetPosition().x;
+        positionCourante[0] = currentCar->m_wheel1->GetWorldCenter().x;
         //float angle = currentCar->m_car->GetAngle();
-        positionCourante[1] = currentCar->m_wheel1->GetPosition().y;
+        positionCourante[1] = currentCar->m_wheel1->GetWorldCenter().y;
         //float x = currentCar->m_car->GetPosition().x;
         positionCourante[2] = currentCar->m_wheel1->GetAngle();
         //float y = currentCar->m_car->GetPosition().y;
-        positionCourante[3] = currentCar->m_wheel2->GetPosition().x;
+        positionCourante[3] = currentCar->m_wheel2->GetWorldCenter().x;
         //float angle = currentCar->m_car->GetAngle();
-        positionCourante[4] = currentCar->m_wheel2->GetPosition().y;
+        positionCourante[4] = currentCar->m_wheel2->GetWorldCenter().y;
         //float x = currentCar->m_car->GetPosition().x;
         positionCourante[5] = currentCar->m_wheel2->GetAngle();
         //float y = currentCar->m_car->GetPosition().y;

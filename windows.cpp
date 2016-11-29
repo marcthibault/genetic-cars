@@ -227,6 +227,7 @@ void windows::afficher()
     }
     std::vector<std::array<float, 6> > roues =moteur->getWheels();
     for(int i=0;i<roues.size();i++){
+        /*
         double x1=roues[i][0];
         double y1=roues[i][1];
         double rayon1=this->moteur->car[i]->radius1;
@@ -234,8 +235,13 @@ void windows::afficher()
         double x2=roues[i][3];
         double y2=roues[i][4];
         double rayon2=this->moteur->car[i]->radius2;
-        m_scene->addEllipse(lambda*x1,-lambda*y1,lambda*rayon1,lambda*rayon1);
-        m_scene->addEllipse(lambda*x2,-lambda*y2,lambda*rayon2,lambda*rayon2);
+        m_scene->addEllipse(lambda*(x1-rayon1),-lambda*(y1+rayon1),2*lambda*rayon1,2*lambda*rayon1,QPen(Qt::black),QBrush(Qt::black));
+        m_scene->addEllipse(lambda*(x2-rayon2),-lambda*(y2+rayon2),2*lambda*rayon2,2*lambda*rayon2,QPen(Qt::black),QBrush(Qt::black));
+        double angle1=roues[i][2];
+        double angle2=roues[i][5];
+        m_scene->addLine(lambda*x1,-lambda*y1,lambda*(x1+rayon1*cos(angle1)),-lambda*(y1+rayon1*sin(angle1)),QPen(Qt::white));
+    */
+        displayWheels(i,roues[i],lambda);
     }
     /*
     double abs0=5*V[indice][1];
@@ -309,4 +315,19 @@ QPointF windows::rotation(double x0, double y0, double angle,double abs, double 
     double x=x0*cos(angle)-y0*sin(angle);
     double y=x0*sin(angle)+y0*cos(angle);
     return QPointF(lambda*(x+abs),-lambda*(y+ord));
+}
+
+void windows::displayWheels(int i,std::array<float, 6> roues,double lambda){
+    double x1=roues[0];
+    double y1=roues[1];
+    double rayon1=this->moteur->car[i]->radius1;
+    double x2=roues[3];
+    double y2=roues[4];
+    double rayon2=this->moteur->car[i]->radius2;
+    m_scene->addEllipse(lambda*(x1-rayon1),-lambda*(y1+rayon1),2*lambda*rayon1,2*lambda*rayon1,QPen(Qt::black),QBrush(Qt::black));
+    m_scene->addEllipse(lambda*(x2-rayon2),-lambda*(y2+rayon2),2*lambda*rayon2,2*lambda*rayon2,QPen(Qt::black),QBrush(Qt::black));
+    double angle1=roues[2];
+    double angle2=roues[5];
+    m_scene->addLine(lambda*x1,-lambda*y1,lambda*(x1+rayon1*cos(angle1)),-lambda*(y1+rayon1*sin(angle1)),QPen(Qt::white));
+    m_scene->addLine(lambda*x2,-lambda*y2,lambda*(x2+rayon2*cos(angle2)),-lambda*(y2+rayon2*sin(angle2)),QPen(Qt::white));
 }
