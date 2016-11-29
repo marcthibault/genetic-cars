@@ -40,7 +40,7 @@ class windows : public QWidget
 
     public:
     windows();
-    windows(int dt);
+    windows(int dt,double gravity);
     void dessiner(QVector<QPointF> v,QPen pen=QPen(Qt::red),QBrush brush=QBrush(Qt::blue));
     static QPointF cartesien(double x, double y, double angle, double longueur, double repere);
     void displayFloor(QVector<QPointF> v);
@@ -67,7 +67,6 @@ class windows : public QWidget
     Moteur* moteur;
     QVector<QPointF> sol;
 
-    int indice;
 
     // Pour le chrono
     QLCDNumber* m_LCD;

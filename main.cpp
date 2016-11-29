@@ -32,7 +32,7 @@ int main(int argc, char** argv)
 */
 
     QApplication app(argc, argv);
-    windows fenetre(40);
+    windows fenetre(10,10);
 
     fenetre.show();
 

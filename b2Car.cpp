@@ -67,9 +67,9 @@ void b2Car::initializeTestCar(b2World* m_world){
     b2WheelJoint* m_spring1 = (b2WheelJoint*)m_world->CreateJoint(&jd);
 
     jd.Initialize(m_car, m_wheel2, m_wheel2->GetPosition(), axis);
-    jd.motorSpeed = 0.0f;
+    jd.motorSpeed = -10.0f;
     jd.maxMotorTorque = 10.0f;
-    jd.enableMotor = false;
+    jd.enableMotor = true;
     jd.frequencyHz = m_hz;
     jd.dampingRatio = m_zeta;
     b2WheelJoint* m_spring2 = (b2WheelJoint*)m_world->CreateJoint(&jd);

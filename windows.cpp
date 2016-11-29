@@ -28,7 +28,7 @@ windows::windows() : QWidget()
     avancement=0;
 }
 
-windows::windows(int dt) : QWidget()
+windows::windows(int dt, double gravity) : QWidget()
 {
     setFixedSize(1000, 500);
 
@@ -58,8 +58,7 @@ windows::windows(int dt) : QWidget()
     m_view->move(0,0);
     m_view->show();
 
-    moteur=new Moteur(10.0);
-    indice=-1;
+    moteur=new Moteur(gravity);
 
     double lambda=30;
     std::list<float32>* liste_sol=this->moteur->b2floor->getPoints();
@@ -176,6 +175,7 @@ void windows::afficher()
     double lambda=30;
     m_scene->clear();
     moteur->next(0.1);
+    int indice=-1;
     std::vector<std::array<float, 4> > V =moteur->getPosition();
     int classement = std::numeric_limits<int>::max();
     for(int i=0;i<V.size();i++){
@@ -250,6 +250,9 @@ void windows::afficher()
 
     m_scene->setSceneRect(abs0,-ord0,100,100);
 
+    if(indice==-1){
+        moteur=new Moteur(10.0);
+    }
 
     timer->start(step);
 }
