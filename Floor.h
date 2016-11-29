@@ -4,6 +4,7 @@
 #include "Box2D/Box2D.h"
 #include <list>
 #include <random>
+#include <iostream>
 
 class Floor
 {
@@ -16,11 +17,12 @@ public:
     void createArrayb2Vec2(int N); // Construit un sol aléatoire avec la méthode de Thibault
     void floorInitialize(b2World* world);// Construit effectivement le sol dans le monde pointé
     std::list<float32>* getPoints();
+    std::list<b2Vec2>* p; // Liste des points du sol dans l'ordre gauche -> droite
 //    void extend();
 private:
     double length; // Longueur de chaque bout de segments
     double variance; // Variance -> génère le chaos du sol
-    std::list<b2Vec2>* p; // Liste des points du sol dans l'ordre gauche -> droite
+
     bool chaos; // booleen qui s'il est faux lisse le sol car l'angle dépend du précédent. sinon l'angle sera totalement aléatoire
 };
 #endif // FLOOR_H

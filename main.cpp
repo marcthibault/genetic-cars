@@ -30,10 +30,12 @@ int main(int argc, char** argv)
 
   //TEST UI TEAM
 */
-   /* QApplication app(argc, argv);
+
+    QApplication app(argc, argv);
     windows fenetre(40);
+
     fenetre.show();
-*/
+
 
   //TEST TEAM PHY
     //Car(int N, double r1, double d1, double r2, double d2, double D, double d, vector<pair<double, double> > angles_distances); //constructeur
@@ -59,14 +61,15 @@ int main(int argc, char** argv)
    Moteur* m = new Moteur(10.0, c);
 
 
+    app.exec();
 
-
-    while (!m->toutesCarBloquees(5.0))
-    {
-        m->next(1.0/20.0);
-        m->printPositions();
-    //std::vector< std::array<float,4> > bidule = m->getPosition() ; //test de la fonction getPosition
-    }
+    //à virer ?
+    // while (!m->toutesCarBloquees(5.0))
+    // {
+    //     m->next(1.0/20.0);
+    //     m->printPositions();
+    //     //std::vector< std::array<float,4> > bidule = m->getPosition() ; //test de la fonction getPosition
+    // }
 
     // QVector<QPointF> vect;
     // vect.append(QPointF(10.0,10.0));
@@ -143,9 +146,10 @@ int main(int argc, char** argv)
 
     std::cout << "Fin de l'affichage" << std::endl;
     // return a.exec();
+    */
     return 0;
 
-    */
+
 
 }
 

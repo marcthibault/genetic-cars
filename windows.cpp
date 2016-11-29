@@ -48,11 +48,29 @@ windows::windows(int dt) : QWidget()
 
     QObject::connect(m_bouton, SIGNAL(clicked()), this, SLOT(run()));
 
+
+
     m_scene = new QGraphicsScene(this);
     m_scene->setSceneRect(0,0,500,300);
+
+
     m_view = new QGraphicsView(m_scene,this);
     m_view->move(0,0);
     m_view->show();
+
+    moteur=new Moteur(10.0);
+
+    double lambda=30;
+    std::list<float32>* liste_sol=this->moteur->b2floor->getPoints();
+    for(std::list<float32>::iterator it=liste_sol->begin();it!=liste_sol->end();it++){
+        float32 x=*it;
+        float32 y=*(++it);
+        //sol.append(QPointF(5*x,-5*y));
+        sol.append(QPointF(lambda*x,-lambda*y));
+        /*
+        std::cout<<x<<" ,";
+        std::cout<<y<<std::endl;*/
+    }
 
 
     this->m_LCD = new QLCDNumber(5, this);
@@ -92,10 +110,11 @@ void windows::dessiner(QVector<QPointF> v,QPen pen,QBrush brush){
 
 void windows::afficher()
 {
-    m_scene->clear();
-    if(a){
 
+   // m_scene->clear();
+    //if(a){
 
+        /*
         QVector<QPointF> vect;
         vect.append(QPointF(avancement+10.0,10.0));
         vect.append(QPointF(avancement+10.0,100.0));
@@ -105,6 +124,39 @@ void windows::afficher()
         vect.append(QPointF(avancement+150.0,10.0));
         dessiner(vect);
         //a=false;
+        avancement++;
+        QVector<QPointF> vect2;
+        vect2.append(QPointF(10.0,160.0));
+        vect2.append(QPointF(100.0,150.0));
+        vect2.append(QPointF(200.0,160.0));
+        vect2.append(QPointF(300.0,170.0));
+        vect2.append(QPointF(400.0,150.0));
+        vect2.append(QPointF(550.0,110.0));
+
+        this->displayFloor(vect2);
+        */
+    /*
+        QVector<QPointF> vect;
+        vect.append(QPointF(10.0,10.0));
+        vect.append(QPointF(10.0,100.0));
+        vect.append(QPointF(200.0,150.0));
+        vect.append(QPointF(300.0,100.0));
+        vect.append(QPointF(200.0,50.0));
+        vect.append(QPointF(150.0,10.0));
+        dessiner(vect);
+
+
+        QVector<QPointF> vect2;
+        vect2.append(QPointF(10.0-avancement,160.0));
+        vect2.append(QPointF(100.0-avancement,150.0));
+        vect2.append(QPointF(200.0-avancement,160.0));
+        vect2.append(QPointF(300.0-avancement,170.0));
+        vect2.append(QPointF(400.0-avancement,150.0));
+        vect2.append(QPointF(550.0-avancement,110.0));
+
+        this->displayFloor(vect2);
+        m_scene->setSceneRect(-avancement,0,500,300);
+
         avancement++;
     }
     else{
@@ -119,6 +171,81 @@ void windows::afficher()
         dessiner(vect,QPen(Qt::green),QBrush(Qt::yellow));
         a=true;
     }
+    */
+    double lambda=30;
+    m_scene->clear();
+    moteur->next(0.1);
+    std::vector<std::array<float, 4> > V =moteur->getPosition();
+    int indice=-1;
+    for(int i=0;i<V.size();i++){
+        if(V[i][3]==1)indice=i;
+        QVector<QPointF> vect;
+        /*
+        double abs=5*V[i][1];
+        double ord=5*V[i][2];
+        vect.append(QPointF(abs-290,-(10.0+ord)));
+        vect.append(QPointF(abs-290,-(100.0+ord)));
+        vect.append(QPointF(abs-100,-(150.0+ord)));
+        vect.append(QPointF(abs,-(100.0+ord)));
+        vect.append(QPointF(abs-100,-(50.0+ord)));
+        vect.append(QPointF(abs-150,-(10.0+ord)));
+        //dessiner(vect);
+        */
+        double abs=V[i][1];
+        double ord=V[i][2];
+        double angle=V[i][0];
+        /*
+        double x1=-
+        x*cos(angle)-y*sin(angle)
+        xsin(angle)+ycos(angle)
+        */
+        /*
+        vect.append(QPointF(lambda*(abs-1.5),-lambda*(ord -0.5)));
+        vect.append(QPointF(lambda*(abs+1.5),-lambda*(ord -0.5)));
+        vect.append(QPointF(lambda*(abs+1.5),-lambda*(ord +0.0)));
+        vect.append(QPointF(lambda*(abs+0.0),-lambda*(ord +0.9)));
+        vect.append(QPointF(lambda*(abs-1.15),-lambda*(ord+0.9)));
+        vect.append(QPointF(lambda*(abs-1.5),-lambda*(ord +0.2)));
+        */
+        vect.append(rotation(-1.5,-0.5,angle,abs,ord,lambda));
+        vect.append(rotation(1.5,-0.5,angle,abs,ord,lambda));
+        vect.append(rotation(1.5,0,angle,abs,ord,lambda));
+        vect.append(rotation(0,0.9,angle,abs,ord,lambda));
+        vect.append(rotation(-1.15,0.9,angle,abs,ord,lambda));
+        vect.append(rotation(-1.5,0.2,angle,abs,ord,lambda));
+
+
+        if(i==0) dessiner(vect);
+        else dessiner(vect,QPen(Qt::green),QBrush(Qt::yellow));
+
+
+
+    }
+    /*
+    double abs0=5*V[indice][1];
+    double ord0=5*V[indice][2];
+    */
+    double abs0=lambda*V[indice][1];
+    double ord0=lambda*V[indice][2];
+    std::cout<<abs0<<std::endl;
+
+    /*
+    QVector<QPointF> vect2;
+    vect2.append(QPointF(10.0,160.0));
+    vect2.append(QPointF(100.0,150.0));
+    vect2.append(QPointF(200.0,160.0));
+    vect2.append(QPointF(300.0,170.0));
+    vect2.append(QPointF(400.0,150.0));
+    vect2.append(QPointF(550.0,110.0));
+
+    this->displayFloor(vect2);
+    */
+
+    this->displayFloor();
+
+    m_scene->setSceneRect(abs0,-ord0,100,100);
+
+
     timer->start(step);
 }
 
@@ -152,4 +279,14 @@ void windows::displayFloor(QVector<QPointF> v){
         p1=p2;
     }
 
+}
+
+void windows::displayFloor(){
+    this->displayFloor(this->sol);
+}
+
+QPointF windows::rotation(double x0, double y0, double angle,double abs, double ord, double lambda){
+    double x=x0*cos(angle)-y0*sin(angle);
+    double y=x0*sin(angle)+y0*cos(angle);
+    return QPointF(lambda*(x+abs),-lambda*(y+ord));
 }

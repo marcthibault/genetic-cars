@@ -42,10 +42,9 @@ double Floor::getVariance(){
     return this->variance;
 }
 
-
 //Crée un tableau de points permettant ensuite de générer le sol
 //Un mur est ajouté à la fin pour stopper les voitures à la fin du cirrcuit
-void  Floor::createArrayb2Vec2(int N){
+void Floor::createArrayb2Vec2(int N){
     double a = 0.0;
     double x = -10.0;
     double y = -2.0;
@@ -80,9 +79,10 @@ void  Floor::createArrayb2Vec2(int N){
         //A décommenter si ça ne fonctionne pas
         p->push_back(b2Vec2(v.x,v.y-100.0));
         p->push_back(b2Vec2(v.x,v.y+100.0));
-
     }
+    return;
 }
+
 
 // assigne le sol (comme succession des points à notre univers
 void Floor::floorInitialize(b2World* world){

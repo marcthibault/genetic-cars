@@ -22,6 +22,13 @@
 #include <math.h>
 #include <vector>
 #include <QLineF>
+#include <Moteur.h>
+#include <array>
+#include <iostream>
+#include <list>
+#include <Floor.h>
+#include <Box2D/Box2D.h>
+#include <iostream>
 
 
 
@@ -35,6 +42,8 @@ class windows : public QWidget
     void dessiner(QVector<QPointF> v,QPen pen=QPen(Qt::red),QBrush brush=QBrush(Qt::blue));
     static QPointF cartesien(double x, double y, double angle, double longueur, double repere);
     void displayFloor(QVector<QPointF> v);
+    void displayFloor();
+    static QPointF rotation(double x0, double y0, double angle, double abs, double ord, double lambda);
 
 
     public slots:
@@ -52,6 +61,9 @@ class windows : public QWidget
     QGraphicsScene* m_scene;
     QGraphicsView* m_view;
     QPushButton *m_reset;
+
+    Moteur* moteur;
+    QVector<QPointF> sol;
 
     // Pour le chrono
     QLCDNumber* m_LCD;
