@@ -51,9 +51,13 @@ int main(int argc, char** argv)
 
     Car c (4, 0.4 ,1, 0.4,1, 4, 1, sommetsPolaire);
   //  Car c;
+    double angle = c.get_angle_wheel();
+    vector<pair<double,double> > pos = c.get_points();
+    vector< pair < double, double > > posXY = c.get_points_xy();
 
    //Moteur* m = new Moteur(10.0);
    Moteur* m = new Moteur(10.0, c);
+
 
 
 

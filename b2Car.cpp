@@ -210,20 +210,25 @@ b2Car::b2Car(Car car, b2World* m_world){
     positionMaximale = new b2Vec2(0.0, 0.0);
     classement = -1;
 
-//    vector<pair<double,double> > pos = car.get_points_xy(); //ensemble des positions des sommets du chassis avec origine situé au centre des roues en x et à r1 (rayon roue 1) en y, getpoint_xy renvoie n'importe quoi
-     vector<pair <double, double> > pos; //code en dur de la position des sommets de la voiture pour tester le programme
-//     pos.push_back(std::make_pair(-2.0, -1.0));
-//     pos.push_back(std::make_pair(2.0, -1.0));
-//     pos.push_back(std::make_pair(2.0, 2.0));
-//     pos.push_back(std::make_pair(2.0, -2.0));
+    //vrai fonction du constructeur
+    vector<pair<double,double> > pos = car.get_points_xy(); //ensemble des positions des sommets du chassis avec origine situé au centre des roues en x et à r1 (rayon roue 1) en y, getpoint_xy renvoie n'importe quoi
 
-     //test avec la voiture par défaut
-     pos.push_back(std::make_pair(-1.5, -0.5));
-     pos.push_back(std::make_pair(1.5, -0.5));
-     pos.push_back(std::make_pair(1.5, -0.0));
-     pos.push_back(std::make_pair(0.0, 0.9));
-     pos.push_back(std::make_pair(-1.15, 0.9));
-     pos.push_back(std::make_pair(-1.5, 0.2));
+//code en dur de la position des sommets de la voiture pour tester le programme
+   //deux voitures possibles, un rectangle ou celle de testInit
+
+//    vector<pair <double, double> > pos;
+////     pos.push_back(std::make_pair(-2.0, -1.0));
+////     pos.push_back(std::make_pair(2.0, -1.0));
+////     pos.push_back(std::make_pair(2.0, 2.0));
+////     pos.push_back(std::make_pair(2.0, -2.0));
+
+//     //test avec la voiture par défaut
+//     pos.push_back(std::make_pair(-1.5, -0.5));
+//     pos.push_back(std::make_pair(1.5, -0.5));
+//     pos.push_back(std::make_pair(1.5, -0.0));
+//     pos.push_back(std::make_pair(0.0, 0.9));
+//     pos.push_back(std::make_pair(-1.15, 0.9));
+//     pos.push_back(std::make_pair(-1.5, 0.2));
 
 
 //    std::cout<<(float)pos[iw1].first<<" /ROUE 1/ "<<iw1<<" "<<(float)pos[iw1].second<<std::endl;
@@ -240,11 +245,13 @@ b2Car::b2Car(Car car, b2World* m_world){
     b2Car::creationChassis(m_car, pos, car);
 
 //création des fixtures pour les roues
-//    int iw1 = car.get_wheels_index()[0];
-//    int iw2 = car.get_wheels_index()[1];
+    int iw1 = car.get_wheels_index()[0];
+    int iw2 = car.get_wheels_index()[1];
 
-    int iw1 = 0;
-    int iw2 = 1;
+
+    //code en dur pour les positions des roues pour les tests
+//    int iw1 = 0;
+//    int iw2 = 1;
 
     b2CircleShape circle1;
     b2CircleShape circle2;
@@ -270,15 +277,21 @@ b2Car::b2Car(Car car, b2World* m_world){
 
     b2BodyDef bd1;
     bd1.type = b2_dynamicBody;
-    //bd1.position.Set((float)pos[iw1].first,(float)pos[iw1].second + hauteur);  //la voiture a été remonté de 4m, idem pour les roues
-    bd1.position.Set(-1.0f, 0.35f - 1.0f +hauteur);
+
+    bd1.position.Set((float)pos[iw1].first,(float)pos[iw1].second + hauteur);  //la voiture a été remonté de 4m, idem pour les roues
+
+    // code en dur pour la voiture de test de la position des roues
+    //bd1.position.Set(-1.0f, 0.35f - 1.0f +hauteur);
+
     m_wheel1 = m_world->CreateBody(&bd1);
     m_wheel1->CreateFixture(&fd1);
 
     b2BodyDef bd2;
     bd2.type = b2_dynamicBody;
-    //bd2.position.Set((float)pos[iw2].first,(float)pos[iw2].second + hauteur);
-    bd2.position.Set(1.0f, 0.4f -1.0f +hauteur);
+    bd2.position.Set((float)pos[iw2].first,(float)pos[iw2].second + hauteur);
+
+    // code en dur pour la voiture de test de la position des roues
+    //bd2.position.Set(1.0f, 0.4f -1.0f +hauteur);
 
     m_wheel2 = m_world->CreateBody(&bd2);
     m_wheel2->CreateFixture(&fd2);
