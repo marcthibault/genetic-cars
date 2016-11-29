@@ -16,7 +16,7 @@ Moteur::Moteur(float32 g){
 
     //Floor *fl = new Floor(80);
 
-    Floor *fl = new Floor(0.2, 0.005, true);
+    Floor *fl = new Floor(2.0, 0.004, true);
     fl->createArrayb2Vec2(1000);
 
     this->car = std::vector<b2Car*>();

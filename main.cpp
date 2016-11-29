@@ -35,8 +35,6 @@ int main(int argc, char** argv)
     windows fenetre(10);
     std::cout<<"test"<<std::endl;
 
-    fenetre.displayFloor();
-
     fenetre.show();
 
 

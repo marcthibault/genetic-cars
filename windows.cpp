@@ -193,13 +193,26 @@ void windows::afficher()
         */
         double abs=V[i][1];
         double ord=V[i][2];
-
+        double angle=V[i][0];
+        /*
+        double x1=-
+        x*cos(angle)-y*sin(angle)
+        xsin(angle)+ycos(angle)
+        */
+        /*
         vect.append(QPointF(lambda*(abs-1.5),-lambda*(ord -0.5)));
         vect.append(QPointF(lambda*(abs+1.5),-lambda*(ord -0.5)));
         vect.append(QPointF(lambda*(abs+1.5),-lambda*(ord +0.0)));
         vect.append(QPointF(lambda*(abs+0.0),-lambda*(ord +0.9)));
         vect.append(QPointF(lambda*(abs-1.15),-lambda*(ord+0.9)));
         vect.append(QPointF(lambda*(abs-1.5),-lambda*(ord +0.2)));
+        */
+        vect.append(rotation(-1.5,-0.5,angle,abs,ord,lambda));
+        vect.append(rotation(1.5,-0.5,angle,abs,ord,lambda));
+        vect.append(rotation(1.5,0,angle,abs,ord,lambda));
+        vect.append(rotation(0,0.9,angle,abs,ord,lambda));
+        vect.append(rotation(-1.15,0.9,angle,abs,ord,lambda));
+        vect.append(rotation(-1.5,0.2,angle,abs,ord,lambda));
 
 
         if(i==0) dessiner(vect);
@@ -230,7 +243,7 @@ void windows::afficher()
 
     this->displayFloor();
 
-    m_scene->setSceneRect(abs0,0,0,-ord0);
+    m_scene->setSceneRect(abs0,-ord0,100,100);
 
 
     timer->start(step);
@@ -272,4 +285,8 @@ void windows::displayFloor(){
     this->displayFloor(this->sol);
 }
 
-
+QPointF windows::rotation(double x0, double y0, double angle,double abs, double ord, double lambda){
+    double x=x0*cos(angle)-y0*sin(angle);
+    double y=x0*sin(angle)+y0*cos(angle);
+    return QPointF(lambda*(x+abs),-lambda*(y+ord));
+}

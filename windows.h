@@ -43,6 +43,7 @@ class windows : public QWidget
     static QPointF cartesien(double x, double y, double angle, double longueur, double repere);
     void displayFloor(QVector<QPointF> v);
     void displayFloor();
+    static QPointF rotation(double x0, double y0, double angle, double abs, double ord, double lambda);
 
 
     public slots:
