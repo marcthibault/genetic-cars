@@ -59,7 +59,7 @@ void b2Car::initializeTestCar(b2World* m_world){
     b2Vec2 axis(0.0f, 1.0f);
 
     jd.Initialize(m_car, m_wheel1, m_wheel1->GetPosition(), axis);
-    jd.motorSpeed = -5.0f;
+    jd.motorSpeed = -10.0f;
     jd.maxMotorTorque = 20.0f;
     jd.enableMotor = true;
     jd.frequencyHz = m_hz;
