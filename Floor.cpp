@@ -43,18 +43,20 @@ double Floor::getVariance(){
 }
 
 void Floor::createArrayb2Vec2(int N){
-   double x = -10.0;
-   double y = -2.0;
-   p->push_back(b2Vec2(x, y));
-   std::default_random_engine generator;
-   for (int i = 1; i < N; i++){
-       x = x + this->length;
-       std::normal_distribution<double> distribution(0,this->variance*i);
-       y = distribution(generator);
-       p->push_back(b2Vec2(x, y));
-   }
-   return;
+    double x = -10.0;
+    double y = -2.0;
+    p->push_back(b2Vec2(x, y));
+    std::default_random_engine generator;
+    for (int i = 1; i < N; i++){
+        x = x + this->length;
+        std::normal_distribution<double> distribution(0,this->variance*i);
+        y = distribution(generator);
+        std::cout << y << std::endl;
+        p->push_back(b2Vec2(x, y));
+    }
+    return;
 }
+
 
 // assigne le sol (comme succession des points à notre univers
 void Floor::floorInitialize(b2World* world){

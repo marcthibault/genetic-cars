@@ -60,7 +60,7 @@ windows::windows(int dt) : QWidget()
 
     moteur=new Moteur(10.0);
 
-    double lambda=10;
+    double lambda=30;
     std::list<float32>* liste_sol=this->moteur->b2floor->getPoints();
     for(std::list<float32>::iterator it=liste_sol->begin();it!=liste_sol->end();it++){
         float32 x=*it;
@@ -172,7 +172,7 @@ void windows::afficher()
         a=true;
     }
     */
-    double lambda=10;
+    double lambda=30;
     m_scene->clear();
     moteur->next(0.1);
     std::vector<std::array<float, 4> > V =moteur->getPosition();
