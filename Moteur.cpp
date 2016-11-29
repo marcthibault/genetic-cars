@@ -14,8 +14,9 @@ Moteur::Moteur(float32 g){
     this->velocityIterations = 5;
     this->positionIterations = 5;
 
-    //test sol aléatoire
-    Floor *fl = new Floor(1.0, 0.01, true);
+    //Floor *fl = new Floor(80);
+    this->tempsStagnationMax = 5.0;
+    Floor *fl = new Floor(2.0, 0.004, true);
     fl->createArrayb2Vec2(1000);
 
     //test sol plat de 100m avec mur à 50m
@@ -87,6 +88,7 @@ void Moteur::next(float dt){
             // on est dans le cas où la voiture stagne
             // on incrémente le temps de stagnation de la voiture
             currentCar->tempsStagnation += n*timeStep;
+            currentCar->vivante = !currentCar->bloquee(tempsStagnationMax);
         }
     }
     this->classement();

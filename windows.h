@@ -29,6 +29,8 @@
 #include <Floor.h>
 #include <Box2D/Box2D.h>
 #include <iostream>
+#include <limits>
+
 
 
 
@@ -64,6 +66,8 @@ class windows : public QWidget
 
     Moteur* moteur;
     QVector<QPointF> sol;
+
+    int indice;
 
     // Pour le chrono
     QLCDNumber* m_LCD;

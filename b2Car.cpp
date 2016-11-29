@@ -8,7 +8,7 @@ void b2Car::initializeTestCar(b2World* m_world){
 
     float m_hz = 4.0f;
     float m_zeta = 0.7f;
-
+    vivante = true;
     nom = "Voiture de test";
     tempsStagnation = 0;
     positionMaximale = new b2Vec2(0.0, 0.0);
@@ -79,7 +79,7 @@ void b2Car::initializeTestCarNulle(b2World* m_world){
 
     float m_hz = 4.0f;
     float m_zeta = 0.7f;
-
+    vivante = true;
     nom = "Voiture de test nulle";
     tempsStagnation = 0;
     positionMaximale = new b2Vec2(0.0, 0.0);
