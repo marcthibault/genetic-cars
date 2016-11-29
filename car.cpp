@@ -7,6 +7,7 @@
 #include <time.h>
 #include <algorithm>
 
+
 using namespace std;
 
 //C'est quoi ça ? (Mabille ?)
@@ -55,7 +56,7 @@ vector<int> Car::get_wheels_index(){
     double theta = get_angle_wheel();
     vector<int> wheels_index;
     wheels_index.push_back(0); //roue arrière
-    wheels_index.push_back(7); //roue avant
+    wheels_index.push_back(N-1); //roue avant
     for(int i=0;i<N-2;i++){
         if (std::get<0>(angles_distances[i])<M_PI+theta) wheels_index[0]++;
         else if (std::get<0>(angles_distances[i])>2*M_PI-theta) wheels_index[1]--;
@@ -86,8 +87,8 @@ vector<pair<double, double> > Car::get_points(){ //renvoie les sommets du polygo
 vector<pair<double, double> > Car::get_points_xy(){ //renvoie les sommets du polygones (dans l'ordre trigonométrique)
     vector<pair<double,double> > points=this->get_points();
     for (int i=0;i<N;i++){
-        double r=std::get<0>(points[i]);
-        double alpha=std::get<1>(points[i]);
+        double alpha=std::get<0>(points[i]);
+        double r=std::get<1>(points[i]);
         points[i]=pair<double,double>(r*cos(alpha),r*sin(alpha));
     }
     return points;
@@ -115,3 +116,4 @@ void Car::printCar(){
     //    std::cout << *it << std::endl;
     //}
  }
+

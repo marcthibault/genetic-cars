@@ -69,6 +69,7 @@ Car preprocessing::returnCar(std::vector<double>* attributes){
         std::pair <double,double> pair ((*attributes)[6+i],(*attributes)[6+len+i]);
         my_car.angles_distances.push_back(pair);
     }
+
     return my_car;
 }
 

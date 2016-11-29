@@ -3,28 +3,164 @@
 #include "b2Car.h"
 #include "Moteur.h"
 
+
 Moteur::Moteur(){
-    b2Vec2 gravity(0.0f, -10.0f);
-    b2World *world = new b2World(gravity);
-
-    b2floor =  new Floor();
-
-    std::vector<b2Car>* b2CarsList;
-    b2CarsList->push_back(b2Car());
+    car = std::vector<b2Car*>();
 }
 
-void Moteur::next(){
+Moteur::Moteur(float32 g){
 
-   // world->Step(timeStep, velocityIterations, positionIterations);
+    this->timeStep = 1.0f / 60.0f;
+    this->velocityIterations = 5;
+    this->positionIterations = 5;
+
+    //Floor *fl = new Floor(80);
+    this->tempsStagnationMax = 5.0;
+    Floor *fl = new Floor(2.0, 0.004, true);
+    fl->createArrayb2Vec2(1000);
+
+    //test sol plat de 100m avec mur à 50m
+//    Floor *fl = new Floor(50);
+//    fl->createArrayb2Vec2(1000);
+
+    this->car = std::vector<b2Car*>();
+    b2Car* car1 = new b2Car();
+    car.push_back(car1);
+    b2Car* car2 = new b2Car();
+    car.push_back(car2);
+
+    world = new b2World(b2Vec2(0.0, -g));
+    fl->floorInitialize(world);
+    b2floor=fl;
+    // Le compteur ici ne sert que pour les tests. A terme avec l'implémentation des voitures dans box2D, il devra etre supprimé
+    int compteur = 0;
+    for(std::vector<b2Car*>::iterator i = car.begin(); i != car.end(); i++){
+        b2Car* currentCar = (*i);
+        if (compteur == 0){ currentCar->initializeTestCar(world); } else{currentCar->initializeTestCarNulle(world);}
+        //fl->floorInitialize(world);
+        compteur++;
+    }
+}
+
+Moteur::Moteur(float32 g, Car c){
+    // crée un monde avec 2 voitures identiques basées sur Car c
+
+    this->timeStep = 1.0f / 60.0f;
+    this->velocityIterations = 8;
+    this->positionIterations = 3;
+
+    world = new b2World(b2Vec2(0.0, -g));
+
+    //test sol aléatoire
+//    Floor *fl = new Floor(1.0, 0.01, true);
+//    fl->createArrayb2Vec2(1000);
+//    fl->floorInitialize(world);
+
+    //test sol plat de 100m avec mur à 50m
+    Floor *fl = new Floor(50);
+    fl->createArrayb2Vec2(1000);
+    fl->floorInitialize(world);
+
+    this->car = std::vector<b2Car*>();
+    b2Car* car1 = new b2Car(c, world);
+    car.push_back(car1);
+    b2Car* car2 = new b2Car(c, world);
+    car.push_back(car2);
+
 
 }
 
-std::vector<float*> Moteur::getPosition(){
-    std::vector< float* > v;
-    float zero [3];
-    zero[0] = 0;
-    zero[1] = 0;
-    zero[2] = 0;
-    v.push_back( zero );
-    return v;
+void Moteur::next(float dt){
+    // On fait avancer le moteur physique
+    unsigned int n = floor(dt/timeStep);
+    for (unsigned int i=0; i<n; i++){
+            world->Step(this->timeStep, this->velocityIterations, this->positionIterations);
+    }
+    t += n*timeStep;
+    // On met à jour les paramètres des voitures qui ne sont pas pris en compte par Box2D
+    for (std::vector<b2Car*>::iterator i = car.begin(); i!=car.end(); i++){
+        b2Car* currentCar = (*i);
+        if (currentCar->positionMaximale->x < currentCar->m_car->GetPosition().x){
+            // on est dans le cas où la voiture avance
+            *(currentCar->positionMaximale) = currentCar->m_car->GetPosition();
+        }
+        else{
+            // on est dans le cas où la voiture stagne
+            // on incrémente le temps de stagnation de la voiture
+            currentCar->tempsStagnation += n*timeStep;
+            currentCar->vivante = !currentCar->bloquee(tempsStagnationMax);
+        }
+    }
+    this->classement();
+}
+
+void Moteur::printPositions(){
+    std::cout << "Au temps : " << t << std::endl;
+    for (std::vector<b2Car*>::iterator i = car.begin(); i!=car.end(); i++){
+        b2Car* currentCar = (*i);
+        std::cout << "\n" << currentCar->nom;
+        currentCar->printPosition();
+    }
+}
+
+/*Crée une fonction qui retourne les positions des centres de chaques voitures.
+ * Pour chaque voiture de la course, on transmet un tableau contenant angle, x,y de son centre, et classement
+ * */
+
+std::vector<std::array<float, 4> > Moteur::getPosition(){
+    // A refaire pourquoi pas avec un for_each !
+    std::vector<std::array<float, 4>> positions;
+    for (std::vector<b2Car*>::iterator i = car.begin(); i!=car.end(); i++){
+        b2Car* currentCar = (*i);
+        std::array<float, 4> positionCourante;
+        positionCourante[0] = currentCar->m_car->GetAngle();
+        //float angle = currentCar->m_car->GetAngle();
+        positionCourante[1] = currentCar->m_car->GetPosition().x;
+        //float x = currentCar->m_car->GetPosition().x;
+        positionCourante[2] = currentCar->m_car->GetPosition().y;
+        //float y = currentCar->m_car->GetPosition().y;
+        positionCourante[3] = currentCar->classement;
+        //float classement; = currentCar->classement;
+        positions.push_back(positionCourante);
+
+//        std::cout << "angle = " << positionCourante[0] << std::endl;
+//        std::cout << "x = " << positionCourante[1] << std::endl;
+//        std::cout << "y = " << positionCourante[2] << std::endl;
+//        std::cout << "classement = " << positionCourante[3] << std::endl;
+    }
+    // A compléter pour l'interface graphique
+    // TODO
+    return positions;
+}
+
+bool Moteur::toutesCarBloquees(float tempsStagnationMax){
+    std::vector<b2Car*>::iterator i = car.begin();
+    bool retour = true;
+    while (retour && i!=car.end()){
+        b2Car* currentCar = (*i);
+        retour = currentCar->bloquee(tempsStagnationMax) & retour;
+        i++;
+    }
+    return retour;
+}
+
+
+void Moteur::classement(){
+    // Récupération des couples position/voiture
+    std::vector<CouplePositionXVoiture> positionVoiture = std::vector<CouplePositionXVoiture> ();
+    unsigned int compteur = 0;
+    for (std::vector<b2Car*>::iterator i = car.begin(); i!=car.end(); i++){
+        b2Car* currentCar = (*i);
+        positionVoiture.push_back(CouplePositionXVoiture(currentCar->m_car->GetPosition().x, compteur));
+        compteur ++;
+    }
+    // Tri des positionHorizontale
+    compteur = 1;
+    std::sort(positionVoiture.begin(), positionVoiture.end(), greater_than());
+    // On réaffecte le classment
+    for (std::vector<CouplePositionXVoiture>::iterator i = positionVoiture.begin(); i!=positionVoiture.end(); i++){
+        CouplePositionXVoiture currentPositionVoiture = (*i);
+        (car.at(currentPositionVoiture.voiture))->classement = compteur;
+        compteur++;
+    }
 }
