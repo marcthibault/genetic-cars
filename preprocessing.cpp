@@ -1,112 +1,82 @@
-
 #include "preprocessing.h"
+#include "strategy.h"
 #include "car.h"
 #include <math.h>
 #include <vector>
 #include <random>
+#include <stdlib.h>
 #include <iostream>
+#include <time.h>
 
 preprocessing::preprocessing(){
-
+    srand(time(NULL));
+    std::default_random_engine generator;
 }
 
-std::vector<Car> preprocessing::matrixToCars(std::vector<std::vector<double>  > matrix){
-    std::vector<Car> cars;
-    for(int i=0;i<matrix.size();i++){
-        cars.push_back(returnCar(matrix[i]));
+// Transfor a vector of vector of car parameters into a vector of cars
+std::vector<Car> preprocessing::matrixToCars(std::vector<std::vector<double>>* matrix){
+   std::vector<Car> cars;
+   for(int i=0;i<(*matrix).size();i++){
+       std::vector<double> tmp = (*matrix)[i];
+       cars.push_back(returnCar(&tmp));
+   }
+   return cars;
+}
+
+/* Transforme l'output de la course en matrice
+    Get: list of pair (Car, rankingof the car)
+    Return: list of vector with params of the car + ranking at end of vector
+*/
+std::vector<std::vector<double>> preprocessing::carsToMatrix(std::vector<std::pair<Car,double>>* output){
+    std::vector<std::vector<double>> M;
+    for(std::vector<std::pair<Car,double>>::iterator it = output->begin(); it != output->end(); ++it){
+        std::vector<double> data;
+        data = openCar(&((*it).first));
+        data.push_back((*it).second);
+        M.push_back(data);
     }
-    return cars;
+    return M;
 }
 
 // Transform an object Car in vector
-std::vector<double> preprocessing::openCar(Car my_car){
+std::vector<double> preprocessing::openCar(Car* my_car){
     std::vector<double> data;
-    data.push_back(my_car.r1);
-    data.push_back(my_car.r2);
-    data.push_back(my_car.D);
-    data.push_back(my_car.d1);
-    data.push_back(my_car.d2);
-    data.push_back(my_car.d);
-    for(int i=0;i<my_car.angles_distances.size();i++){
-       data.push_back(my_car.angles_distances[i].first);
+    data.push_back(my_car->r1);
+    data.push_back(my_car->d1);
+    data.push_back(my_car->r2);
+    data.push_back(my_car->d2);
+    data.push_back(my_car->D);
+    data.push_back(my_car->d);
+    for(int i=0;i<my_car->angles_distances.size();i++){
+        data.push_back(my_car->angles_distances[i].first);
     }
-    for(int i=0;i<my_car.angles_distances.size();i++){
-       data.push_back(my_car.angles_distances[i].second);
+    for(int i=0;i<my_car->angles_distances.size();i++){
+        data.push_back(my_car->angles_distances[i].second);
     }
     return data;
 }
 
 // Convert vector in car
-Car preprocessing::returnCar(std::vector<double> attributes){
+Car preprocessing::returnCar(std::vector<double>* attributes){
     Car my_car = Car();
-    my_car.r1 = attributes[0];
-    my_car.r2 = attributes[1];
-    my_car.D = attributes[2];
-    my_car.d1 = attributes[3];
-    my_car.d2 = attributes[4];
-    my_car.D = attributes[5];
-    int len = (attributes.size() - 6)/2;
+    my_car.r1 = (*attributes)[0];
+    my_car.d1 = (*attributes)[1];
+    my_car.r2 = (*attributes)[2];
+    my_car.d2 = (*attributes)[3];
+    my_car.D = (*attributes)[4];
+    my_car.d = (*attributes)[5];
+    int len = ((*attributes).size() - 6)/2;
     for(int i = 0; i < len; i++){
-        my_car.angles_distances.push_back(make_pair(attributes[6+i], attributes[6+len+i]));
-        //my_car.angles.push_back(attributes[6+i]);
-        //my_car.distances.push_back(attributes[6+len+i]);
+        std::pair <double,double> pair ((*attributes)[6+i],(*attributes)[6+len+i]);
+        my_car.angles_distances.push_back(pair);
     }
-}
 
-// Compute the coeff associated to the ranking of the car
-double preprocessing::computeCoeff(int rank, int total){
-    rank++; // nb 0 is 1st
-    if(rank < total){
-       return 1./pow(2, rank);
-    } else {
-       return 1./pow(2, (total-1));
-    }
-}
-
-// Function that takes the ranking of the race and generates the coefficients
-std::vector<double> preprocessing::generateCoeff(int N){
-    std::vector<double> coeffs;
-    for (int i=0;i<N;i++){
-       coeffs.push_back(computeCoeff(i, N));
-    }
-    return coeffs;
-}
-
-// Compute the random evolution of the new cars
-//- We can imagine a model where the variability decreases (like temperature)
-std::vector<double> preprocessing::generateRandomVector(std::vector<std::vector<double>  > cars){
-    std::vector<double> means;
-    std::vector<double> variances;
-    std::vector<double> noise;
-    std::default_random_engine generator;
-    // pour chaque paramètre i (sauf la distance parcourue)
-    for(int i=0;i<(cars[0].size()-1);i++){
-        // calcul de la moyenne
-       double m = 0;
-        // pour chaque voiture j
-       for(int j=0;j<cars.size();j++){
-           m += cars[j][i];
-       }
-       m /= cars.size();
-       double var = 0;
-       for(int j=0;j<cars.size();j++){
-           var += (cars[j][i] - m)*(cars[j][i] - m);
-       }
-       var /= cars.size();
-       variances.push_back(var);
-    }
-    // pour chaque param i
-    for(int i=0;i<(cars[0].size()-1);i++){
-        std::normal_distribution<double> distribution(0,variances[i]);
-        double param = distribution(generator);
-        noise.push_back(param);
-    }
-    return noise;
+    return my_car;
 }
 
 // Sum of two cars
 std::vector<double> preprocessing::add(std::vector<double> a, std::vector<double> b){
-    std::vector<double> c(a.size(), 0.0);
+    std::vector<double> c;
     for (int i=0;i<a.size();i++){
         c.push_back(a[i] + b[i]);
     }
@@ -115,36 +85,39 @@ std::vector<double> preprocessing::add(std::vector<double> a, std::vector<double
 
 //Multiply car with a scalar
 std::vector<double> preprocessing::multiply(std::vector<double> lambda, std::vector<double> car){
-    std::vector<double> c(car.size(), 0.0);
+    std::vector<double> c;
     for (int i=0;i<car.size();i++){
         c.push_back( lambda[i] * car[i]);
     }
     return c;
 }
 
-// Generate the random coefficients for one car
-std::vector<vector<double>  > preprocessing::generateCoeffs(std::vector<vector<double>  > cars){
-    std::vector<vector<double>  > ans;
-    return ans;
+// Pour la debug : print vector.
+void preprocessing::printVector(std::vector<double>* vec){
+    for (std::vector<double>::const_iterator i = vec->begin(); i != vec->end(); ++i)
+        std::cout << *i << ' ';
+    std::cout << ' ' << std::endl;
 }
 
-// Generate all the new cars
-std::vector<vector<double>  > preprocessing::generate(std::vector<vector<double>  > cars){
-    std::vector<vector<double>  > newCars;
-    for (int i=0;i<cars.size();i++){
-        newCars[i] = vector<double>(cars[0].size());
-        vector<vector<double>  > coeffs = preprocessing::generateCoeffs(cars);
-        for (int j=0;j<cars.size();j++){
-            newCars[i] = preprocessing::add( newCars[i] , preprocessing::multiply( cars[j],coeffs[j] ) );
+// Generate cars of a new generation from the result of a race.
+void preprocessing::generate(strategy strat, std::vector<std::vector<double>> *cars,std::vector<std::vector<double>> *newCars,int nbCars){
+    for (int i=0;i<nbCars;i++){//nbCars
+        std::vector<std::vector<double>> coeffs = strat.generateCoeffs(*cars);
+        std::vector<double> newCar((*cars)[0].size()-1,0);
+        for (int j=0;j<cars->size();j++){
+            std::vector<double> my_car = (*cars)[j];
+            my_car.pop_back();
+            std::vector<double> prod = preprocessing::multiply( my_car,coeffs[j] );
+            newCar = preprocessing::add( newCar , prod );
         }
+        printVector(&newCar);
+        newCars->push_back(newCar);
     }
-    return newCars;
 }
 
-// Compute a random car
+// Compute a random car with coherent coefficients (around coherent means and with a large variance).
 Car preprocessing::generateRandomCar(std::vector<double> means, std::vector<double> variances){
     std::vector<double> attributes;
-    std::default_random_engine generator;
     for(int i = 0;i < 6; i++){
         std::normal_distribution<double> distribution(means[i], variances[i]);
         double value = distribution(generator);
@@ -161,24 +134,31 @@ Car preprocessing::generateRandomCar(std::vector<double> means, std::vector<doub
         double value_variance = distribution_variances(generator);
         attributes.push_back(value_variance);
     }
-    return returnCar(attributes);
+    return returnCar(&attributes);
 }
 
-// Pour la debug : print vector
-void preprocessing::printVector(std::vector<double> vec){
-    for (std::vector<double>::const_iterator i = vec.begin(); i != vec.end(); ++i)
-        std::cout << *i << ' ';
-    std::cout << ' ' << std::endl;
-}
-
-// Transforme l'output de la course en matrice
-std::vector<std::vector<double>  > preprocessing::CarsToMatrix(std::vector<std::pair<Car,double>  > output){
-    std::vector<std::vector<double>  > M;
-    for(std::vector<std::pair<Car,double>  >::iterator it = output.begin(); it != output.end(); ++it){
-        std::vector<double> data;
-        data = openCar((*it).first);
-        data.push_back((*it).second);
-        M.push_back(data);
+// Function called to launch the simulation by generating N random cars.
+std::vector<Car> preprocessing::initialise(int N, std::vector<double> means, std::vector<double> variances){
+    std::vector<Car> firstCars;
+    for (int i=0;i<N;i++){
+        firstCars.push_back(preprocessing::generateRandomCar(means,variances));
     }
 }
 
+//Function called by the outside to generate the first generation of cars
+std::vector<Car> preprocessing::generateCars(int n){
+    preprocessing pre = preprocessing();
+    std::vector<double> means = {1.6, 2.6, 3.6, 4.6, 22.6, 22.6, 22.6, 22.6, 22.6, 22.6}; //éventuellement changer le nombre de paramètres
+    std::vector<double> variances = {0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
+    return pre.initialise(n,means,variances);
+}
+
+//Function called by the outside to generate the next generation of cars
+std::vector<Car> preprocessing::generateCars(int n,std::vector<std::pair<Car,double>> list){
+    strategy strat = strategy();
+    preprocessing pre = preprocessing();
+    std::vector<std::vector<double>> cars = pre.carsToMatrix(&list);
+    std::vector<std::vector<double>> newCars;
+    generate(strat,&cars,&newCars,n);
+    return pre.matrixToCars(&newCars);
+}

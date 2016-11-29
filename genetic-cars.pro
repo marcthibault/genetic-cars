@@ -8,6 +8,11 @@ QMAKE_CXXFLAGS += -std=c++11
 CONFIG -= app_bundle
 #CONFIG -= qt
 
+
+TARGET = genetic_car
+CONFIG -= app_bundle
+TEMPLATE = app
+
 CONFIG += console c++11
 CONFIG += c++11
 CONFIG += gnu++11
@@ -65,6 +70,7 @@ SOURCES += main.cpp \
     car.cpp \
     preprocessing.cpp \
     windows.cpp \
+    strategy.cpp \
     Moteur.cpp
 
 HEADERS += \
@@ -120,6 +126,5 @@ HEADERS += \
     preprocessing.h \
     car.h \
     windows.h \
-    FooTest.h \
-    Moteur.h \
-    CCar.h
+    strategy.h \
+    Moteur.h
