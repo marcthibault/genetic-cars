@@ -14,8 +14,9 @@ Moteur::Moteur(float32 g){
     this->velocityIterations = 5;
     this->positionIterations = 5;
 
-    //test sol aléatoire
-    Floor *fl = new Floor(1.0, 0.01, true);
+    //Floor *fl = new Floor(80);
+    this->tempsStagnationMax = 5.0;
+    Floor *fl = new Floor(2.0, 0.004, true);
     fl->createArrayb2Vec2(1000);
 
     //test sol plat de 100m avec mur à 50m
@@ -29,13 +30,14 @@ Moteur::Moteur(float32 g){
     car.push_back(car2);
 
     world = new b2World(b2Vec2(0.0, -g));
-
+    fl->floorInitialize(world);
+    b2floor=fl;
     // Le compteur ici ne sert que pour les tests. A terme avec l'implémentation des voitures dans box2D, il devra etre supprimé
     int compteur = 0;
     for(std::vector<b2Car*>::iterator i = car.begin(); i != car.end(); i++){
         b2Car* currentCar = (*i);
         if (compteur == 0){ currentCar->initializeTestCar(world); } else{currentCar->initializeTestCarNulle(world);}
-        fl->floorInitialize(world);
+        //fl->floorInitialize(world);
         compteur++;
     }
 }
@@ -66,6 +68,25 @@ Moteur::Moteur(float32 g, Car c){
     car.push_back(car2);
 
 
+}v
+
+Moteur::Moteur(float32 g, float32 timeStep, float32 velocityIterations, float32 positionIterations, double length_floor, double var_floor, vector<Car> V ){
+    // crée un monde avec 2 voitures identiques basées sur Car c
+
+    this->timeStep =timeStep ;
+    this->velocityIterations = velocityIterations;
+    this->positionIterations = positionIterations;
+
+    world = new b2World(b2Vec2(0.0, -g));
+
+    Floor *fl = new Floor(length_floor,  var_floor, True);
+    fl->createArrayb2Vec2(1000);
+    fl->floorInitialize(world);
+
+    this->car = std::vector<b2Car*>();
+    for (auto car_V :V){
+        car.push_back(car_V);
+    }
 }
 
 void Moteur::next(float dt){
@@ -86,6 +107,7 @@ void Moteur::next(float dt){
             // on est dans le cas où la voiture stagne
             // on incrémente le temps de stagnation de la voiture
             currentCar->tempsStagnation += n*timeStep;
+            currentCar->vivante = !currentCar->bloquee(tempsStagnationMax);
         }
     }
     this->classement();
@@ -160,12 +182,4 @@ void Moteur::classement(){
         (car.at(currentPositionVoiture.voiture))->classement = compteur;
         compteur++;
     }
-}
-
-std::vector< std::pair< Car, double> > Moteur::getResult(){ //renvoie la car associé à sa distance parcourrue à la fin
-    std::vector < pair < Car, double> > result;
-    for(auto b2carCurrent : car){
-        result.push_back(std::make_pair(b2carCurrent->voitureparent, (double) b2carCurrent->m_car->GetPosition().x));
-    }
-    return result;
 }
