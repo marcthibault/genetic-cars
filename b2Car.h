@@ -15,6 +15,7 @@ public:
     //idée : remplacer les initialize par des contructeurs + un boolean de test qui permet de ne pas donner de car mais de prendre la car de test
     //créer b2(Car car, b2world* m_world, bool test)
 
+    Car voitureparent; // pointeur vers la Car qui a permis de générer la b2Car
     b2Body* m_car; //
     b2Vec2* positionMaximale; // Ce point enregistre les coordonnées du centre de la position la plus à droite de la voiture.
     float32 tempsStagnation; // Temps pendant lequel la voiture n'avance plus.

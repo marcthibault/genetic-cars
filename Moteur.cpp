@@ -70,6 +70,34 @@ Moteur::Moteur(float32 g, Car c){
 
 }
 
+Moteur::Moteur( vector<Car> V, float32 g, float32 timeStep, float32 velocityIterations, float32 positionIterations, double length_floor, double var_floor ){
+    // crée un monde avec 2 voitures identiques basées sur Car c
+
+    this->timeStep =timeStep ;
+    this->velocityIterations = velocityIterations;
+    this->positionIterations = positionIterations;
+
+    world = new b2World(b2Vec2(0.0, -g));
+
+    b2floor = new Floor(length_floor,  var_floor, 1 );
+    b2floor->createArrayb2Vec2(1000);
+    b2floor->floorInitialize(world);
+
+    car = std::vector<b2Car*>();
+    for (auto car_V :V){
+        b2Car* voiture = new b2Car(car_V, world);
+        car.push_back(voiture);
+    }
+}
+Moteur::~Moteur(){
+    for(auto voiture : car){
+        delete voiture;
+    }
+    delete b2floor;
+    delete world;
+
+}
+
 void Moteur::next(float dt){
     // On fait avancer le moteur physique
     unsigned int n = floor(dt/timeStep);
@@ -163,4 +191,12 @@ void Moteur::classement(){
         (car.at(currentPositionVoiture.voiture))->classement = compteur;
         compteur++;
     }
+}
+
+std::vector< std::pair< Car, double> > Moteur::getResult(){ //renvoie la car associé à sa distance parcourrue à la fin
+    std::vector < pair < Car, double> > result;
+    for(auto b2carCurrent : car){
+        result.push_back(std::make_pair(b2carCurrent->voitureparent, (double) b2carCurrent->m_car->GetPosition().x));
+    }
+    return result;
 }
