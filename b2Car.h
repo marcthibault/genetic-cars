@@ -20,7 +20,7 @@ public:
     float32 tempsStagnation; // Temps pendant lequel la voiture n'avance plus.
     std::string nom; // Nom de la voiture
     int classement; // Classement de la voiture en fin. Si non classée, -1.
-
+    bool vivante;
     void initializeTestCar(b2World* m_world); // On construit une voiture test (celle de l'exemple Box2D) dans un monde pointé
     void initializeTestCarNulle(b2World* m_world); // On construit une voiture test (comme la précédente) mais qui avance moins vite pour tester les fonctions de classement
     void printPosition(); // imprime position, angle, temps de stagnation, classment en console. Pour les tests

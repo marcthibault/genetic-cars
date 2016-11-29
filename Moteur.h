@@ -41,7 +41,7 @@ public :
     int32 positionIterations; // Paramètre box2d
     Floor* b2floor; // Sol de notre monde
     float gravite; // Valeur absolue de l'intensite de la pesanteur dans notre monde
-
+    float tempsStagnationMax;
     b2World* world; // Tableau de pointeurs vers nos mondes. Un monde par voiture pour faire les courses en meme temps sans que les voitures se genent.
     std::vector<b2Car*> car; // Tableau de nos voitures box2d
 

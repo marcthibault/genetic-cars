@@ -59,6 +59,7 @@ windows::windows(int dt) : QWidget()
     m_view->show();
 
     moteur=new Moteur(10.0);
+    indice=-1;
 
     double lambda=30;
     std::list<float32>* liste_sol=this->moteur->b2floor->getPoints();
@@ -176,9 +177,12 @@ void windows::afficher()
     m_scene->clear();
     moteur->next(0.1);
     std::vector<std::array<float, 4> > V =moteur->getPosition();
-    int indice=-1;
+    int classement = std::numeric_limits<int>::max();
     for(int i=0;i<V.size();i++){
-        if(V[i][3]==1)indice=i;
+        if(V[i][3]<classement && this->moteur->car[i]->vivante==1){
+            indice=i;
+            classement=V[i][3];
+        }
         QVector<QPointF> vect;
         /*
         double abs=5*V[i][1];
@@ -225,6 +229,7 @@ void windows::afficher()
     double abs0=5*V[indice][1];
     double ord0=5*V[indice][2];
     */
+
     double abs0=lambda*V[indice][1];
     double ord0=lambda*V[indice][2];
     std::cout<<abs0<<std::endl;
