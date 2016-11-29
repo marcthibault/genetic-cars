@@ -53,9 +53,10 @@ int main(int argc, char *argv[])
     std::vector<std::vector<double>> vec_tab = preprocessor.carsToMatrix(&cars);
     preprocessor.printVector(&vec_tab[0]);
 
+    strategy strat = strategy();
     std::cout<<"Creation d'une nouvelle generation de voitures :" <<std::endl;
     std::vector<std::vector<double>> newMatrix;
-    preprocessor.generate(&vec_tab,&newMatrix,3);
+    preprocessor.generate(strat, &vec_tab,&newMatrix,3);
 
     std::cout << "Fin de l'affichage" << std::endl;
     // return a.exec();

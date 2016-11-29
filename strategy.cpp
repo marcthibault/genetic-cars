@@ -7,7 +7,7 @@ strategy::strategy()
 
 // Compute the random evolution of the new cars
 //- We can imagine a model where the variability decreases (like temperature)
-std::vector<double> preprocessing::generateRandomVector(std::vector<std::vector<double>> cars){
+std::vector<double> strategy::generateRandomVector(std::vector<std::vector<double>> cars){
     std::vector<double> means;
     std::vector<double> variances;
     std::vector<double> new_car;
@@ -44,8 +44,8 @@ std::vector<double> preprocessing::generateRandomVector(std::vector<std::vector<
 
 // Tirage avec remise de deux parents, proportionnellement à la distance parcourue
 
-std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<double>> carsAndDistance){
-    std::vector<vector<double>> coeffs;
+std::vector<std::vector<double>> strategy::generateCoeffs(std::vector<std::vector<double>> carsAndDistance){
+    std::vector<std::vector<double>> coeffs;
 
     std::vector<double> distances;
     for (int i=0;i<carsAndDistance.size() ; i++){
@@ -84,11 +84,11 @@ std::vector<vector<double>> preprocessing::generateCoeffs(std::vector<vector<dou
             coeffs.push_back(null);
         }
     }
-    printVector(&coeff1);
+
     return coeffs;
 }
 
-pair<int,int> preprocessing::selectParents(std::vector<double> & distances) {
+std::pair<int,int> strategy::selectParents(std::vector<double> & distances) {
     double distanceTotale = 0.0;
     double distanceCourante = 0.0;
     for(std::vector<double>::iterator it = distances.begin(); it != distances.end(); ++it){
@@ -116,5 +116,5 @@ pair<int,int> preprocessing::selectParents(std::vector<double> & distances) {
         cpt++;
         it2++;
     }
-    return firstCars;
+    return make_pair(n1,n2);
 }

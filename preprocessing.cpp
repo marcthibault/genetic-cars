@@ -1,5 +1,5 @@
-
 #include "preprocessing.h"
+#include "strategy.h"
 #include "car.h"
 #include <math.h>
 #include <vector>
@@ -98,9 +98,9 @@ void preprocessing::printVector(std::vector<double>* vec){
 }
 
 // Generate cars of a new generation from the result of a race.
-void preprocessing::generate(std::vector<std::vector<double>> *cars,std::vector<std::vector<double>> *newCars,int nbCars){
+void preprocessing::generate(strategy strat, std::vector<std::vector<double>> *cars,std::vector<std::vector<double>> *newCars,int nbCars){
     for (int i=0;i<nbCars;i++){//nbCars
-        std::vector<std::vector<double>> coeffs = preprocessing::generateCoeffs(*cars);
+        std::vector<std::vector<double>> coeffs = strat.generateCoeffs(*cars);
         std::vector<double> newCar((*cars)[0].size()-1,0);
         for (int j=0;j<cars->size();j++){
             std::vector<double> my_car = (*cars)[j];
@@ -140,12 +140,5 @@ std::vector<Car> preprocessing::initialise(int N, std::vector<double> means, std
     std::vector<Car> firstCars;
     for (int i=0;i<N;i++){
         firstCars.push_back(preprocessing::generateRandomCar(means,variances));
-
-// Pour la debug : print vector
-void preprocessing::printVector(std::vector<double>* vec){
-    for (std::vector<double>::const_iterator i = vec->begin(); i != vec->end(); ++i)
-        std::cout << *i << ' ';
-    std::cout << ' ' << std::endl;
+    }
 }
-
-
