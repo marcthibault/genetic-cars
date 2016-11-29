@@ -269,6 +269,7 @@ void windows::afficher()
     m_scene->setSceneRect(abs0,-ord0,100,100);
 
     if(indice==-1){
+        delete moteur;
         moteur=new Moteur(10.0);
     }
 
