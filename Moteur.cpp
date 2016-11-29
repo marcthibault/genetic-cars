@@ -14,9 +14,8 @@ Moteur::Moteur(float32 g){
     this->velocityIterations = 5;
     this->positionIterations = 5;
 
-    //Floor *fl = new Floor(80);
-    this->tempsStagnationMax = 5.0;
-    Floor *fl = new Floor(2.0, 0.004, true);
+    //test sol aléatoire
+    Floor *fl = new Floor(1.0, 0.01, true);
     fl->createArrayb2Vec2(1000);
 
     //test sol plat de 100m avec mur à 50m
@@ -182,4 +181,12 @@ void Moteur::classement(){
         (car.at(currentPositionVoiture.voiture))->classement = compteur;
         compteur++;
     }
+}
+
+std::vector< std::pair< Car, double> > Moteur::getResult(){ //renvoie la car associé à sa distance parcourrue à la fin
+    std::vector < pair < Car, double> > result;
+    for(auto b2carCurrent : car){
+        result.push_back(std::make_pair(b2carCurrent->voitureparent, (double) b2carCurrent->m_car->GetPosition().x));
+    }
+    return result;
 }
