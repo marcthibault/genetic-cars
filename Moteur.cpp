@@ -16,7 +16,7 @@ Moteur::Moteur(float32 g){
 
     //Floor *fl = new Floor(80);
     this->tempsStagnationMax = 5.0;
-    Floor *fl = new Floor(2.0, 0.004, true);
+    Floor *fl = new Floor(2.0, 0.012, true);
     fl->createArrayb2Vec2(1000);
 
     //test sol plat de 100m avec mur à 50m
@@ -156,9 +156,35 @@ std::vector<std::array<float, 4> > Moteur::getPosition(){
 //        std::cout << "y = " << positionCourante[2] << std::endl;
 //        std::cout << "classement = " << positionCourante[3] << std::endl;
     }
-    // A compléter pour l'interface graphique
-    // TODO
     return positions;
+}
+
+std::vector<std::array<float,6> > Moteur::getWheels(){
+    // A refaire pourquoi pas avec un for_each !
+    std::vector<std::array<float, 6>> positions_angle;
+    for (std::vector<b2Car*>::iterator i = car.begin(); i!=car.end(); i++){
+        b2Car* currentCar = (*i);
+        std::array<float, 6> positionCourante;
+        positionCourante[0] = currentCar->m_wheel1->GetWorldCenter().x;
+        //float angle = currentCar->m_car->GetAngle();
+        positionCourante[1] = currentCar->m_wheel1->GetWorldCenter().y;
+        //float x = currentCar->m_car->GetPosition().x;
+        positionCourante[2] = currentCar->m_wheel1->GetAngle();
+        //float y = currentCar->m_car->GetPosition().y;
+        positionCourante[3] = currentCar->m_wheel2->GetWorldCenter().x;
+        //float angle = currentCar->m_car->GetAngle();
+        positionCourante[4] = currentCar->m_wheel2->GetWorldCenter().y;
+        //float x = currentCar->m_car->GetPosition().x;
+        positionCourante[5] = currentCar->m_wheel2->GetAngle();
+        //float y = currentCar->m_car->GetPosition().y;
+        positions_angle.push_back(positionCourante);
+
+//        std::cout << "angle = " << positionCourante[0] << std::endl;
+//        std::cout << "x = " << positionCourante[1] << std::endl;
+//        std::cout << "y = " << positionCourante[2] << std::endl;
+//        std::cout << "classement = " << positionCourante[3] << std::endl;
+    }
+    return positions_angle;
 }
 
 bool Moteur::toutesCarBloquees(float tempsStagnationMax){

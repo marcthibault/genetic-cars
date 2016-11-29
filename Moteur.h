@@ -53,6 +53,7 @@ public :
     void next(float dt); // Avance de dt dans le moteur physique et mets à jour les paramètres
     void printPositions(); // Imprime les positions, angles, temps de stagnation et classement de toutes nos voitures
     std::vector<std::array<float, 4> > getPosition(); // Pour l'interface graphique.
+    std::vector<std::array<float,6> > getWheels();
     void classement(); // Met à jour le classement des voitures.
     bool toutesCarBloquees(float tempsStagnationMax); // Si true ie si toutes les voitures n'avancent plus depuis suffisamment longtemps la course s'arrete
     std::vector< pair< Car, double> > getResult(); //renvoie la car associé à sa distance parcourrue à la fin

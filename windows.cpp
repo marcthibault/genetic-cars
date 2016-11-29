@@ -28,7 +28,7 @@ windows::windows() : QWidget()
     avancement=0;
 }
 
-windows::windows(int dt) : QWidget()
+windows::windows(int dt, double gravity) : QWidget()
 {
     setFixedSize(1000, 500);
 
@@ -58,8 +58,7 @@ windows::windows(int dt) : QWidget()
     m_view->move(0,0);
     m_view->show();
 
-    moteur=new Moteur(10.0);
-    indice=-1;
+    moteur=new Moteur(gravity);
 
     double lambda=30;
     std::list<float32>* liste_sol=this->moteur->b2floor->getPoints();
@@ -176,6 +175,7 @@ void windows::afficher()
     double lambda=30;
     m_scene->clear();
     moteur->next(0.1);
+    int indice=-1;
     std::vector<std::array<float, 4> > V =moteur->getPosition();
     int classement = std::numeric_limits<int>::max();
     for(int i=0;i<V.size();i++){
@@ -225,6 +225,24 @@ void windows::afficher()
 
 
     }
+    std::vector<std::array<float, 6> > roues =moteur->getWheels();
+    for(int i=0;i<roues.size();i++){
+        /*
+        double x1=roues[i][0];
+        double y1=roues[i][1];
+        double rayon1=this->moteur->car[i]->radius1;
+        //std::cout<<rayon1<<std::endl;
+        double x2=roues[i][3];
+        double y2=roues[i][4];
+        double rayon2=this->moteur->car[i]->radius2;
+        m_scene->addEllipse(lambda*(x1-rayon1),-lambda*(y1+rayon1),2*lambda*rayon1,2*lambda*rayon1,QPen(Qt::black),QBrush(Qt::black));
+        m_scene->addEllipse(lambda*(x2-rayon2),-lambda*(y2+rayon2),2*lambda*rayon2,2*lambda*rayon2,QPen(Qt::black),QBrush(Qt::black));
+        double angle1=roues[i][2];
+        double angle2=roues[i][5];
+        m_scene->addLine(lambda*x1,-lambda*y1,lambda*(x1+rayon1*cos(angle1)),-lambda*(y1+rayon1*sin(angle1)),QPen(Qt::white));
+    */
+        displayWheels(i,roues[i],lambda);
+    }
     /*
     double abs0=5*V[indice][1];
     double ord0=5*V[indice][2];
@@ -232,7 +250,7 @@ void windows::afficher()
 
     double abs0=lambda*V[indice][1];
     double ord0=lambda*V[indice][2];
-    std::cout<<abs0<<std::endl;
+    //std::cout<<abs0<<std::endl;
 
     /*
     QVector<QPointF> vect2;
@@ -250,6 +268,10 @@ void windows::afficher()
 
     m_scene->setSceneRect(abs0,-ord0,100,100);
 
+    if(indice==-1){
+        delete moteur;
+        moteur=new Moteur(10.0);
+    }
 
     timer->start(step);
 }
@@ -294,4 +316,19 @@ QPointF windows::rotation(double x0, double y0, double angle,double abs, double 
     double x=x0*cos(angle)-y0*sin(angle);
     double y=x0*sin(angle)+y0*cos(angle);
     return QPointF(lambda*(x+abs),-lambda*(y+ord));
+}
+
+void windows::displayWheels(int i,std::array<float, 6> roues,double lambda){
+    double x1=roues[0];
+    double y1=roues[1];
+    double rayon1=this->moteur->car[i]->radius1;
+    double x2=roues[3];
+    double y2=roues[4];
+    double rayon2=this->moteur->car[i]->radius2;
+    m_scene->addEllipse(lambda*(x1-rayon1),-lambda*(y1+rayon1),2*lambda*rayon1,2*lambda*rayon1,QPen(Qt::black),QBrush(Qt::black));
+    m_scene->addEllipse(lambda*(x2-rayon2),-lambda*(y2+rayon2),2*lambda*rayon2,2*lambda*rayon2,QPen(Qt::black),QBrush(Qt::black));
+    double angle1=roues[2];
+    double angle2=roues[5];
+    m_scene->addLine(lambda*x1,-lambda*y1,lambda*(x1+rayon1*cos(angle1)),-lambda*(y1+rayon1*sin(angle1)),QPen(Qt::white));
+    m_scene->addLine(lambda*x2,-lambda*y2,lambda*(x2+rayon2*cos(angle2)),-lambda*(y2+rayon2*sin(angle2)),QPen(Qt::white));
 }
