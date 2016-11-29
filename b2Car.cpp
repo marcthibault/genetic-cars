@@ -6,6 +6,8 @@ b2Car::b2Car()
 
 void b2Car::initializeTestCar(b2World* m_world){
 
+    radius1 = 0.4;
+    radius2 = 0.4;
     float m_hz = 4.0f;
     float m_zeta = 0.7f;
     vivante = true;
@@ -45,12 +47,12 @@ void b2Car::initializeTestCar(b2World* m_world){
     fd.friction = 0.9f;
     fd.filter.groupIndex = -1;
 
-    b2Body* m_wheel1;
+
     bd.position.Set(-1.0f, 0.35f);
     m_wheel1 = m_world->CreateBody(&bd);
     m_wheel1->CreateFixture(&fd);
 
-    b2Body* m_wheel2;
+
     bd.position.Set(1.0f, 0.4f);
     m_wheel2 = m_world->CreateBody(&bd);
     m_wheel2->CreateFixture(&fd);
@@ -77,6 +79,8 @@ void b2Car::initializeTestCar(b2World* m_world){
 
 void b2Car::initializeTestCarNulle(b2World* m_world){
 
+    radius1 = 0.4;
+    radius2 = 0.4;
     float m_hz = 4.0f;
     float m_zeta = 0.7f;
     vivante = true;
@@ -116,12 +120,9 @@ void b2Car::initializeTestCarNulle(b2World* m_world){
     fd.friction = 0.9f;
     fd.filter.groupIndex = -1;
 
-    b2Body* m_wheel1;
     bd.position.Set(-1.0f, 0.35f);
     m_wheel1 = m_world->CreateBody(&bd);
     m_wheel1->CreateFixture(&fd);
-
-    b2Body* m_wheel2;
     bd.position.Set(1.0f, 0.4f);
     m_wheel2 = m_world->CreateBody(&bd);
     m_wheel2->CreateFixture(&fd);

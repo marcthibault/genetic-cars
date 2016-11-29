@@ -16,6 +16,10 @@ public:
     //créer b2(Car car, b2world* m_world, bool test)
 
     b2Body* m_car; //
+    b2Body* m_wheel1;
+    float radius1;
+    float radius2;
+    b2Body* m_wheel2;
     b2Vec2* positionMaximale; // Ce point enregistre les coordonnées du centre de la position la plus à droite de la voiture.
     float32 tempsStagnation; // Temps pendant lequel la voiture n'avance plus.
     std::string nom; // Nom de la voiture

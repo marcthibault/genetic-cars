@@ -48,6 +48,7 @@ class windows : public QWidget
     static QPointF rotation(double x0, double y0, double angle, double abs, double ord, double lambda);
 
 
+
     public slots:
     void run();
     void afficher();

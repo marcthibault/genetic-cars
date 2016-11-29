@@ -225,6 +225,18 @@ void windows::afficher()
 
 
     }
+    std::vector<std::array<float, 6> > roues =moteur->getWheels();
+    for(int i=0;i<roues.size();i++){
+        double x1=roues[i][0];
+        double y1=roues[i][1];
+        double rayon1=this->moteur->car[i]->radius1;
+        //std::cout<<rayon1<<std::endl;
+        double x2=roues[i][3];
+        double y2=roues[i][4];
+        double rayon2=this->moteur->car[i]->radius2;
+        m_scene->addEllipse(lambda*x1,-lambda*y1,lambda*rayon1,lambda*rayon1);
+        m_scene->addEllipse(lambda*x2,-lambda*y2,lambda*rayon2,lambda*rayon2);
+    }
     /*
     double abs0=5*V[indice][1];
     double ord0=5*V[indice][2];
@@ -232,7 +244,7 @@ void windows::afficher()
 
     double abs0=lambda*V[indice][1];
     double ord0=lambda*V[indice][2];
-    std::cout<<abs0<<std::endl;
+    //std::cout<<abs0<<std::endl;
 
     /*
     QVector<QPointF> vect2;
