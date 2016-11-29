@@ -58,20 +58,24 @@ std::vector<double> preprocessing::openCar(Car* my_car){
 
 // Convert vector in car
 Car preprocessing::returnCar(std::vector<double>* attributes){
-    Car my_car = Car();
-    my_car.r1 = (*attributes)[0];
-    my_car.d1 = (*attributes)[1];
-    my_car.r2 = (*attributes)[2];
-    my_car.d2 = (*attributes)[3];
-    my_car.D = (*attributes)[4];
-    my_car.d = (*attributes)[5];
-    int len = ((*attributes).size() - 6)/2;
-    for(int i = 0; i < len; i++){
-        std::pair <double,double> pair ((*attributes)[6+i],(*attributes)[6+len+i]);
-        my_car.angles_distances.push_back(pair);
-    }
+    int N = 8;
+    double r1 = (*attributes)[0];
+    double d1 = (*attributes)[1];
+    double r2 = (*attributes)[2];
+    double d2 = (*attributes)[3];
+    double D = (*attributes)[4];
+    double d = (*attributes)[5];
 
-    return my_car;
+    int len = N - 2;//6
+
+    std::vector<std::pair <double, double> > angles_distances;
+    for(int i = 0; i < N - 2; i++){
+      angles_distances.push_back(pair<double, double> ((*attributes)[6+i], (*attributes)[6+len+i]));
+
+
+    }
+    //return Car(N, r1, d1, r2, d2, D, d, angles_distances);
+    return Car();
 }
 
 // Sum of two cars
@@ -123,7 +127,7 @@ Car preprocessing::generateRandomCar(std::vector<double> means, std::vector<doub
         double value = distribution(generator);
         attributes.push_back(value);
     }
-    int len = (means.size() - 6) / 2;
+    int len = 6; //nombre de points libres dans le chassis
     for(int i = 0; i < len; i++){
         std::normal_distribution<double> distribution_means(means[6 + i], variances[6 + i]);
         double value_mean = distribution_means(generator);
@@ -143,13 +147,14 @@ std::vector<Car> preprocessing::initialise(int N, std::vector<double> means, std
     for (int i=0;i<N;i++){
         firstCars.push_back(preprocessing::generateRandomCar(means,variances));
     }
+    return firstCars;
 }
 
 //Function called by the outside to generate the first generation of cars
 std::vector<Car> preprocessing::generateCars(int n){
     preprocessing pre = preprocessing();
-    std::vector<double> means = {1.6, 2.6, 3.6, 4.6, 22.6, 22.6, 22.6, 22.6, 22.6, 22.6}; //éventuellement changer le nombre de paramètres
-    std::vector<double> variances = {0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
+    std::vector<double> means = {1.6, 2.6, 3.6, 4.6, 22.6, 22.6, 22.6, 22.6, 22.6, 22.6, 22.6, 22.6, 22.6, 22.6, 10, 10, 10, 10}; //éventuellement changer le nombre de paramètres
+    std::vector<double> variances = {0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
     return pre.initialise(n,means,variances);
 }
 
@@ -159,6 +164,6 @@ std::vector<Car> preprocessing::generateCars(int n,std::vector<std::pair<Car,dou
     preprocessing pre = preprocessing();
     std::vector<std::vector<double>> cars = pre.carsToMatrix(&list);
     std::vector<std::vector<double>> newCars;
-    generate(strat,&cars,&newCars,n);
+    preprocessing::generate(strat,&cars,&newCars,n);
     return pre.matrixToCars(&newCars);
 }

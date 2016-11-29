@@ -175,6 +175,7 @@ void windows::afficher()
     double lambda=30;
     m_scene->clear();
     moteur->next(0.1);
+    std::cout << "after net" << '\n';
     int indice=-1;
     std::vector<std::array<float, 4> > V =moteur->getPosition();
     int classement = std::numeric_limits<int>::max();
@@ -263,17 +264,24 @@ void windows::afficher()
 
     this->displayFloor(vect2);
     */
-
     this->displayFloor();
-
+    std::cout << "dpfloor2" << '\n';
     m_scene->setSceneRect(abs0,-ord0,100,100);
+    std::cout << "jsp" << '\n';
 
     if(indice==-1){
+        std::vector< pair< Car, double> > results = moteur->getResult();
         delete moteur;
-        moteur=new Moteur(10.0);
+        // Update génétique
+        std::cout << "starting gen generation" << '\n';
+        std::vector<Car> new_cars = preprocessing::generateCars(1);
+        std::cout << "ending gen generation" << '\n';
+        moteur=new Moteur(9.8, new_cars[0]);
+        std::cout << "moteur créé" << '\n';
     }
 
     timer->start(step);
+    std::cout << "simulation step" << '\n';
 }
 
 void windows::reset()

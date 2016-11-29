@@ -9,7 +9,6 @@ Moteur::Moteur(){
 }
 
 Moteur::Moteur(float32 g){
-
     this->timeStep = 1.0f / 60.0f;
     this->velocityIterations = 5;
     this->positionIterations = 5;
@@ -70,23 +69,26 @@ Moteur::Moteur(float32 g, Car c){
 
 }
 
-Moteur::Moteur( vector<Car> V, float32 g, float32 timeStep, float32 velocityIterations, float32 positionIterations, double length_floor, double var_floor ){
+Moteur::Moteur( std::vector<Car> V, float32 g, float32 timeStep, float32 velocityIterations, float32 positionIterations, double length_floor, double var_floor ){
     // crée un monde avec 2 voitures identiques basées sur Car c
 
     this->timeStep =timeStep ;
     this->velocityIterations = velocityIterations;
     this->positionIterations = positionIterations;
-
+    std::cout << "new b2world" << '\n';
     world = new b2World(b2Vec2(0.0, -g));
-
+    std::cout << "new floor" << '\n';
     b2floor = new Floor(length_floor,  var_floor, 1 );
     b2floor->createArrayb2Vec2(1000);
     b2floor->floorInitialize(world);
+    std::cout << "before car init" << '\n';
+    this->car = std::vector<b2Car*>();
 
-    car = std::vector<b2Car*>();
     for (auto car_V :V){
+        std::cout << "before b2car initializeTestCar" << '\n';
         b2Car* voiture = new b2Car(car_V, world);
-        car.push_back(voiture);
+        std::cout << "mon print" << '\n';
+        this->car.push_back(voiture);
     }
 }
 Moteur::~Moteur(){
@@ -164,26 +166,36 @@ std::vector<std::array<float,6> > Moteur::getWheels(){
     std::vector<std::array<float, 6>> positions_angle;
     for (std::vector<b2Car*>::iterator i = car.begin(); i!=car.end(); i++){
         b2Car* currentCar = (*i);
+        std::cout << "createshit" << '\n';
         std::array<float, 6> positionCourante;
+        std::cout << "updateshit2" << '\n';
         positionCourante[0] = currentCar->m_wheel1->GetWorldCenter().x;
+        std::cout << "updateshit3" << '\n';
         //float angle = currentCar->m_car->GetAngle();
         positionCourante[1] = currentCar->m_wheel1->GetWorldCenter().y;
+        std::cout << "updateshit4" << '\n';
         //float x = currentCar->m_car->GetPosition().x;
         positionCourante[2] = currentCar->m_wheel1->GetAngle();
+        std::cout << "updateshit5" << '\n';
         //float y = currentCar->m_car->GetPosition().y;
         positionCourante[3] = currentCar->m_wheel2->GetWorldCenter().x;
+        std::cout << "updateshit6" << '\n';
         //float angle = currentCar->m_car->GetAngle();
         positionCourante[4] = currentCar->m_wheel2->GetWorldCenter().y;
+        std::cout << "updateshit7" << '\n';
         //float x = currentCar->m_car->GetPosition().x;
         positionCourante[5] = currentCar->m_wheel2->GetAngle();
+        std::cout << "updateshit8" << '\n';
         //float y = currentCar->m_car->GetPosition().y;
         positions_angle.push_back(positionCourante);
+        std::cout << "updateshit9" << '\n';
 
 //        std::cout << "angle = " << positionCourante[0] << std::endl;
 //        std::cout << "x = " << positionCourante[1] << std::endl;
 //        std::cout << "y = " << positionCourante[2] << std::endl;
 //        std::cout << "classement = " << positionCourante[3] << std::endl;
     }
+
     return positions_angle;
 }
 
