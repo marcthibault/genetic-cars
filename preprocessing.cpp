@@ -15,11 +15,12 @@ preprocessing::preprocessing(){
 
 // Transfor a vector of vector of car parameters into a vector of cars
 std::vector<Car> preprocessing::matrixToCars(std::vector<std::vector<double>>* matrix){
-    std::vector<Car> cars;
-    for(int i=0;i<(*matrix).size();i++){
-        cars.push_back(returnCar(&(*matrix)[i]));
-    }
-    return cars;
+   std::vector<Car> cars;
+   for(int i=0;i<(*matrix).size();i++){
+       std::vector<double> tmp = (*matrix)[i];
+       cars.push_back(returnCar(&tmp));
+   }
+   return cars;
 }
 
 /* Transforme l'output de la course en matrice
@@ -30,7 +31,7 @@ std::vector<std::vector<double>> preprocessing::carsToMatrix(std::vector<std::pa
     std::vector<std::vector<double>> M;
     for(std::vector<std::pair<Car,double>>::iterator it = output->begin(); it != output->end(); ++it){
         std::vector<double> data;
-        data = openCar(&(*it).first);
+        data = openCar(&((*it).first));
         data.push_back((*it).second);
         M.push_back(data);
     }
@@ -142,4 +143,22 @@ std::vector<Car> preprocessing::initialise(int N, std::vector<double> means, std
     for (int i=0;i<N;i++){
         firstCars.push_back(preprocessing::generateRandomCar(means,variances));
     }
+}
+
+//Function called by the outside to generate the first generation of cars
+std::vector<Car> preprocessing::generateCars(int n){
+    preprocessing pre = preprocessing();
+    std::vector<double> means = {1.6, 2.6, 3.6, 4.6, 22.6, 22.6, 22.6, 22.6, 22.6, 22.6}; //éventuellement changer le nombre de paramètres
+    std::vector<double> variances = {0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
+    return pre.initialise(n,means,variances);
+}
+
+//Function called by the outside to generate the next generation of cars
+std::vector<Car> preprocessing::generateCars(int n,std::vector<std::pair<Car,double>> list){
+    strategy strat = strategy();
+    preprocessing pre = preprocessing();
+    std::vector<std::vector<double>> cars = pre.carsToMatrix(&list);
+    std::vector<std::vector<double>> newCars;
+    generate(strat,&cars,&newCars,n);
+    return pre.matrixToCars(&newCars);
 }
