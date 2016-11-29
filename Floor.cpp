@@ -45,42 +45,18 @@ double Floor::getVariance(){
 //Crée un tableau de points permettant ensuite de générer le sol
 //Un mur est ajouté à la fin pour stopper les voitures à la fin du cirrcuit
 void Floor::createArrayb2Vec2(int N){
-    double a = 0.0;
     double x = -10.0;
     double y = -2.0;
     p->push_back(b2Vec2(x, y));
-    if(this->chaos){
-        for(int i =1;i<N;i++){
-            std::default_random_engine generator;
-            std::normal_distribution<double> distribution(0,this->variance*i);
-            a = distribution(generator);
-            x=x+this->length*cos(a);
-            y=y+this->length*sin(a);
-            p->push_back(b2Vec2(x, y));
-        }
-        b2Vec2 v = p->back();
-        p->push_back(b2Vec2(v.x,v.y+100.0));
-//        A décommenter si ça ne fonctionne pas
-        p->push_back(b2Vec2(v.x,v.y-100.0));
-        p->push_back(b2Vec2(v.x,v.y+100.0));
-
+    std::default_random_engine generator;
+    for (int i = 1; i < N; i++){
+        x = x + this->length;
+        std::normal_distribution<double> distribution(0,this->variance*i);
+        y = distribution(generator);
+        std::cout << y << std::endl;
+        p->push_back(b2Vec2(x, y));
     }
-    else{
-        for(int i =1;i<N;i++){
-            std::default_random_engine generator;
-            std::normal_distribution<double> distribution(a,this->variance*i);
-            a = distribution(generator);
-            x=x+this->length*cos(a);
-            y=y+this->length*sin(a);
-            p->push_back(b2Vec2(x, y));
-        }
-        b2Vec2 v = p->back();
-        p->push_back(b2Vec2(v.x,v.y+100.0));
-        //A décommenter si ça ne fonctionne pas
-        p->push_back(b2Vec2(v.x,v.y-100.0));
-        p->push_back(b2Vec2(v.x,v.y+100.0));
-    }
-    return;
+   return;
 }
 
 
