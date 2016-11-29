@@ -67,9 +67,9 @@ Moteur::Moteur(float32 g, Car c){
     car.push_back(car2);
 
 
-}v
+}
 
-Moteur::Moteur(float32 g, float32 timeStep, float32 velocityIterations, float32 positionIterations, double length_floor, double var_floor, vector<Car> V ){
+Moteur::Moteur( vector<Car> V, float32 g, float32 timeStep, float32 velocityIterations, float32 positionIterations, double length_floor, double var_floor ){
     // crée un monde avec 2 voitures identiques basées sur Car c
 
     this->timeStep =timeStep ;
@@ -78,14 +78,23 @@ Moteur::Moteur(float32 g, float32 timeStep, float32 velocityIterations, float32 
 
     world = new b2World(b2Vec2(0.0, -g));
 
-    Floor *fl = new Floor(length_floor,  var_floor, True);
-    fl->createArrayb2Vec2(1000);
-    fl->floorInitialize(world);
+    b2floor = new Floor(length_floor,  var_floor, 1 );
+    b2floor->createArrayb2Vec2(1000);
+    b2floor->floorInitialize(world);
 
-    this->car = std::vector<b2Car*>();
+    car = std::vector<b2Car*>();
     for (auto car_V :V){
-        car.push_back(car_V);
+        b2Car* voiture = new b2Car(car_V, world);
+        car.push_back(voiture);
     }
+}
+Moteur::~Moteur(){
+    for(auto voiture : car){
+        delete voiture;
+    }
+    delete b2floor;
+    delete world;
+
 }
 
 void Moteur::next(float dt){
